@@ -1,0 +1,13 @@
+name: Protect master
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: |
+          [ "${{ github.head_ref }}" = "dev" ] || exit 1
