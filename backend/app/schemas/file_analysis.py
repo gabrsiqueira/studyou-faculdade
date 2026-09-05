@@ -4,6 +4,7 @@ from uuid import UUID
 from pydantic import BaseModel
 
 from app.domain.entities.analysis import FileAnalysisResult
+from app.schemas.games import GeneratedGamesResponse
 
 
 class FileAnalysisResponse(BaseModel):
@@ -11,6 +12,7 @@ class FileAnalysisResponse(BaseModel):
     filename: str
     mime_type: str
     content: str
+    games: GeneratedGamesResponse
     status: str
     created_at: datetime
 
@@ -21,6 +23,7 @@ class FileAnalysisResponse(BaseModel):
             filename=entity.filename,
             mime_type=entity.mime_type,
             content=entity.content,
+            games=GeneratedGamesResponse.from_entity(entity.games),
             status=entity.status.value,
             created_at=entity.created_at,
         )

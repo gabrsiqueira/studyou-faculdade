@@ -26,7 +26,8 @@ import kotlinx.coroutines.launch
  */
 class FileRepositoryImpl(
     private val apiClient: FileAnalysisApiClient,
-    private val notifier: UploadResultNotifier
+    private val notifier: UploadResultNotifier,
+    private val generatedGamesStore: GeneratedGamesStore
 ) : FileRepository {
 
     private val filesFlow = MutableStateFlow<List<StudyFile>>(emptyList())
@@ -48,6 +49,7 @@ class FileRepositoryImpl(
         processingScope.launch {
             when (val result = apiClient.analyzeFile(fileName, mimeType, content)) {
                 is FileAnalysisResult.Success -> {
+                    generatedGamesStore.put(fileId, result.games)
                     updateFile(fileId) { it.copy(status = FileStatus.COMPLETED, statusDetail = "Pronto") }
                     notifier.notifyAnalysisCompleted(fileName)
                 }

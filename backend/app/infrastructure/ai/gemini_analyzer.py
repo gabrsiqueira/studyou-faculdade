@@ -2,15 +2,19 @@ import io
 
 from google import genai
 from google.genai import types
-from google.genai.errors import APIError
+from google.genai.errors import APIError, ClientError
 from pptx import Presentation
 from docx import Document
 
-from app.domain.exceptions import AIServiceError
+from app.domain.exceptions import AIServiceError, ContentExceedsContextLimitError
 from app.domain.interfaces.ai_content_analyzer import AIContentAnalyzer
 
 _DOCX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 _PPTX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+
+# Substrings observadas na mensagem de erro do Gemini quando a requisicao e rejeitada
+# por exceder o limite de contexto do modelo (ao inves de outro tipo de erro 4xx).
+_CONTEXT_LIMIT_ERROR_HINTS = ("token", "context length", "context window", "too long", "too large")
 
 
 def _extract_docx_text(content: bytes) -> str:
@@ -38,24 +42,24 @@ def _as_gemini_content(content: bytes, mime_type: str) -> tuple[bytes, str]:
     return content, mime_type
 
 
-class GeminiContentAnalyzer(AIContentAnalyzer):
-    """Implementacao de AIContentAnalyzer usando o Gemini (Google GenAI) como servico de terceiro."""
+def _is_context_limit_error(error: APIError) -> bool:
+    if not isinstance(error, ClientError):
+        return False
+    message = str(error).lower()
+    return any(hint in message for hint in _CONTEXT_LIMIT_ERROR_HINTS)
 
-    def __init__(self, api_key: str, model: str, max_context_tokens: int) -> None:
+
+class GeminiContentAnalyzer(AIContentAnalyzer):
+    """Implementacao de AIContentAnalyzer usando o Gemini (Google GenAI) como servico de terceiro.
+
+    Faz uma unica chamada (generate_content) por arquivo: o limite de contexto e checado
+    reativamente a partir do erro que o proprio Gemini retorna quando o conteudo e grande
+    demais, em vez de uma chamada extra (count_tokens) soh para essa verificacao.
+    """
+
+    def __init__(self, api_key: str, model: str) -> None:
         self._client = genai.Client(api_key=api_key)
         self._model = model
-        self._max_context_tokens = max_context_tokens
-
-    async def is_within_context_limit(self, filename: str, content: bytes, mime_type: str) -> bool:
-        gemini_content, gemini_mime_type = _as_gemini_content(content, mime_type)
-        try:
-            response = await self._client.aio.models.count_tokens(
-                model=self._model,
-                contents=[types.Part.from_bytes(data=gemini_content, mime_type=gemini_mime_type)],
-            )
-        except APIError as error:
-            raise AIServiceError(filename, str(error)) from error
-        return (response.total_tokens or 0) <= self._max_context_tokens
 
     async def analyze(self, filename: str, content: bytes, mime_type: str, prompt: str) -> str:
         gemini_content, gemini_mime_type = _as_gemini_content(content, mime_type)
@@ -68,5 +72,7 @@ class GeminiContentAnalyzer(AIContentAnalyzer):
                 ],
             )
         except APIError as error:
+            if _is_context_limit_error(error):
+                raise ContentExceedsContextLimitError(filename) from error
             raise AIServiceError(filename, str(error)) from error
         return response.text or ""

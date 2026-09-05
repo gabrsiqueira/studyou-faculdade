@@ -13,7 +13,6 @@ class Settings(BaseSettings):
 
     gemini_api_key: str
     gemini_model: str = "gemini-3.8-flash"
-    gemini_max_context_tokens: int = 1_000_000
     gemini_analysis_prompt: str = (
         "Voce e um assistente de estudos. Resuma o conteudo do arquivo enviado e "
         "extraia os principais topicos, conceitos e possiveis perguntas de revisao."

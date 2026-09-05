@@ -1,0 +1,93 @@
+from pydantic import BaseModel
+
+from app.domain.entities.games import (
+    CrosswordEntry,
+    CrosswordGame,
+    Flashcard,
+    GeneratedGames,
+    GuessWordGame,
+    QuizQuestion,
+    WordFormingGame,
+)
+
+
+class QuizQuestionResponse(BaseModel):
+    prompt: str
+    options: list[str]
+    correct_option_index: int
+
+    @classmethod
+    def from_entity(cls, entity: QuizQuestion) -> "QuizQuestionResponse":
+        return cls(prompt=entity.prompt, options=entity.options, correct_option_index=entity.correct_option_index)
+
+
+class FlashcardResponse(BaseModel):
+    question: str
+    answer: str
+
+    @classmethod
+    def from_entity(cls, entity: Flashcard) -> "FlashcardResponse":
+        return cls(question=entity.question, answer=entity.answer)
+
+
+class GuessWordGameResponse(BaseModel):
+    answer: str
+    max_attempts: int
+
+    @classmethod
+    def from_entity(cls, entity: GuessWordGame) -> "GuessWordGameResponse":
+        return cls(answer=entity.answer, max_attempts=entity.max_attempts)
+
+
+class CrosswordEntryResponse(BaseModel):
+    direction: str
+    answer: str
+    row: int
+    col: int
+
+    @classmethod
+    def from_entity(cls, entity: CrosswordEntry) -> "CrosswordEntryResponse":
+        return cls(direction=entity.direction, answer=entity.answer, row=entity.row, col=entity.col)
+
+
+class CrosswordGameResponse(BaseModel):
+    size: int
+    letters: list[str]
+    entries: list[CrosswordEntryResponse]
+    bonus_words: list[str]
+
+    @classmethod
+    def from_entity(cls, entity: CrosswordGame) -> "CrosswordGameResponse":
+        return cls(
+            size=entity.size,
+            letters=entity.letters,
+            entries=[CrosswordEntryResponse.from_entity(item) for item in entity.entries],
+            bonus_words=entity.bonus_words,
+        )
+
+
+class WordFormingGameResponse(BaseModel):
+    letters: list[str]
+    valid_words: list[str]
+
+    @classmethod
+    def from_entity(cls, entity: WordFormingGame) -> "WordFormingGameResponse":
+        return cls(letters=entity.letters, valid_words=entity.valid_words)
+
+
+class GeneratedGamesResponse(BaseModel):
+    quiz: list[QuizQuestionResponse]
+    flashcards: list[FlashcardResponse]
+    guess_word: GuessWordGameResponse
+    crossword: CrosswordGameResponse
+    word_forming: WordFormingGameResponse
+
+    @classmethod
+    def from_entity(cls, entity: GeneratedGames) -> "GeneratedGamesResponse":
+        return cls(
+            quiz=[QuizQuestionResponse.from_entity(item) for item in entity.quiz],
+            flashcards=[FlashcardResponse.from_entity(item) for item in entity.flashcards],
+            guess_word=GuessWordGameResponse.from_entity(entity.guess_word),
+            crossword=CrosswordGameResponse.from_entity(entity.crossword),
+            word_forming=WordFormingGameResponse.from_entity(entity.word_forming),
+        )

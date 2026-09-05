@@ -6,6 +6,7 @@ import br.com.studyou.data.remote.FileAnalysisApiClient
 import br.com.studyou.data.repository.AuthRepositoryImpl
 import br.com.studyou.data.repository.FileRepositoryImpl
 import br.com.studyou.data.repository.GameRepositoryImpl
+import br.com.studyou.data.repository.GeneratedGamesStore
 import br.com.studyou.data.repository.HistoryRepositoryImpl
 import br.com.studyou.data.repository.UserRepositoryImpl
 import br.com.studyou.domain.repository.AuthRepository
@@ -22,14 +23,19 @@ import br.com.studyou.domain.repository.UserRepository
 class AppContainer(context: Context) {
     private val appContext = context.applicationContext
 
+    // Shared between fileRepository (fills it in after a successful upload) and
+    // gameRepository (reads from it), since games are generated alongside the upload.
+    private val generatedGamesStore = GeneratedGamesStore()
+
     val authRepository: AuthRepository by lazy { AuthRepositoryImpl() }
     val fileRepository: FileRepository by lazy {
         FileRepositoryImpl(
             apiClient = FileAnalysisApiClient(),
-            notifier = AndroidUploadResultNotifier(appContext)
+            notifier = AndroidUploadResultNotifier(appContext),
+            generatedGamesStore = generatedGamesStore
         )
     }
-    val gameRepository: GameRepository by lazy { GameRepositoryImpl() }
+    val gameRepository: GameRepository by lazy { GameRepositoryImpl(generatedGamesStore) }
     val historyRepository: HistoryRepository by lazy { HistoryRepositoryImpl() }
     val userRepository: UserRepository by lazy { UserRepositoryImpl() }
 

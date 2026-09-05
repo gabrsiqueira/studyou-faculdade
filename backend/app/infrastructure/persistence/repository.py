@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.domain.entities.analysis import FileAnalysisError, FileAnalysisResult
 from app.domain.interfaces.analysis_repository import AnalysisRepository
 from app.infrastructure.persistence.models import FileAnalysisErrorModel, FileAnalysisResultModel
+from app.schemas.games import GeneratedGamesResponse
 
 
 class SqlAlchemyAnalysisRepository(AnalysisRepository):
@@ -18,6 +19,7 @@ class SqlAlchemyAnalysisRepository(AnalysisRepository):
             mime_type=result.mime_type,
             prompt_used=result.prompt_used,
             content=result.content,
+            games=GeneratedGamesResponse.from_entity(result.games).model_dump(mode="json"),
             status=result.status.value,
         )
         self._session.add(model)

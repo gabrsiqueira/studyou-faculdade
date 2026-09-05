@@ -1,5 +1,6 @@
 package br.com.studyou.data.remote
 
+import br.com.studyou.domain.model.GeneratedGames
 import java.io.IOException
 import java.net.ConnectException
 import java.net.HttpURLConnection
@@ -25,7 +26,7 @@ import org.json.JSONObject
 private const val BASE_URL = "http://localhost:8000"
 
 sealed class FileAnalysisResult {
-    data class Success(val content: String) : FileAnalysisResult()
+    data class Success(val content: String, val games: GeneratedGames) : FileAnalysisResult()
     data class Failure(val message: String) : FileAnalysisResult()
 }
 
@@ -58,7 +59,11 @@ class FileAnalysisApiClient {
                     .orEmpty()
 
                 if (status in 200..299) {
-                    FileAnalysisResult.Success(extractField(body, "content") ?: body)
+                    val json = JSONObject(body)
+                    FileAnalysisResult.Success(
+                        content = json.optString("content", body),
+                        games = parseGeneratedGames(json.getJSONObject("games"))
+                    )
                 } else {
                     FileAnalysisResult.Failure(extractField(body, "detail") ?: "Erro inesperado do servidor ($status).")
                 }
@@ -71,6 +76,8 @@ class FileAnalysisApiClient {
                 )
             } catch (error: IOException) {
                 FileAnalysisResult.Failure("Falha de rede ao enviar o arquivo: ${error.message ?: "erro desconhecido"}.")
+            } catch (error: JSONException) {
+                FileAnalysisResult.Failure("O servidor respondeu em um formato inesperado.")
             } finally {
                 connection?.disconnect()
             }

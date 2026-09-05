@@ -3,6 +3,8 @@ from datetime import datetime, timezone
 from enum import Enum
 from uuid import UUID, uuid4
 
+from app.domain.entities.games import GeneratedGames
+
 
 class FileAnalysisStatus(str, Enum):
     COMPLETED = "completed"
@@ -17,6 +19,7 @@ class FileAnalysisResult:
     mime_type: str
     prompt_used: str
     content: str
+    games: GeneratedGames
     id: UUID = field(default_factory=uuid4)
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     status: FileAnalysisStatus = FileAnalysisStatus.COMPLETED
