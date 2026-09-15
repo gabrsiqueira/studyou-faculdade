@@ -133,7 +133,7 @@ fun FileUploadScreen(
     Scaffold(topBar = { BackTopBar("Enviar arquivo", onBack) }) { padding ->
         Column(modifier = Modifier.fillMaxSize().padding(padding).padding(20.dp)) {
             Text(
-                text = "Envie um material de estudo e a Aprendix cria jogos personalizados a partir do conteúdo.",
+                text = "Envie um material de estudo e o StudYou cria jogos personalizados a partir do conteúdo.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
