@@ -3,8 +3,10 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from app.api.error_handlers import register_error_handlers
+from app.api.middleware import register_request_logging
 from app.api.v1.router import api_router
 from app.core.config import get_settings
+from app.core.logging import setup_logging
 from app.infrastructure.persistence.database import init_session_factory
 
 
@@ -17,9 +19,17 @@ async def lifespan(app: FastAPI):
 
 def create_app() -> FastAPI:
     settings = get_settings()
+    setup_logging(
+        level=settings.log_level,
+        log_file=settings.log_file,
+        max_bytes=settings.log_max_bytes,
+        backup_count=settings.log_backup_count,
+    )
+
     app = FastAPI(title=settings.app_name, lifespan=lifespan)
 
     register_error_handlers(app)
+    register_request_logging(app)
     app.include_router(api_router)
 
     return app

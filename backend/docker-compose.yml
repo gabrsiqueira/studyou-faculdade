@@ -23,6 +23,8 @@ services:
       DATABASE_URL: postgresql+asyncpg://studyou:studyou@db:5432/studyou
     ports:
       - "8000:8000"
+    volumes:
+      - ./logs:/app/logs
     depends_on:
       db:
         condition: service_healthy

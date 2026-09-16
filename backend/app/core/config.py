@@ -21,6 +21,12 @@ class Settings(BaseSettings):
     max_file_size_bytes: int = 10 * 1024 * 1024
     allowed_file_formats: str = "pdf,txt,docx,pptx,png,jpg,jpeg"
 
+    log_level: str = "INFO"
+    # Arquivo de log separado (com rotacao). Vazio = loga apenas no console.
+    log_file: str = "logs/studyou.log"
+    log_max_bytes: int = 5 * 1024 * 1024
+    log_backup_count: int = 5
+
     @property
     def allowed_file_formats_set(self) -> set[str]:
         return {fmt.strip().lower() for fmt in self.allowed_file_formats.split(",") if fmt.strip()}
