@@ -1,5 +1,6 @@
 package br.com.studyou.data.remote
 
+import br.com.studyou.BuildConfig
 import br.com.studyou.domain.model.GeneratedGames
 import java.io.IOException
 import java.net.ConnectException
@@ -13,17 +14,16 @@ import org.json.JSONException
 import org.json.JSONObject
 
 /**
- * Base URL of the StudYou backend (see the FastAPI project under /backend).
+ * Base URL of the StudYou backend (see the FastAPI project under /backend), configured via
+ * BACKEND_BASE_URL in /mobile/.env (not versioned — see .env.example) and injected at build
+ * time as BuildConfig.BACKEND_BASE_URL, so it never needs to be hardcoded or recompiled by hand:
  *
- * Set for testing on a physical device over USB: with the backend running on your machine
- * (`docker compose up` in /backend), run `adb reverse tcp:8000 tcp:8000` so the device's
- * "localhost:8000" is forwarded to your machine's "localhost:8000" — then this just works.
- *
- * Testing on the Android *emulator* instead? Use "http://10.0.2.2:8000" — the emulator's
- * special alias for the host machine's localhost — and skip the adb reverse step.
- * Point this at a real deployment's URL for production.
+ * - Physical device over USB with `adb reverse tcp:8000 tcp:8000`: http://localhost:8000
+ * - Android emulator: http://10.0.2.2:8000 (the emulator's alias for the host's localhost)
+ * - Device on the same Wi-Fi as the machine running the backend: http://<machine-ip>:8000
+ * - A real deployment's URL for production.
  */
-private const val BASE_URL = "http://localhost:8000"
+private val BASE_URL = BuildConfig.BACKEND_BASE_URL
 
 sealed class FileAnalysisResult {
     data class Success(val content: String, val games: GeneratedGames) : FileAnalysisResult()

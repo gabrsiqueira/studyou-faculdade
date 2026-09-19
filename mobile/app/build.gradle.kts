@@ -1,7 +1,19 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
 }
+
+// Lido de /mobile/.env (nao versionado — veja .env.example) para nao deixar o endereco
+// do backend fixo no codigo. Veja app/src/main/java/.../data/remote/FileAnalysisApiClient.kt.
+val envProperties = Properties().apply {
+    val envFile = rootProject.file(".env")
+    if (envFile.exists()) {
+        envFile.inputStream().use { load(it) }
+    }
+}
+val backendBaseUrl: String = envProperties.getProperty("BACKEND_BASE_URL", "http://localhost:8000")
 
 android {
     namespace = "br.com.studyou"
@@ -17,6 +29,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "BACKEND_BASE_URL", "\"$backendBaseUrl\"")
     }
 
     buildTypes {
@@ -32,6 +46,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 

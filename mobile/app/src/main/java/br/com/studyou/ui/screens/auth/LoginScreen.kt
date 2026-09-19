@@ -96,7 +96,7 @@ fun LoginScreen(
                     }
                 }
                 Text(
-                    text = "Aprendix",
+                    text = "StudYou",
                     color = Color.White,
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
