@@ -5,7 +5,12 @@ from app.application.use_cases.analyze_file import AnalyzeFileInput, AnalyzeFile
 from app.domain.exceptions import ContentExceedsContextLimitError, FileTooLargeError, UnsupportedFileFormatError
 from app.infrastructure.validation.format_validator import ExtensionFileFormatValidator
 from app.infrastructure.validation.size_validator import MaxSizeFileValidator
-from tests.unit.fakes import FakeAIContentAnalyzer, FakeAnalysisRepository, FakeGameContentGenerator
+from tests.unit.fakes import (
+    FakeAIContentAnalyzer,
+    FakeAnalysisRepository,
+    FakeGameContentGenerator,
+    make_raw_game_content,
+)
 
 
 def make_use_case(
@@ -85,3 +90,16 @@ async def test_persists_result_with_generated_games_when_analysis_succeeds():
         "PALAVRA",
         "TERMO",
     }
+
+
+async def test_result_total_tokens_sums_analysis_and_game_generation_tokens():
+    use_case = make_use_case(
+        ai_analyzer=FakeAIContentAnalyzer(total_tokens=1200),
+        game_content_generator=FakeGameContentGenerator(make_raw_game_content(total_tokens=800)),
+    )
+
+    result = await use_case.execute(
+        AnalyzeFileInput(filename="notas.txt", mime_type="text/plain", content=b"dados")
+    )
+
+    assert result.total_tokens == 2000

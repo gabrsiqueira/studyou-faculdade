@@ -13,6 +13,7 @@ class FileAnalysisResponse(BaseModel):
     mime_type: str
     content: str
     games: GeneratedGamesResponse
+    total_tokens: int
     status: str
     created_at: datetime
 
@@ -24,6 +25,7 @@ class FileAnalysisResponse(BaseModel):
             mime_type=entity.mime_type,
             content=entity.content,
             games=GeneratedGamesResponse.from_entity(entity.games),
+            total_tokens=entity.total_tokens,
             status=entity.status.value,
             created_at=entity.created_at,
         )

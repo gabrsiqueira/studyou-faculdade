@@ -1,4 +1,4 @@
-from app.domain.entities.analysis import FileAnalysisError, FileAnalysisResult
+from app.domain.entities.analysis import ContentAnalysis, FileAnalysisError, FileAnalysisResult
 from app.domain.entities.games import RawGameContent
 from app.domain.exceptions import ContentExceedsContextLimitError
 from app.domain.interfaces.ai_content_analyzer import AIContentAnalyzer
@@ -7,16 +7,17 @@ from app.domain.interfaces.game_content_generator import GameContentGenerator
 
 
 class FakeAIContentAnalyzer(AIContentAnalyzer):
-    def __init__(self, within_limit: bool = True, analysis_output: str = "analise gerada"):
+    def __init__(self, within_limit: bool = True, analysis_output: str = "analise gerada", total_tokens: int = 0):
         self.within_limit = within_limit
         self.analysis_output = analysis_output
+        self.total_tokens = total_tokens
         self.analyze_calls: list[tuple[str, bytes, str, str]] = []
 
-    async def analyze(self, filename: str, content: bytes, mime_type: str, prompt: str) -> str:
+    async def analyze(self, filename: str, content: bytes, mime_type: str, prompt: str) -> ContentAnalysis:
         self.analyze_calls.append((filename, content, mime_type, prompt))
         if not self.within_limit:
             raise ContentExceedsContextLimitError(filename)
-        return self.analysis_output
+        return ContentAnalysis(text=self.analysis_output, total_tokens=self.total_tokens)
 
 
 def make_raw_game_content(**overrides) -> RawGameContent:

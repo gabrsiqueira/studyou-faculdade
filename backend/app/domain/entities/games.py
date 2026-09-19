@@ -64,3 +64,5 @@ class RawGameContent:
     crossword_words: list[str]
     word_forming_letters: list[str]
     word_forming_valid_words: list[str]
+    # Tokens (entrada + saida) gastos na chamada a IA que gerou este conteudo.
+    total_tokens: int = 0

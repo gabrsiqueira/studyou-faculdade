@@ -106,10 +106,30 @@ pytest
 `POST /api/v1/files/analyze` — multipart/form-data com o campo `file`.
 
 Respostas:
-- `201` — análise concluída, retorna o conteúdo analisado.
+- `201` — análise concluída, retorna o conteúdo analisado e os jogos. O
+  campo `total_tokens` traz o total de tokens (entrada + saída) gastos no
+  Gemini, somando a chamada de análise e a de geração dos jogos.
 - `413` — arquivo excede `MAX_FILE_SIZE_BYTES`.
 - `415` — extensão do arquivo fora de `ALLOWED_FILE_FORMATS`.
 - `422` — conteúdo do arquivo excede o limite de contexto do modelo Gemini.
+
+## Logs
+
+A aplicação usa o `logging` padrão do Python (configurado em
+`app/core/logging.py`). Os logs vão para o console e também para um **arquivo
+separado**, `logs/studyou.log` por padrão, com rotação por tamanho (5 MB, 5
+arquivos de backup). No Docker Compose a pasta `logs/` é montada no host.
+
+O que é logado:
+- Cada requisição: método, rota, status e duração (`app.api.middleware`).
+- Início e conclusão de cada análise, tempo das chamadas ao Gemini e o id do
+  resultado/erro persistido (`app.application.use_cases.analyze_file`).
+- Erros de negócio (413/415/422) como `WARNING` e falhas do Gemini (502) e
+  exceções não tratadas como `ERROR`, com stack trace.
+
+Configuração via `LOG_LEVEL`, `LOG_FILE` (vazio = só console),
+`LOG_MAX_BYTES` e `LOG_BACKUP_COUNT`. Com `LOG_LEVEL=DEBUG` também são
+logados os detalhes do que é enviado ao Gemini.
 
 ## Variáveis de ambiente
 

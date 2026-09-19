@@ -1,4 +1,5 @@
 import io
+import logging
 
 from google import genai
 from google.genai import types
@@ -6,8 +7,11 @@ from google.genai.errors import APIError, ClientError
 from pptx import Presentation
 from docx import Document
 
+from app.domain.entities.analysis import ContentAnalysis
 from app.domain.exceptions import AIServiceError, ContentExceedsContextLimitError
 from app.domain.interfaces.ai_content_analyzer import AIContentAnalyzer
+
+logger = logging.getLogger(__name__)
 
 _DOCX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 _PPTX_MIME_TYPE = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
@@ -61,8 +65,15 @@ class GeminiContentAnalyzer(AIContentAnalyzer):
         self._client = genai.Client(api_key=api_key)
         self._model = model
 
-    async def analyze(self, filename: str, content: bytes, mime_type: str, prompt: str) -> str:
+    async def analyze(self, filename: str, content: bytes, mime_type: str, prompt: str) -> ContentAnalysis:
         gemini_content, gemini_mime_type = _as_gemini_content(content, mime_type)
+        logger.debug(
+            "Enviando '%s' ao Gemini (modelo=%s, mime=%s, %d bytes)",
+            filename,
+            self._model,
+            gemini_mime_type,
+            len(gemini_content),
+        )
         try:
             response = await self._client.aio.models.generate_content(
                 model=self._model,
@@ -75,4 +86,8 @@ class GeminiContentAnalyzer(AIContentAnalyzer):
             if _is_context_limit_error(error):
                 raise ContentExceedsContextLimitError(filename) from error
             raise AIServiceError(filename, str(error)) from error
-        return response.text or ""
+        usage = response.usage_metadata
+        return ContentAnalysis(
+            text=response.text or "",
+            total_tokens=(usage.total_token_count or 0) if usage else 0,
+        )

@@ -1,3 +1,4 @@
+import logging
 from collections import Counter
 
 from google import genai
@@ -9,6 +10,8 @@ from app.application.services.crossword_layout import normalize_word
 from app.domain.entities.games import Flashcard, QuizQuestion, RawGameContent
 from app.domain.exceptions import AIServiceError
 from app.domain.interfaces.game_content_generator import GameContentGenerator
+
+logger = logging.getLogger(__name__)
 
 _GENERATION_PROMPT_TEMPLATE = """\
 Com base no material de estudo analisado abaixo, gere o conteudo bruto para 5 mini-jogos \
@@ -85,11 +88,14 @@ class GeminiGameContentGenerator(GameContentGenerator):
 
         parsed = response.parsed
         if not isinstance(parsed, _GameContentSchema):
+            logger.debug("Resposta invalida do Gemini para os jogos de '%s': %r", filename, response.text)
             raise AIServiceError(filename, "A IA nao retornou um JSON valido para os jogos.")
 
-        return self._to_raw_game_content(parsed)
+        usage = response.usage_metadata
+        total_tokens = (usage.total_token_count or 0) if usage else 0
+        return self._to_raw_game_content(parsed, total_tokens)
 
-    def _to_raw_game_content(self, schema: _GameContentSchema) -> RawGameContent:
+    def _to_raw_game_content(self, schema: _GameContentSchema, total_tokens: int) -> RawGameContent:
         quiz = [
             QuizQuestion(
                 prompt=q.prompt.strip(),
@@ -141,4 +147,5 @@ class GeminiGameContentGenerator(GameContentGenerator):
             crossword_words=crossword_words,
             word_forming_letters=word_forming_letters,
             word_forming_valid_words=word_forming_valid_words,
+            total_tokens=total_tokens,
         )

@@ -1,3 +1,5 @@
+import logging
+import time
 from dataclasses import dataclass
 
 from app.application.services.crossword_layout import CrosswordLayoutService
@@ -8,6 +10,8 @@ from app.domain.interfaces.ai_content_analyzer import AIContentAnalyzer
 from app.domain.interfaces.analysis_repository import AnalysisRepository
 from app.domain.interfaces.file_validator import FileFormatValidator, FileSizeValidator
 from app.domain.interfaces.game_content_generator import GameContentGenerator
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -45,14 +49,35 @@ class AnalyzeFileUseCase:
         self._analysis_prompt = analysis_prompt
 
     async def execute(self, data: AnalyzeFileInput) -> FileAnalysisResult:
+        logger.info(
+            "Iniciando analise do arquivo '%s' (%s, %d bytes)",
+            data.filename,
+            data.mime_type,
+            len(data.content),
+        )
         self._format_validator.validate(data.filename, data.mime_type)
         self._size_validator.validate(data.filename, data.content)
 
         try:
-            analyzed_content = await self._ai_analyzer.analyze(
+            start = time.perf_counter()
+            analysis = await self._ai_analyzer.analyze(
                 data.filename, data.content, data.mime_type, self._analysis_prompt
             )
-            raw_games = await self._game_content_generator.generate(data.filename, analyzed_content)
+            logger.info(
+                "Analise da IA concluida para '%s' em %.1fs (%d tokens)",
+                data.filename,
+                time.perf_counter() - start,
+                analysis.total_tokens,
+            )
+
+            start = time.perf_counter()
+            raw_games = await self._game_content_generator.generate(data.filename, analysis.text)
+            logger.info(
+                "Jogos gerados para '%s' em %.1fs (%d tokens)",
+                data.filename,
+                time.perf_counter() - start,
+                raw_games.total_tokens,
+            )
         except ContentExceedsContextLimitError:
             error = FileAnalysisError(
                 filename=data.filename,
@@ -60,6 +85,7 @@ class AnalyzeFileUseCase:
                 reason="Conteudo do arquivo excede o limite de contexto do modelo de IA.",
             )
             await self._repository.save_error(error)
+            logger.info("Erro de limite de contexto persistido para '%s' (id=%s)", data.filename, error.id)
             raise
 
         games = GeneratedGames(
@@ -77,8 +103,10 @@ class AnalyzeFileUseCase:
             filename=data.filename,
             mime_type=data.mime_type,
             prompt_used=self._analysis_prompt,
-            content=analyzed_content,
+            content=analysis.text,
             games=games,
+            total_tokens=analysis.total_tokens + raw_games.total_tokens,
         )
         await self._repository.save_result(result)
+        logger.info("Resultado da analise persistido para '%s' (id=%s)", data.filename, result.id)
         return result
