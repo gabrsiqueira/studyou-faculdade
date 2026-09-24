@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
-.venv/
+backend/.venv/
+backend/.idea/
 venv/
 .env
 .pytest_cache/
@@ -10,4 +11,4 @@ dist/
 .coverage
 htmlcov/
 logs/
-*.idea
+.idea/

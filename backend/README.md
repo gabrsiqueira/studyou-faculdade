@@ -108,7 +108,9 @@ pytest
 Respostas:
 - `201` — análise concluída, retorna o conteúdo analisado e os jogos. O
   campo `total_tokens` traz o total de tokens (entrada + saída) gastos no
-  Gemini, somando a chamada de análise e a de geração dos jogos.
+  Gemini, somando a chamada de análise e a de geração dos jogos, e o campo
+  `ai_response_time_ms` traz o tempo de resposta do Gemini (em ms) somado
+  dessas duas chamadas.
 - `413` — arquivo excede `MAX_FILE_SIZE_BYTES`.
 - `415` — extensão do arquivo fora de `ALLOWED_FILE_FORMATS`.
 - `422` — conteúdo do arquivo excede o limite de contexto do modelo Gemini.

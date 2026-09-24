@@ -7,17 +7,26 @@ from app.domain.interfaces.game_content_generator import GameContentGenerator
 
 
 class FakeAIContentAnalyzer(AIContentAnalyzer):
-    def __init__(self, within_limit: bool = True, analysis_output: str = "analise gerada", total_tokens: int = 0):
+    def __init__(
+        self,
+        within_limit: bool = True,
+        analysis_output: str = "analise gerada",
+        total_tokens: int = 0,
+        response_time_ms: int = 0,
+    ):
         self.within_limit = within_limit
         self.analysis_output = analysis_output
         self.total_tokens = total_tokens
+        self.response_time_ms = response_time_ms
         self.analyze_calls: list[tuple[str, bytes, str, str]] = []
 
     async def analyze(self, filename: str, content: bytes, mime_type: str, prompt: str) -> ContentAnalysis:
         self.analyze_calls.append((filename, content, mime_type, prompt))
         if not self.within_limit:
             raise ContentExceedsContextLimitError(filename)
-        return ContentAnalysis(text=self.analysis_output, total_tokens=self.total_tokens)
+        return ContentAnalysis(
+            text=self.analysis_output, total_tokens=self.total_tokens, response_time_ms=self.response_time_ms
+        )
 
 
 def make_raw_game_content(**overrides) -> RawGameContent:

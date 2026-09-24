@@ -1,5 +1,4 @@
 import logging
-import time
 from dataclasses import dataclass
 
 from app.application.services.crossword_layout import CrosswordLayoutService
@@ -59,23 +58,21 @@ class AnalyzeFileUseCase:
         self._size_validator.validate(data.filename, data.content)
 
         try:
-            start = time.perf_counter()
             analysis = await self._ai_analyzer.analyze(
                 data.filename, data.content, data.mime_type, self._analysis_prompt
             )
             logger.info(
-                "Analise da IA concluida para '%s' em %.1fs (%d tokens)",
+                "Analise da IA concluida para '%s' em %dms (%d tokens)",
                 data.filename,
-                time.perf_counter() - start,
+                analysis.response_time_ms,
                 analysis.total_tokens,
             )
 
-            start = time.perf_counter()
             raw_games = await self._game_content_generator.generate(data.filename, analysis.text)
             logger.info(
-                "Jogos gerados para '%s' em %.1fs (%d tokens)",
+                "Jogos gerados para '%s' em %dms (%d tokens)",
                 data.filename,
-                time.perf_counter() - start,
+                raw_games.response_time_ms,
                 raw_games.total_tokens,
             )
         except ContentExceedsContextLimitError:
@@ -106,6 +103,7 @@ class AnalyzeFileUseCase:
             content=analysis.text,
             games=games,
             total_tokens=analysis.total_tokens + raw_games.total_tokens,
+            ai_response_time_ms=analysis.response_time_ms + raw_games.response_time_ms,
         )
         await self._repository.save_result(result)
         logger.info("Resultado da analise persistido para '%s' (id=%s)", data.filename, result.id)

@@ -1,5 +1,6 @@
 import io
 import logging
+import time
 
 from google import genai
 from google.genai import types
@@ -74,6 +75,7 @@ class GeminiContentAnalyzer(AIContentAnalyzer):
             gemini_mime_type,
             len(gemini_content),
         )
+        start = time.perf_counter()
         try:
             response = await self._client.aio.models.generate_content(
                 model=self._model,
@@ -86,8 +88,11 @@ class GeminiContentAnalyzer(AIContentAnalyzer):
             if _is_context_limit_error(error):
                 raise ContentExceedsContextLimitError(filename) from error
             raise AIServiceError(filename, str(error)) from error
+        response_time_ms = round((time.perf_counter() - start) * 1000)
+
         usage = response.usage_metadata
         return ContentAnalysis(
             text=response.text or "",
             total_tokens=(usage.total_token_count or 0) if usage else 0,
+            response_time_ms=response_time_ms,
         )

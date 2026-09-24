@@ -1,4 +1,5 @@
 import logging
+import time
 from collections import Counter
 
 from google import genai
@@ -74,6 +75,7 @@ class GeminiGameContentGenerator(GameContentGenerator):
 
     async def generate(self, filename: str, analysis_text: str) -> RawGameContent:
         prompt = _GENERATION_PROMPT_TEMPLATE.format(analysis_text=analysis_text)
+        start = time.perf_counter()
         try:
             response = await self._client.aio.models.generate_content(
                 model=self._model,
@@ -85,6 +87,7 @@ class GeminiGameContentGenerator(GameContentGenerator):
             )
         except APIError as error:
             raise AIServiceError(filename, str(error)) from error
+        response_time_ms = round((time.perf_counter() - start) * 1000)
 
         parsed = response.parsed
         if not isinstance(parsed, _GameContentSchema):
@@ -93,9 +96,11 @@ class GeminiGameContentGenerator(GameContentGenerator):
 
         usage = response.usage_metadata
         total_tokens = (usage.total_token_count or 0) if usage else 0
-        return self._to_raw_game_content(parsed, total_tokens)
+        return self._to_raw_game_content(parsed, total_tokens, response_time_ms)
 
-    def _to_raw_game_content(self, schema: _GameContentSchema, total_tokens: int) -> RawGameContent:
+    def _to_raw_game_content(
+        self, schema: _GameContentSchema, total_tokens: int, response_time_ms: int
+    ) -> RawGameContent:
         quiz = [
             QuizQuestion(
                 prompt=q.prompt.strip(),
@@ -148,4 +153,5 @@ class GeminiGameContentGenerator(GameContentGenerator):
             word_forming_letters=word_forming_letters,
             word_forming_valid_words=word_forming_valid_words,
             total_tokens=total_tokens,
+            response_time_ms=response_time_ms,
         )

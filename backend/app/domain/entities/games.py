@@ -66,3 +66,5 @@ class RawGameContent:
     word_forming_valid_words: list[str]
     # Tokens (entrada + saida) gastos na chamada a IA que gerou este conteudo.
     total_tokens: int = 0
+    # Tempo de resposta (ms) da chamada a IA que gerou este conteudo.
+    response_time_ms: int = 0

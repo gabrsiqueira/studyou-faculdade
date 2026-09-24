@@ -103,3 +103,16 @@ async def test_result_total_tokens_sums_analysis_and_game_generation_tokens():
     )
 
     assert result.total_tokens == 2000
+
+
+async def test_result_ai_response_time_sums_analysis_and_game_generation_times():
+    use_case = make_use_case(
+        ai_analyzer=FakeAIContentAnalyzer(response_time_ms=3200),
+        game_content_generator=FakeGameContentGenerator(make_raw_game_content(response_time_ms=1800)),
+    )
+
+    result = await use_case.execute(
+        AnalyzeFileInput(filename="notas.txt", mime_type="text/plain", content=b"dados")
+    )
+
+    assert result.ai_response_time_ms == 5000
