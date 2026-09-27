@@ -9,6 +9,15 @@ enum class GameType {
     WORD_FORMING
 }
 
+/** Short display name shown across the games list, result and history screens. */
+fun GameType.displayTitle(): String = when (this) {
+    GameType.QUIZ -> "Quiz"
+    GameType.FLASHCARDS -> "Flashcards"
+    GameType.GUESS_WORD -> "Termo"
+    GameType.CROSSWORD -> "Cruzamento"
+    GameType.WORD_FORMING -> "Forma-Palavras"
+}
+
 /** A game available for a given study file, as shown in the games list screen. */
 data class GameSummary(
     val type: GameType,

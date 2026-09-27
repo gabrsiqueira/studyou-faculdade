@@ -15,6 +15,7 @@ class FileAnalysisStatus(str, Enum):
 class FileAnalysisResult:
     """Resultado persistido quando a IA consegue analisar o conteudo do arquivo."""
 
+    user_id: UUID
     filename: str
     mime_type: str
     prompt_used: str
@@ -29,6 +30,7 @@ class FileAnalysisResult:
 class FileAnalysisError:
     """Erro persistido referente ao arquivo (ex.: conteudo fora do limite de contexto da IA)."""
 
+    user_id: UUID
     filename: str
     mime_type: str
     reason: str

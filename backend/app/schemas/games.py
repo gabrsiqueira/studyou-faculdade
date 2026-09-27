@@ -91,3 +91,22 @@ class GeneratedGamesResponse(BaseModel):
             crossword=CrosswordGameResponse.from_entity(entity.crossword),
             word_forming=WordFormingGameResponse.from_entity(entity.word_forming),
         )
+
+    def to_entity(self) -> GeneratedGames:
+        return GeneratedGames(
+            quiz=[QuizQuestion(prompt=q.prompt, options=q.options, correct_option_index=q.correct_option_index) for q in self.quiz],
+            flashcards=[Flashcard(question=c.question, answer=c.answer) for c in self.flashcards],
+            guess_word=GuessWordGame(answer=self.guess_word.answer, max_attempts=self.guess_word.max_attempts),
+            crossword=CrosswordGame(
+                size=self.crossword.size,
+                letters=self.crossword.letters,
+                entries=[
+                    CrosswordEntry(direction=e.direction, answer=e.answer, row=e.row, col=e.col)
+                    for e in self.crossword.entries
+                ],
+                bonus_words=self.crossword.bonus_words,
+            ),
+            word_forming=WordFormingGame(
+                letters=self.word_forming.letters, valid_words=self.word_forming.valid_words
+            ),
+        )

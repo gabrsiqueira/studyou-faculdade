@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from uuid import UUID
 
 from app.application.services.crossword_layout import CrosswordLayoutService
 from app.domain.entities.analysis import FileAnalysisError, FileAnalysisResult
@@ -12,6 +13,7 @@ from app.domain.interfaces.game_content_generator import GameContentGenerator
 
 @dataclass
 class AnalyzeFileInput:
+    user_id: UUID
     filename: str
     mime_type: str
     content: bytes
@@ -55,6 +57,7 @@ class AnalyzeFileUseCase:
             raw_games = await self._game_content_generator.generate(data.filename, analyzed_content)
         except ContentExceedsContextLimitError:
             error = FileAnalysisError(
+                user_id=data.user_id,
                 filename=data.filename,
                 mime_type=data.mime_type,
                 reason="Conteudo do arquivo excede o limite de contexto do modelo de IA.",
@@ -74,6 +77,7 @@ class AnalyzeFileUseCase:
         )
 
         result = FileAnalysisResult(
+            user_id=data.user_id,
             filename=data.filename,
             mime_type=data.mime_type,
             prompt_used=self._analysis_prompt,

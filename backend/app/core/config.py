@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     max_file_size_bytes: int = 10 * 1024 * 1024
     allowed_file_formats: str = "pdf,txt,docx,pptx,png,jpg,jpeg"
 
+    jwt_secret: str
+    jwt_expires_minutes: int = 60 * 24 * 30
+
     @property
     def allowed_file_formats_set(self) -> set[str]:
         return {fmt.strip().lower() for fmt in self.allowed_file_formats.split(",") if fmt.strip()}

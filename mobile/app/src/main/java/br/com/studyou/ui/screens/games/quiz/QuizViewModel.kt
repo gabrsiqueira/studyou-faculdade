@@ -88,7 +88,7 @@ class QuizViewModel(
                     playedAtLabel = "hoje",
                     scoreLabel = "${state.correctCount}/$total",
                     xpEarned = xp,
-                    streakDays = 5,
+                    streakDays = 0,
                     bestScoreLabel = "${state.correctCount}/$total"
                 )
             )
@@ -106,7 +106,7 @@ class QuizViewModel(
                 big = "${state.correctCount}/$total",
                 caption = "corretas",
                 xp = xp,
-                streak = 5,
+                streak = 0,
                 note = note
             )
         )
