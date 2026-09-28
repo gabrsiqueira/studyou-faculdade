@@ -45,3 +45,29 @@ class AIServiceError(FileAnalysisDomainError):
         super().__init__(
             f"Falha ao analisar o arquivo '{filename}' com o servico de IA: {reason}"
         )
+
+
+class AuthDomainError(Exception):
+    """Classe base para erros de negocio do fluxo de autenticacao."""
+
+
+class EmailAlreadyRegisteredError(AuthDomainError):
+    """Levantado ao tentar cadastrar um e-mail que ja possui conta."""
+
+    def __init__(self, email: str):
+        self.email = email
+        super().__init__(f"Ja existe uma conta com o e-mail '{email}'.")
+
+
+class InvalidCredentialsError(AuthDomainError):
+    """Levantado quando o e-mail ou a senha informados no login estao incorretos."""
+
+    def __init__(self) -> None:
+        super().__init__("E-mail ou senha invalidos.")
+
+
+class UnauthorizedError(AuthDomainError):
+    """Levantado quando a requisicao nao tem um token de autenticacao valido."""
+
+    def __init__(self) -> None:
+        super().__init__("Nao autenticado. Faca login novamente.")

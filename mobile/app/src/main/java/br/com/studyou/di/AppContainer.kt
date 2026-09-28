@@ -5,6 +5,7 @@ import br.com.studyou.data.notification.AndroidUploadResultNotifier
 import br.com.studyou.data.remote.FileAnalysisApiClient
 import br.com.studyou.data.repository.AuthRepositoryImpl
 import br.com.studyou.data.repository.FileRepositoryImpl
+import br.com.studyou.data.repository.GameAttemptStore
 import br.com.studyou.data.repository.GameRepositoryImpl
 import br.com.studyou.data.repository.GeneratedGamesStore
 import br.com.studyou.data.repository.HistoryRepositoryImpl
@@ -27,6 +28,10 @@ class AppContainer(context: Context) {
     // gameRepository (reads from it), since games are generated alongside the upload.
     private val generatedGamesStore = GeneratedGamesStore()
 
+    // Shared between gameRepository (records an attempt when a game finishes) and
+    // historyRepository (reads them for the "Meu histórico" screen).
+    private val gameAttemptStore = GameAttemptStore()
+
     val authRepository: AuthRepository by lazy { AuthRepositoryImpl() }
     val fileRepository: FileRepository by lazy {
         FileRepositoryImpl(
@@ -35,8 +40,8 @@ class AppContainer(context: Context) {
             generatedGamesStore = generatedGamesStore
         )
     }
-    val gameRepository: GameRepository by lazy { GameRepositoryImpl(generatedGamesStore) }
-    val historyRepository: HistoryRepository by lazy { HistoryRepositoryImpl() }
+    val gameRepository: GameRepository by lazy { GameRepositoryImpl(generatedGamesStore, gameAttemptStore) }
+    val historyRepository: HistoryRepository by lazy { HistoryRepositoryImpl(gameAttemptStore) }
     val userRepository: UserRepository by lazy { UserRepositoryImpl() }
 
     companion object {

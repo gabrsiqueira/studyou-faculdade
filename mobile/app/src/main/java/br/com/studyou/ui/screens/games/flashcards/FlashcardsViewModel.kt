@@ -85,7 +85,7 @@ class FlashcardsViewModel(
                     playedAtLabel = "hoje",
                     scoreLabel = "$percent% lembrados",
                     xpEarned = xp,
-                    streakDays = 5,
+                    streakDays = 0,
                     bestScoreLabel = "$percent% lembrados"
                 )
             )
@@ -98,7 +98,7 @@ class FlashcardsViewModel(
                 big = "$percent%",
                 caption = "lembrados",
                 xp = xp,
-                streak = 5,
+                streak = 0,
                 note = "Você revisou $total cartões e lembrou de ${state.rememberedCount} deles."
             )
         )

@@ -23,10 +23,16 @@ Material analisado:
 {analysis_text}
 ---
 
+Regras gerais:
+- Cada pergunta, cartao ou palavra deve ser DIFERENTE das demais e cobrir um aspecto \
+distinto do conteudo (nao repita a mesma pergunta/cartao reformulado(a) com outras \
+palavras, nem reuse o mesmo fato para itens diferentes).
+
 Regras por campo:
-- quiz: exatamente 5 perguntas de multipla escolha sobre o conteudo, cada uma com \
-exatamente 4 opcoes e o indice (0 a 3) da opcao correta.
-- flashcards: de 6 a 8 cartoes de pergunta/resposta curtos para revisao.
+- quiz: exatamente 5 perguntas de multipla escolha DISTINTAS sobre o conteudo, cada uma \
+cobrindo um topico ou fato diferente, cada uma com exatamente 4 opcoes e o indice (0 a 3) \
+da opcao correta.
+- flashcards: de 6 a 8 cartoes de pergunta/resposta curtos e DISTINTOS entre si para revisao.
 - guess_word_answer: UMA unica palavra-chave central do conteudo (sem espacos, sem \
 acentos, 4 a 10 letras, maiusculas) para um jogo de adivinhacao estilo Termo.
 - crossword_words: de 6 a 10 palavras-chave do conteudo (uma palavra cada, sem espacos, \
@@ -75,7 +81,6 @@ class GeminiGameContentGenerator(GameContentGenerator):
 
     async def generate(self, filename: str, analysis_text: str) -> RawGameContent:
         prompt = _GENERATION_PROMPT_TEMPLATE.format(analysis_text=analysis_text)
-        start = time.perf_counter()
         try:
             response = await self._client.aio.models.generate_content(
                 model=self._model,
@@ -87,16 +92,12 @@ class GeminiGameContentGenerator(GameContentGenerator):
             )
         except APIError as error:
             raise AIServiceError(filename, str(error)) from error
-        response_time_ms = round((time.perf_counter() - start) * 1000)
 
         parsed = response.parsed
         if not isinstance(parsed, _GameContentSchema):
-            logger.debug("Resposta invalida do Gemini para os jogos de '%s': %r", filename, response.text)
             raise AIServiceError(filename, "A IA nao retornou um JSON valido para os jogos.")
 
-        usage = response.usage_metadata
-        total_tokens = (usage.total_token_count or 0) if usage else 0
-        return self._to_raw_game_content(parsed, total_tokens, response_time_ms)
+        return self._to_raw_game_content(parsed)
 
     def _to_raw_game_content(
         self, schema: _GameContentSchema, total_tokens: int, response_time_ms: int
@@ -106,15 +107,33 @@ class GeminiGameContentGenerator(GameContentGenerator):
                 prompt=q.prompt.strip(),
                 options=[option.strip() for option in q.options],
                 correct_option_index=min(max(q.correct_option_index, 0), len(q.options) - 1),
+    def _to_raw_game_content(self, schema: _GameContentSchema) -> RawGameContent:
+        quiz = []
+        seen_prompts: set[str] = set()
+        for q in schema.quiz:
+            prompt_text = q.prompt.strip()
+            dedup_key = prompt_text.lower()
+            if not prompt_text or len(q.options) != 4 or dedup_key in seen_prompts:
+                continue
+            seen_prompts.add(dedup_key)
+            quiz.append(
+                QuizQuestion(
+                    prompt=prompt_text,
+                    options=[option.strip() for option in q.options],
+                    correct_option_index=min(max(q.correct_option_index, 0), len(q.options) - 1),
+                )
             )
-            for q in schema.quiz
-            if q.prompt.strip() and len(q.options) == 4
-        ]
-        flashcards = [
-            Flashcard(question=card.question.strip(), answer=card.answer.strip())
-            for card in schema.flashcards
-            if card.question.strip() and card.answer.strip()
-        ]
+
+        flashcards = []
+        seen_questions: set[str] = set()
+        for card in schema.flashcards:
+            question_text = card.question.strip()
+            answer_text = card.answer.strip()
+            dedup_key = question_text.lower()
+            if not question_text or not answer_text or dedup_key in seen_questions:
+                continue
+            seen_questions.add(dedup_key)
+            flashcards.append(Flashcard(question=question_text, answer=answer_text))
 
         guess_word_answer = normalize_word(schema.guess_word_answer)
         crossword_words = [normalize_word(word) for word in schema.crossword_words]

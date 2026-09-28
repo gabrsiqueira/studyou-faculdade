@@ -43,10 +43,16 @@ class FileUploadViewModel(private val fileRepository: FileRepository) : ViewMode
     }
 
     fun upload(onSuccess: () -> Unit) {
-        val file = _uiState.value.selectedFile ?: return
+        val state = _uiState.value
+        if (state.isUploading) return
+        val file = state.selectedFile ?: return
+
+        // Set synchronously (not inside the coroutine below) so a second tap arriving
+        // before the coroutine is dispatched is still rejected by the guard above —
+        // otherwise a fast double-tap could fire two uploads and two navigation calls.
+        _uiState.value = state.copy(isUploading = true, errorMessage = null)
 
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isUploading = true, errorMessage = null)
             fileRepository.uploadFile(file.name, file.mimeType, file.content)
                 .onSuccess {
                     _uiState.value = _uiState.value.copy(isUploading = false)

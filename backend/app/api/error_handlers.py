@@ -6,7 +6,10 @@ from fastapi.responses import JSONResponse
 from app.domain.exceptions import (
     AIServiceError,
     ContentExceedsContextLimitError,
+    EmailAlreadyRegisteredError,
     FileTooLargeError,
+    InvalidCredentialsError,
+    UnauthorizedError,
     UnsupportedFileFormatError,
 )
 
@@ -36,3 +39,15 @@ def register_error_handlers(app: FastAPI) -> None:
         # exc_info inclui a excecao original do Gemini (encadeada via "from error") no log.
         logger.error("Falha no servico de IA: %s", exc, exc_info=exc)
         return JSONResponse(status_code=status.HTTP_502_BAD_GATEWAY, content={"detail": str(exc)})
+
+    @app.exception_handler(EmailAlreadyRegisteredError)
+    async def handle_email_already_registered(_: Request, exc: EmailAlreadyRegisteredError) -> JSONResponse:
+        return JSONResponse(status_code=status.HTTP_409_CONFLICT, content={"detail": str(exc)})
+
+    @app.exception_handler(InvalidCredentialsError)
+    async def handle_invalid_credentials(_: Request, exc: InvalidCredentialsError) -> JSONResponse:
+        return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED, content={"detail": str(exc)})
+
+    @app.exception_handler(UnauthorizedError)
+    async def handle_unauthorized(_: Request, exc: UnauthorizedError) -> JSONResponse:
+        return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED, content={"detail": str(exc)})

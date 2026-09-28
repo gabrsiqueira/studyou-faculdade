@@ -1,18 +1,25 @@
 package br.com.studyou.data.repository
 
 import br.com.studyou.domain.model.GameHistoryGroup
+import br.com.studyou.domain.model.displayTitle
 import br.com.studyou.domain.repository.HistoryRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 
-/** Not yet wired to a backend/database, so the history starts empty — no placeholder attempts. */
-class HistoryRepositoryImpl : HistoryRepository {
+/** Groups the attempts recorded in [gameAttemptStore] by game type for the history screen. */
+class HistoryRepositoryImpl(private val gameAttemptStore: GameAttemptStore) : HistoryRepository {
 
-    private val historyFlow = MutableStateFlow<List<GameHistoryGroup>>(emptyList())
-
-    override fun observeHistory(): Flow<List<GameHistoryGroup>> {
-        // TODO: replace with a real API/DB call that streams the user's past game attempts.
-        return historyFlow.asStateFlow()
-    }
+    override fun observeHistory(): Flow<List<GameHistoryGroup>> =
+        gameAttemptStore.observe().map { attempts ->
+            attempts
+                .groupBy { it.gameType }
+                .map { (type, groupAttempts) ->
+                    GameHistoryGroup(
+                        gameType = type,
+                        title = type.displayTitle(),
+                        subtitle = "${groupAttempts.size} tentativa(s)",
+                        attempts = groupAttempts
+                    )
+                }
+        }
 }

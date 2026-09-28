@@ -1,5 +1,6 @@
 import logging
 from dataclasses import dataclass
+from uuid import UUID
 
 from app.application.services.crossword_layout import CrosswordLayoutService
 from app.domain.entities.analysis import FileAnalysisError, FileAnalysisResult
@@ -15,6 +16,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AnalyzeFileInput:
+    user_id: UUID
     filename: str
     mime_type: str
     content: bytes
@@ -77,6 +79,7 @@ class AnalyzeFileUseCase:
             )
         except ContentExceedsContextLimitError:
             error = FileAnalysisError(
+                user_id=data.user_id,
                 filename=data.filename,
                 mime_type=data.mime_type,
                 reason="Conteudo do arquivo excede o limite de contexto do modelo de IA.",
@@ -97,6 +100,7 @@ class AnalyzeFileUseCase:
         )
 
         result = FileAnalysisResult(
+            user_id=data.user_id,
             filename=data.filename,
             mime_type=data.mime_type,
             prompt_used=self._analysis_prompt,

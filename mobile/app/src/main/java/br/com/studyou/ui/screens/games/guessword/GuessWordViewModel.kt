@@ -79,7 +79,7 @@ class GuessWordViewModel(
         viewModelScope.launch {
             val file = fileRepository.observeFiles().first().find { it.id == fileId }
             val puzzle = gameRepository.getGuessWordPuzzle(fileId)
-            if (puzzle == null) {
+            if (puzzle == null || puzzle.answer.isBlank()) {
                 _uiState.value = GuessWordUiState(
                     subjectTitle = subjectTitleOf(file?.name.orEmpty()),
                     isLoading = false,
@@ -150,7 +150,7 @@ class GuessWordViewModel(
                     playedAtLabel = "hoje",
                     scoreLabel = "$attempts tentativas",
                     xpEarned = xp,
-                    streakDays = 5,
+                    streakDays = 0,
                     bestScoreLabel = "$attempts tentativas"
                 )
             )
@@ -163,7 +163,7 @@ class GuessWordViewModel(
                 big = if (solved) "$attempts tentativas" else "Não foi dessa vez",
                 caption = if (solved) "para acertar" else "A palavra era \"$answer\"",
                 xp = xp,
-                streak = 5,
+                streak = 0,
                 note = if (solved) "Você descobriu a palavra-chave!" else "Tente novamente para descobrir a palavra."
             )
         )

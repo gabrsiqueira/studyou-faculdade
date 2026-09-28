@@ -69,7 +69,7 @@ class CrosswordViewModel(
         viewModelScope.launch {
             val file = fileRepository.observeFiles().first().find { it.id == fileId }
             val puzzle = gameRepository.getCrosswordPuzzle(fileId)
-            if (puzzle == null) {
+            if (puzzle == null || puzzle.entries.isEmpty()) {
                 _uiState.value = CrosswordUiState(
                     subjectTitle = subjectTitleOf(file?.name.orEmpty()),
                     isLoading = false,
@@ -147,7 +147,7 @@ class CrosswordViewModel(
                     playedAtLabel = "hoje",
                     scoreLabel = "Completo em $timeLabel",
                     xpEarned = xp,
-                    streakDays = 5,
+                    streakDays = 0,
                     bestScoreLabel = timeLabel
                 )
             )
@@ -161,7 +161,7 @@ class CrosswordViewModel(
                 big = timeLabel,
                 caption = "para completar",
                 xp = xp,
-                streak = 5,
+                streak = 0,
                 note = if (state.bonusWordsFound.isEmpty()) {
                     "Você completou o cruzamento corretamente!"
                 } else {

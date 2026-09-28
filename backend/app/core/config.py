@@ -27,6 +27,9 @@ class Settings(BaseSettings):
     log_max_bytes: int = 5 * 1024 * 1024
     log_backup_count: int = 5
 
+    jwt_secret: str
+    jwt_expires_minutes: int = 60 * 24 * 30
+
     @property
     def allowed_file_formats_set(self) -> set[str]:
         return {fmt.strip().lower() for fmt in self.allowed_file_formats.split(",") if fmt.strip()}

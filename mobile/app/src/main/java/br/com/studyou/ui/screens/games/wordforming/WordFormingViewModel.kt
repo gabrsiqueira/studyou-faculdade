@@ -44,7 +44,7 @@ class WordFormingViewModel(
         viewModelScope.launch {
             val file = fileRepository.observeFiles().first().find { it.id == fileId }
             val puzzle = gameRepository.getWordFormingPuzzle(fileId)
-            if (puzzle == null) {
+            if (puzzle == null || puzzle.letters.isEmpty() || puzzle.validWords.isEmpty()) {
                 _uiState.value = WordFormingUiState(
                     subjectTitle = subjectTitleOf(file?.name.orEmpty()),
                     isLoading = false,
@@ -98,7 +98,7 @@ class WordFormingViewModel(
                     playedAtLabel = "hoje",
                     scoreLabel = "${state.foundWords.size} palavras",
                     xpEarned = xp,
-                    streakDays = 5,
+                    streakDays = 0,
                     bestScoreLabel = "${state.foundWords.size} palavras"
                 )
             )
@@ -111,7 +111,7 @@ class WordFormingViewModel(
                 big = "${state.foundWords.size}",
                 caption = "palavras encontradas",
                 xp = xp,
-                streak = 5,
+                streak = 0,
                 note = "Palavras encontradas: ${state.foundWords.joinToString(", ")}"
             )
         )
