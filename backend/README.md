@@ -133,6 +133,26 @@ Configuração via `LOG_LEVEL`, `LOG_FILE` (vazio = só console),
 `LOG_MAX_BYTES` e `LOG_BACKUP_COUNT`. Com `LOG_LEVEL=DEBUG` também são
 logados os detalhes do que é enviado ao Gemini.
 
+## Token mestre (apenas para testes)
+
+Para testar os endpoints autenticados sem fazer login, defina `MASTER_TOKEN`
+no `.env` (mínimo de 32 caracteres) e envie-o como token Bearer:
+
+```bash
+curl -H "Authorization: Bearer $MASTER_TOKEN" http://localhost:8000/api/v1/files
+```
+
+No Swagger (`/docs`), basta colar o token no botão **Authorize**.
+
+- O token autentica como o usuário `MASTER_TOKEN_USER_EMAIL` (padrão
+  `master@studyou.local`). Se ele não existir, é criado no primeiro uso com
+  uma senha aleatória, ou seja, só é acessível pelo token mestre. Se o e-mail
+  for de um usuário já cadastrado, o token age como esse usuário.
+- Tokens JWT normais continuam funcionando.
+- Vazio = desativado (padrão). A API **não sobe** se `MASTER_TOKEN` estiver
+  definido com `ENVIRONMENT=production`, e registra um aviso no log ao subir
+  com ele ativo.
+
 ## Variáveis de ambiente
 
 Veja [.env.example](.env.example).

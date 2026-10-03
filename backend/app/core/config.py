@@ -1,10 +1,18 @@
 from functools import lru_cache
 
+from pydantic import field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+_PRODUCTION_ENVIRONMENTS = {"production", "prod"}
+_MASTER_TOKEN_MIN_LENGTH = 32
+_DEFAULT_MASTER_TOKEN_USER_EMAIL = "master@studyou.local"
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    # hide_input_in_errors: erros de configuracao nao devem imprimir segredos (chaves, tokens) no log.
+    model_config = SettingsConfigDict(
+        env_file=".env", env_file_encoding="utf-8", extra="ignore", hide_input_in_errors=True
+    )
 
     app_name: str = "StudYou Backend"
     environment: str = "development"
@@ -29,6 +37,30 @@ class Settings(BaseSettings):
 
     jwt_secret: str
     jwt_expires_minutes: int = 60 * 24 * 30
+
+    # Token mestre, APENAS para testes: enviado como "Authorization: Bearer <token>",
+    # autentica como o usuario master_token_user_email sem precisar de login.
+    # Vazio = desativado. A aplicacao nao sobe se ele estiver definido em producao.
+    master_token: str = ""
+    master_token_user_email: str = _DEFAULT_MASTER_TOKEN_USER_EMAIL
+
+    @field_validator("master_token_user_email", mode="before")
+    @classmethod
+    def _default_blank_master_token_user_email(cls, value: object) -> object:
+        # "MASTER_TOKEN_USER_EMAIL=" vazio no .env usa o padrao, em vez de um usuario sem e-mail.
+        if isinstance(value, str) and not value.strip():
+            return _DEFAULT_MASTER_TOKEN_USER_EMAIL
+        return value
+
+    @model_validator(mode="after")
+    def _validate_master_token(self) -> "Settings":
+        if not self.master_token:
+            return self
+        if self.environment.strip().lower() in _PRODUCTION_ENVIRONMENTS:
+            raise ValueError("MASTER_TOKEN nao pode ser usado com ENVIRONMENT=production.")
+        if len(self.master_token) < _MASTER_TOKEN_MIN_LENGTH:
+            raise ValueError(f"MASTER_TOKEN deve ter pelo menos {_MASTER_TOKEN_MIN_LENGTH} caracteres.")
+        return self
 
     @property
     def allowed_file_formats_set(self) -> set[str]:

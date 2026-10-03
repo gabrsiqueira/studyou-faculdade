@@ -1,3 +1,4 @@
+import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -8,6 +9,8 @@ from app.api.v1.router import api_router
 from app.core.config import get_settings
 from app.core.logging import setup_logging
 from app.infrastructure.persistence.database import init_session_factory
+
+logger = logging.getLogger(__name__)
 
 
 @asynccontextmanager
@@ -25,6 +28,12 @@ def create_app() -> FastAPI:
         max_bytes=settings.log_max_bytes,
         backup_count=settings.log_backup_count,
     )
+    if settings.master_token:
+        logger.warning(
+            "MASTER_TOKEN ativo: requisicoes com esse token autenticam como '%s' sem login. "
+            "Use apenas em testes.",
+            settings.master_token_user_email,
+        )
 
     app = FastAPI(title=settings.app_name, lifespan=lifespan)
 

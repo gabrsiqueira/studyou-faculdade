@@ -1,3 +1,4 @@
+import secrets
 from functools import lru_cache
 from typing import Annotated
 from uuid import UUID
@@ -8,6 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.application.services.crossword_layout import CrosswordLayoutService
 from app.application.use_cases.analyze_file import AnalyzeFileUseCase
+from app.application.use_cases.get_master_user import GetMasterUserUseCase
 from app.application.use_cases.login_user import LoginUserUseCase
 from app.application.use_cases.register_user import RegisterUserUseCase
 from app.core.config import Settings, get_settings
@@ -98,13 +100,32 @@ def get_login_user_use_case(
     return LoginUserUseCase(user_repository, password_hasher, token_service)
 
 
+def get_master_user_use_case(
+    user_repository: Annotated[UserRepository, Depends(get_user_repository)],
+    password_hasher: Annotated[PasswordHasher, Depends(get_password_hasher)],
+    settings: Annotated[Settings, Depends(get_settings)],
+) -> GetMasterUserUseCase:
+    return GetMasterUserUseCase(user_repository, password_hasher, settings.master_token_user_email)
+
+
+def _is_master_token(token: str, settings: Settings) -> bool:
+    # compare_digest evita vazar o token por diferenca de tempo na comparacao.
+    return bool(settings.master_token) and secrets.compare_digest(
+        token.encode("utf-8"), settings.master_token.encode("utf-8")
+    )
+
+
 async def get_current_user(
     credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(_bearer_scheme)],
     token_service: Annotated[TokenService, Depends(get_token_service)],
     user_repository: Annotated[UserRepository, Depends(get_user_repository)],
+    settings: Annotated[Settings, Depends(get_settings)],
+    master_user_use_case: Annotated[GetMasterUserUseCase, Depends(get_master_user_use_case)],
 ) -> User:
     if credentials is None:
         raise UnauthorizedError()
+    if _is_master_token(credentials.credentials, settings):
+        return await master_user_use_case.execute()
     user_id: UUID = token_service.verify(credentials.credentials)
     user = await user_repository.get_by_id(user_id)
     if user is None:

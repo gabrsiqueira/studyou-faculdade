@@ -81,6 +81,7 @@ class GeminiGameContentGenerator(GameContentGenerator):
 
     async def generate(self, filename: str, analysis_text: str) -> RawGameContent:
         prompt = _GENERATION_PROMPT_TEMPLATE.format(analysis_text=analysis_text)
+        start = time.perf_counter()
         try:
             response = await self._client.aio.models.generate_content(
                 model=self._model,
@@ -92,22 +93,20 @@ class GeminiGameContentGenerator(GameContentGenerator):
             )
         except APIError as error:
             raise AIServiceError(filename, str(error)) from error
+        response_time_ms = round((time.perf_counter() - start) * 1000)
 
         parsed = response.parsed
         if not isinstance(parsed, _GameContentSchema):
+            logger.debug("Resposta invalida do Gemini para os jogos de '%s': %r", filename, response.text)
             raise AIServiceError(filename, "A IA nao retornou um JSON valido para os jogos.")
 
-        return self._to_raw_game_content(parsed)
+        usage = response.usage_metadata
+        total_tokens = (usage.total_token_count or 0) if usage else 0
+        return self._to_raw_game_content(parsed, total_tokens, response_time_ms)
 
     def _to_raw_game_content(
         self, schema: _GameContentSchema, total_tokens: int, response_time_ms: int
     ) -> RawGameContent:
-        quiz = [
-            QuizQuestion(
-                prompt=q.prompt.strip(),
-                options=[option.strip() for option in q.options],
-                correct_option_index=min(max(q.correct_option_index, 0), len(q.options) - 1),
-    def _to_raw_game_content(self, schema: _GameContentSchema) -> RawGameContent:
         quiz = []
         seen_prompts: set[str] = set()
         for q in schema.quiz:

@@ -1,6 +1,9 @@
-from app.domain.entities.analysis import FileAnalysisError, FileAnalysisResult
+from uuid import UUID
+
+from app.domain.entities.analysis import ContentAnalysis, FileAnalysisError, FileAnalysisResult
 from app.domain.entities.games import RawGameContent
-from app.domain.exceptions import ContentExceedsContextLimitError
+from app.domain.entities.user import User
+from app.domain.exceptions import ContentExceedsContextLimitError, UnauthorizedError
 from app.domain.interfaces.ai_content_analyzer import AIContentAnalyzer
 from app.domain.interfaces.analysis_repository import AnalysisRepository
 from app.domain.interfaces.game_content_generator import GameContentGenerator
@@ -103,4 +106,7 @@ class FakeTokenService(TokenService):
         return f"token-for-{user_id}"
 
     def verify(self, token: str) -> UUID:
-        return UUID(token.removeprefix("token-for-"))
+        try:
+            return UUID(token.removeprefix("token-for-"))
+        except ValueError as error:
+            raise UnauthorizedError() from error

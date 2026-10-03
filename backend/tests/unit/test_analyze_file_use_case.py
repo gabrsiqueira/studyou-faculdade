@@ -103,7 +103,7 @@ async def test_result_total_tokens_sums_analysis_and_game_generation_tokens():
     )
 
     result = await use_case.execute(
-        AnalyzeFileInput(filename="notas.txt", mime_type="text/plain", content=b"dados")
+        AnalyzeFileInput(user_id=USER_ID, filename="notas.txt", mime_type="text/plain", content=b"dados")
     )
 
     assert result.total_tokens == 2000
@@ -116,7 +116,7 @@ async def test_result_ai_response_time_sums_analysis_and_game_generation_times()
     )
 
     result = await use_case.execute(
-        AnalyzeFileInput(filename="notas.txt", mime_type="text/plain", content=b"dados")
+        AnalyzeFileInput(user_id=USER_ID, filename="notas.txt", mime_type="text/plain", content=b"dados")
     )
 
     assert result.ai_response_time_ms == 5000
