@@ -21,10 +21,12 @@ async def save_attempt(
     attempt = GameAttempt(
         id=uuid4(),
         user_id=current_user.id,
+        file_id=request.file_id,
         game_type=request.game_type,
         file_title=request.file_title,
         score_label=request.score_label,
         xp_earned=request.xp_earned,
+        score_percent=request.score_percent,
         best_score_label=request.best_score_label,
     )
     await repository.save(attempt)

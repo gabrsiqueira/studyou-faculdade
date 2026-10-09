@@ -101,11 +101,24 @@ docker compose up --build
 pytest
 ```
 
-## Endpoint principal
+## Endpoints
 
-`POST /api/v1/files/analyze` — multipart/form-data com o campo `file`.
+### Autenticação
 
-Respostas:
+- `POST /api/v1/auth/register` — JSON `{"name", "email", "password"}`. `201` com
+  `{"token", "user"}`; `409` se o e-mail já tem conta.
+- `POST /api/v1/auth/login` — JSON `{"email", "password"}`. `200` com `{"token", "user"}`;
+  `401` se e-mail ou senha estiverem errados.
+
+Todos os endpoints abaixo exigem o header `Authorization: Bearer <token>` (sem ele: `401`).
+Os dados (arquivos, jogos e histórico) ficam salvos por usuário.
+
+### Arquivos e jogos
+
+`POST /api/v1/files/analyze` — multipart/form-data com o campo `file`. Analisa o arquivo e
+gera os 4 jogos (Quiz, Flashcards, Termo, Palavras Cruzadas), sem conteúdo
+repetido entre eles.
+
 - `201` — análise concluída, retorna o conteúdo analisado e os jogos. O
   campo `total_tokens` traz o total de tokens (entrada + saída) gastos no
   Gemini, somando a chamada de análise e a de geração dos jogos, e o campo
@@ -114,6 +127,15 @@ Respostas:
 - `413` — arquivo excede `MAX_FILE_SIZE_BYTES`.
 - `415` — extensão do arquivo fora de `ALLOWED_FILE_FORMATS`.
 - `422` — conteúdo do arquivo excede o limite de contexto do modelo Gemini.
+- `502` — o Gemini falhou (ex.: limite de uso atingido ou serviço sobrecarregado).
+
+`GET /api/v1/files` — arquivos já analisados do usuário, com os jogos de cada um.
+
+### Histórico
+
+- `POST /api/v1/history/attempts` — registra uma partida: JSON `{"file_id", "game_type",
+  "file_title", "score_label", "score_percent", "xp_earned", "best_score_label"}`.
+- `GET /api/v1/history/attempts` — partidas do usuário, mais recentes primeiro.
 
 ## Logs
 

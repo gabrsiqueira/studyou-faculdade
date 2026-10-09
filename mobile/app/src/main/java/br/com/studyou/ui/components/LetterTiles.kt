@@ -2,12 +2,12 @@ package br.com.studyou.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -21,9 +21,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import br.com.studyou.ui.theme.AprendixColors
 
+private const val LETTER_TILE_COLUMNS = 4
+
 /**
- * A grid of tappable letter tiles, like the letter wheel used by word-forming games
- * (Forma-Palavras, Cruzamento): the player taps letters in sequence to build a word.
+ * A grid of tappable letter tiles, like the letter wheel of Palavras Cruzadas: the player
+ * taps letters in sequence to build a word.
+ *
+ * Deliberately not a LazyVerticalGrid: it sits inside screens that already scroll
+ * vertically, and nesting a lazy (scrollable) grid there crashes with an "infinity maximum
+ * height constraints" error. There are only a handful of letters, so laziness buys nothing.
  */
 @Composable
 fun LetterTileGrid(
@@ -32,18 +38,22 @@ fun LetterTileGrid(
     onLetterTap: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(4),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-        modifier = modifier.fillMaxWidth()
-    ) {
-        items(letters.indices.toList()) { index ->
-            LetterTile(
-                letter = letters[index],
-                selected = index in selectedIndices,
-                onClick = { onLetterTap(index) }
-            )
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp), modifier = modifier.fillMaxWidth()) {
+        letters.indices.chunked(LETTER_TILE_COLUMNS).forEach { rowIndices ->
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxWidth()) {
+                rowIndices.forEach { index ->
+                    Box(contentAlignment = Alignment.Center, modifier = Modifier.weight(1f)) {
+                        LetterTile(
+                            letter = letters[index],
+                            selected = index in selectedIndices,
+                            onClick = { onLetterTap(index) }
+                        )
+                    }
+                }
+                repeat(LETTER_TILE_COLUMNS - rowIndices.size) {
+                    Spacer(modifier = Modifier.weight(1f))
+                }
+            }
         }
     }
 }

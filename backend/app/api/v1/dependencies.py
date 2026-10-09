@@ -42,6 +42,7 @@ def get_ai_analyzer() -> AIContentAnalyzer:
     return GeminiContentAnalyzer(
         api_key=settings.gemini_api_key,
         model=settings.gemini_model,
+        thinking_level=settings.gemini_thinking_level,
     )
 
 
@@ -51,6 +52,7 @@ def get_game_content_generator() -> GameContentGenerator:
     return GeminiGameContentGenerator(
         api_key=settings.gemini_api_key,
         model=settings.gemini_model,
+        thinking_level=settings.gemini_thinking_level,
     )
 
 

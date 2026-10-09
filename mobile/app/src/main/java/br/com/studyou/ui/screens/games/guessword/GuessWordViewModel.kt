@@ -3,11 +3,13 @@ package br.com.studyou.ui.screens.games.guessword
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.studyou.domain.model.GameAttempt
 import br.com.studyou.domain.model.GameType
+import br.com.studyou.domain.model.NewGameAttempt
+import br.com.studyou.domain.model.displayTitle
 import br.com.studyou.domain.repository.FileRepository
 import br.com.studyou.domain.repository.GameRepository
 import br.com.studyou.ui.screens.files.subjectTitleOf
+import br.com.studyou.ui.screens.games.recordFinishedGame
 import br.com.studyou.ui.screens.result.GameResultArgs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -57,8 +59,14 @@ data class GuessWordUiState(
     val isUnavailable: Boolean = false,
     val isSolved: Boolean = false,
     val isFailed: Boolean = false,
+    /** Revealed once the game is lost, so the player can see what the word was. */
+    val revealedAnswer: String = "",
+    /** Ready once the attempt is recorded; the result screen opens only when the player taps "Finalizar". */
+    val pendingResultArgs: GameResultArgs? = null,
     val resultArgs: GameResultArgs? = null
 ) {
+    val isOver: Boolean get() = isSolved || isFailed
+
     val attemptsUsed: Int get() = guesses.size
     val attemptLabel: String get() = "Tentativa ${(attemptsUsed + 1).coerceAtMost(maxAttempts)} de $maxAttempts"
 }
@@ -74,6 +82,9 @@ class GuessWordViewModel(
     val uiState: StateFlow<GuessWordUiState> = _uiState.asStateFlow()
 
     private lateinit var answer: String
+
+    // Guards against the final guess being submitted twice and finishing twice.
+    private var finished = false
 
     init {
         viewModelScope.launch {
@@ -99,17 +110,18 @@ class GuessWordViewModel(
 
     fun onLetterTyped(letter: Char) {
         val state = _uiState.value
-        if (state.currentInput.length >= state.answerLength) return
+        if (state.isOver || state.currentInput.length >= state.answerLength) return
         _uiState.value = state.copy(currentInput = state.currentInput + letter.uppercaseChar())
     }
 
     fun onBackspace() {
         val state = _uiState.value
-        if (state.currentInput.isEmpty()) return
+        if (state.isOver || state.currentInput.isEmpty()) return
         _uiState.value = state.copy(currentInput = state.currentInput.dropLast(1))
     }
 
     fun onSubmitGuess() {
+        if (finished) return
         val state = _uiState.value
         if (state.currentInput.length != state.answerLength) return
 
@@ -139,33 +151,45 @@ class GuessWordViewModel(
     }
 
     private fun finish(state: GuessWordUiState, solved: Boolean) {
+        if (finished) return
+        finished = true
+        // The finished board stays on screen; the result screen only opens on "Finalizar".
+        _uiState.value = state.copy(revealedAnswer = if (solved) "" else answer)
+
         val attempts = state.guesses.size
         val xp = if (solved) (state.maxAttempts - attempts + 1) * 15 else 0
+        val score = if (solved) "$attempts tentativas" else "Não acertou"
         viewModelScope.launch {
-            gameRepository.saveAttempt(
-                GameAttempt(
-                    id = "guess-$fileId-${System.currentTimeMillis()}",
+            val resultArgs = gameRepository.recordFinishedGame(
+                attempt = NewGameAttempt(
+                    fileId = fileId,
                     gameType = GameType.GUESS_WORD,
                     fileTitle = state.subjectTitle,
-                    playedAtLabel = "hoje",
-                    scoreLabel = "$attempts tentativas",
+                    scoreLabel = score,
+                    // Fewer guesses needed = higher score; not solving scores 0.
+                    scorePercent = if (solved) (state.maxAttempts - attempts + 1) * 100 / state.maxAttempts else 0,
                     xpEarned = xp,
-                    streakDays = 0,
-                    bestScoreLabel = "$attempts tentativas"
+                    bestScoreLabel = score
+                ),
+                resultArgs = GameResultArgs(
+                    fileId = fileId,
+                    gameType = GameType.GUESS_WORD,
+                    title = "${GameType.GUESS_WORD.displayTitle()} — ${state.subjectTitle}",
+                    big = if (solved) "$attempts tentativas" else "Não foi dessa vez",
+                    caption = if (solved) "para acertar" else "A palavra era \"$answer\"",
+                    xp = xp,
+                    streak = 0,
+                    note = if (solved) "Você descobriu a palavra-chave!" else "Tente novamente para descobrir a palavra."
                 )
             )
+            _uiState.value = _uiState.value.copy(pendingResultArgs = resultArgs)
         }
-        _uiState.value = state.copy(
-            resultArgs = GameResultArgs(
-                fileId = fileId,
-                gameType = GameType.GUESS_WORD,
-                title = "Termo — ${state.subjectTitle}",
-                big = if (solved) "$attempts tentativas" else "Não foi dessa vez",
-                caption = if (solved) "para acertar" else "A palavra era \"$answer\"",
-                xp = xp,
-                streak = 0,
-                note = if (solved) "Você descobriu a palavra-chave!" else "Tente novamente para descobrir a palavra."
-            )
-        )
+    }
+
+    /** Leaves the finished board for the result screen. */
+    fun onFinishClick() {
+        val state = _uiState.value
+        val pending = state.pendingResultArgs ?: return
+        _uiState.value = state.copy(resultArgs = pending)
     }
 }

@@ -89,10 +89,9 @@ async def test_persists_result_with_generated_games_when_analysis_succeeds():
     assert game_content_generator.generate_calls == [("notas.txt", "resumo do conteudo")]
 
     assert result.games.guess_word.answer == "PALAVRA"
-    assert result.games.word_forming.valid_words == ["PALAVRA", "PARA"]
     assert {entry.answer for entry in result.games.crossword.entries} | set(result.games.crossword.bonus_words) == {
-        "PALAVRA",
         "TERMO",
+        "METRO",
     }
 
 

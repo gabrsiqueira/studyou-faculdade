@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -72,51 +73,52 @@ fun LoginScreen(
     onPasswordChange: (String) -> Unit,
     onSubmit: () -> Unit
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        Box(
+    Column(modifier = Modifier.fillMaxSize().imePadding()) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)
-                .background(MaterialTheme.colorScheme.primary),
-            contentAlignment = Alignment.Center
+                .background(MaterialTheme.colorScheme.primary)
+                .padding(vertical = 28.dp)
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Surface(
-                    shape = RoundedCornerShape(20.dp),
-                    color = Color.White,
-                    modifier = Modifier.size(72.dp)
-                ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Icon(
-                            Icons.Filled.Star,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(36.dp)
-                        )
-                    }
+            Surface(
+                shape = RoundedCornerShape(20.dp),
+                color = Color.White,
+                modifier = Modifier.size(72.dp)
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Icon(
+                        Icons.Filled.Star,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(36.dp)
+                    )
                 }
-                Text(
-                    text = "StudYou",
-                    color = Color.White,
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(top = 16.dp)
-                )
-                Text(
-                    text = "Transforme seus estudos em jogo",
-                    color = Color.White.copy(alpha = 0.85f),
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(top = 4.dp)
-                )
             }
+            Text(
+                text = "StudYou",
+                color = MaterialTheme.colorScheme.onPrimary,
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            Text(
+                text = "Transforme seus estudos em jogo",
+                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.85f),
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(top = 4.dp)
+            )
         }
 
+        // Takes all the space left after the header above, instead of a fixed weight ratio
+        // against it — so the extra "Nome" field in REGISTER mode (and the keyboard, once a
+        // field is focused) don't squeeze the header and form into competing fixed shares.
         Surface(
             color = MaterialTheme.colorScheme.surface,
             shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1.3f)
+                .weight(1f)
         ) {
             Column(
                 modifier = Modifier
@@ -129,14 +131,16 @@ fun LoginScreen(
                 Spacer(20.dp)
 
                 if (uiState.mode == AuthMode.REGISTER) {
+                    Text("Nome", style = MaterialTheme.typography.labelLarge)
+                    Spacer(4.dp)
                     OutlinedTextField(
                         value = uiState.name,
                         onValueChange = onNameChange,
-                        label = { Text("Nome") },
+                        placeholder = { Text("Seu nome") },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth()
                     )
-                    Spacer(12.dp)
+                    Spacer(16.dp)
                 }
 
                 Text("E-mail", style = MaterialTheme.typography.labelLarge)
@@ -157,17 +161,14 @@ fun LoginScreen(
                 OutlinedTextField(
                     value = uiState.password,
                     onValueChange = onPasswordChange,
+                    placeholder = {
+                        Text(if (uiState.mode == AuthMode.REGISTER) "Mínimo de 6 caracteres" else "Sua senha")
+                    },
                     singleLine = true,
                     visualTransformation = PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     modifier = Modifier.fillMaxWidth()
                 )
-
-                if (uiState.mode == AuthMode.LOGIN) {
-                    TextButton(onClick = { }, modifier = Modifier.padding(top = 4.dp)) {
-                        Text("Esqueci minha senha")
-                    }
-                }
 
                 uiState.errorMessage?.let { message ->
                     Text(
@@ -193,10 +194,14 @@ fun LoginScreen(
                 } else {
                     Triple("Já tem conta?", "Entrar", AuthMode.LOGIN)
                 }
-                Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     Text(question, style = MaterialTheme.typography.bodyMedium)
-                    TextButton(onClick = { onModeSelected(targetMode) }, contentPadding = PaddingValues(horizontal = 4.dp)) {
-                        Text(action, fontWeight = FontWeight.SemiBold)
+                    TextButton(onClick = { onModeSelected(targetMode) }, contentPadding = PaddingValues(horizontal = 6.dp)) {
+                        Text(action, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
                     }
                 }
             }
@@ -231,14 +236,15 @@ private fun AuthModeTabs(mode: AuthMode, onModeSelected: (AuthMode) -> Unit) {
 @Composable
 private fun AuthModeTab(text: String, selected: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
     val containerColor = if (selected) MaterialTheme.colorScheme.primary else Color.Transparent
-    val contentColor = if (selected) Color.White else MaterialTheme.colorScheme.onSurfaceVariant
+    val contentColor = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(containerColor = containerColor, contentColor = contentColor),
         shape = RoundedCornerShape(10.dp),
+        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 10.dp),
         modifier = modifier
     ) {
-        Text(text, textAlign = TextAlign.Center)
+        Text(text, textAlign = TextAlign.Center, maxLines = 1, softWrap = false, fontWeight = FontWeight.SemiBold)
     }
 }
 

@@ -1,6 +1,5 @@
 import logging
 import time
-from collections import Counter
 
 from google import genai
 from google.genai import types
@@ -11,11 +10,13 @@ from app.application.services.crossword_layout import normalize_word
 from app.domain.entities.games import Flashcard, QuizQuestion, RawGameContent
 from app.domain.exceptions import AIServiceError
 from app.domain.interfaces.game_content_generator import GameContentGenerator
+from app.infrastructure.ai.errors import friendly_reason
+from app.infrastructure.ai.thinking import thinking_config_for
 
 logger = logging.getLogger(__name__)
 
 _GENERATION_PROMPT_TEMPLATE = """\
-Com base no material de estudo analisado abaixo, gere o conteudo bruto para 5 mini-jogos \
+Com base no material de estudo analisado abaixo, gere o conteudo bruto para 4 mini-jogos \
 educativos em portugues do Brasil. Responda SOMENTE no formato JSON pedido.
 
 Material analisado:
@@ -23,26 +24,27 @@ Material analisado:
 {analysis_text}
 ---
 
-Regras gerais:
-- Cada pergunta, cartao ou palavra deve ser DIFERENTE das demais e cobrir um aspecto \
-distinto do conteudo (nao repita a mesma pergunta/cartao reformulado(a) com outras \
-palavras, nem reuse o mesmo fato para itens diferentes).
+Regras gerais (MUITO IMPORTANTE):
+- Nenhum conteudo pode se repetir, nem dentro de um jogo nem ENTRE jogos diferentes. \
+Cada pergunta, cartao e palavra deve cobrir um fato ou termo que nao aparece em nenhum \
+outro item, de nenhum dos jogos (nao reformule a mesma pergunta com outras palavras).
+- Antes de responder, divida os fatos do material entre os jogos: os fatos usados no quiz \
+NAO podem ser usados nos flashcards, e as palavras usadas em um jogo de palavras NAO podem \
+ser usadas em outro.
 
 Regras por campo:
-- quiz: exatamente 5 perguntas de multipla escolha DISTINTAS sobre o conteudo, cada uma \
-cobrindo um topico ou fato diferente, cada uma com exatamente 4 opcoes e o indice (0 a 3) \
-da opcao correta.
-- flashcards: de 6 a 8 cartoes de pergunta/resposta curtos e DISTINTOS entre si para revisao.
+- quiz: exatamente 5 perguntas de multipla escolha, cada uma sobre um fato diferente, com \
+exatamente 4 opcoes e o indice (0 a 3) da opcao correta.
+- flashcards: de 6 a 8 cartoes de pergunta/resposta curtos, sobre fatos que NAO foram \
+usados em nenhuma pergunta do quiz e distintos entre si.
 - guess_word_answer: UMA unica palavra-chave central do conteudo (sem espacos, sem \
-acentos, 4 a 10 letras, maiusculas) para um jogo de adivinhacao estilo Termo.
-- crossword_words: de 6 a 10 palavras-chave do conteudo (uma palavra cada, sem espacos, \
-sem acentos, 3 a 10 letras) para preencher uma cruzadinha.
-- word_forming_letters: um conjunto de 7 a 10 letras (maiusculas, sem acentos, pode \
-repetir letras) a partir das quais seja possivel formar varias palavras relacionadas ao \
-conteudo.
-- word_forming_valid_words: de 5 a 10 palavras (sem acentos, 3+ letras) que podem ser \
-formadas usando SOMENTE as letras de word_forming_letters, respeitando a quantidade de \
-cada letra disponivel.
+acentos, 4 a 10 letras, maiusculas) para um jogo de adivinhacao estilo Termo. Ela NAO \
+pode aparecer em crossword.
+- crossword: de 6 a 10 itens para preencher palavras cruzadas, cada um com:
+  - word: uma palavra-chave do conteudo (uma palavra so, sem espacos, sem acentos, 3 a 10 \
+letras), todas diferentes entre si e da palavra do Termo;
+  - clue: uma dica curta (ate 12 palavras) que ajude o jogador a descobrir essa palavra a \
+partir do conteudo estudado. A dica NUNCA pode conter a propria palavra nem derivados dela.
 """
 
 
@@ -57,27 +59,37 @@ class _FlashcardSchema(BaseModel):
     answer: str
 
 
+class _CrosswordWordSchema(BaseModel):
+    word: str
+    clue: str
+
+
 class _GameContentSchema(BaseModel):
     quiz: list[_QuizQuestionSchema]
     flashcards: list[_FlashcardSchema]
     guess_word_answer: str
-    crossword_words: list[str]
-    word_forming_letters: list[str]
-    word_forming_valid_words: list[str]
+    crossword: list[_CrosswordWordSchema]
 
 
-def _can_form_word(word: str, letter_pool: Counter[str]) -> bool:
-    word_counts = Counter(word)
-    return all(letter_pool.get(letter, 0) >= count for letter, count in word_counts.items())
+def _clues_by_word(items: list[_CrosswordWordSchema]) -> dict[str, str]:
+    """Dica de cada palavra; descarta dicas vazias ou que entregam a propria resposta."""
+    clues: dict[str, str] = {}
+    for item in items:
+        word, clue = normalize_word(item.word), " ".join(item.clue.split())
+        gives_answer_away = any(normalize_word(token).startswith(word) for token in clue.split())
+        if word and clue and not gives_answer_away:
+            clues.setdefault(word, clue)
+    return clues
 
 
 class GeminiGameContentGenerator(GameContentGenerator):
     """Implementacao de GameContentGenerator usando o Gemini, com saida estruturada
     (JSON validado por schema) para evitar parsing fragil de texto livre."""
 
-    def __init__(self, api_key: str, model: str) -> None:
+    def __init__(self, api_key: str, model: str, thinking_level: str = "") -> None:
         self._client = genai.Client(api_key=api_key)
         self._model = model
+        self._thinking_config = thinking_config_for(thinking_level)
 
     async def generate(self, filename: str, analysis_text: str) -> RawGameContent:
         prompt = _GENERATION_PROMPT_TEMPLATE.format(analysis_text=analysis_text)
@@ -89,10 +101,11 @@ class GeminiGameContentGenerator(GameContentGenerator):
                 config=types.GenerateContentConfig(
                     response_mime_type="application/json",
                     response_schema=_GameContentSchema,
+                    thinking_config=self._thinking_config,
                 ),
             )
         except APIError as error:
-            raise AIServiceError(filename, str(error)) from error
+            raise AIServiceError(filename, friendly_reason(error)) from error
         response_time_ms = round((time.perf_counter() - start) * 1000)
 
         parsed = response.parsed
@@ -107,69 +120,29 @@ class GeminiGameContentGenerator(GameContentGenerator):
     def _to_raw_game_content(
         self, schema: _GameContentSchema, total_tokens: int, response_time_ms: int
     ) -> RawGameContent:
-        quiz = []
-        seen_prompts: set[str] = set()
-        for q in schema.quiz:
-            prompt_text = q.prompt.strip()
-            dedup_key = prompt_text.lower()
-            if not prompt_text or len(q.options) != 4 or dedup_key in seen_prompts:
-                continue
-            seen_prompts.add(dedup_key)
-            quiz.append(
-                QuizQuestion(
-                    prompt=prompt_text,
-                    options=[option.strip() for option in q.options],
-                    correct_option_index=min(max(q.correct_option_index, 0), len(q.options) - 1),
-                )
+        """Converte e descarta itens malformados. A unicidade entre jogos fica em
+        enforce_unique_content (use case)."""
+        quiz = [
+            QuizQuestion(
+                prompt=q.prompt.strip(),
+                options=[option.strip() for option in q.options],
+                correct_option_index=min(max(q.correct_option_index, 0), len(q.options) - 1),
             )
-
-        flashcards = []
-        seen_questions: set[str] = set()
-        for card in schema.flashcards:
-            question_text = card.question.strip()
-            answer_text = card.answer.strip()
-            dedup_key = question_text.lower()
-            if not question_text or not answer_text or dedup_key in seen_questions:
-                continue
-            seen_questions.add(dedup_key)
-            flashcards.append(Flashcard(question=question_text, answer=answer_text))
-
-        guess_word_answer = normalize_word(schema.guess_word_answer)
-        crossword_words = [normalize_word(word) for word in schema.crossword_words]
-        crossword_words = [word for word in crossword_words if word]
-
-        if not guess_word_answer and crossword_words:
-            guess_word_answer = max(crossword_words, key=len)
-
-        raw_letters = [letter for raw in schema.word_forming_letters if (letter := normalize_word(raw))]
-        raw_letter_pool = Counter("".join(raw_letters))
-
-        word_forming_valid_words = [
-            word
-            for raw_word in schema.word_forming_valid_words
-            if (word := normalize_word(raw_word)) and len(word) >= 3 and _can_form_word(word, raw_letter_pool)
+            for q in schema.quiz
+            if q.prompt.strip() and len(q.options) == 4
         ]
-
-        # Deriva o conjunto final de letras a partir das proprias palavras validadas
-        # (igual ao cruzamento), garantindo por construcao que toda palavra valida
-        # realmente pode ser formada a partir das letras devolvidas -- independente de
-        # a lista "crua" de letras da IA estar perfeita ou nao.
-        if word_forming_valid_words:
-            derived_pool: Counter[str] = Counter()
-            for word in word_forming_valid_words:
-                for letter, count in Counter(word).items():
-                    derived_pool[letter] = max(derived_pool[letter], count)
-            word_forming_letters = list(derived_pool.elements())
-        else:
-            word_forming_letters = list(raw_letter_pool.elements())
+        flashcards = [
+            Flashcard(question=card.question.strip(), answer=card.answer.strip())
+            for card in schema.flashcards
+            if card.question.strip() and card.answer.strip()
+        ]
 
         return RawGameContent(
             quiz=quiz,
             flashcards=flashcards,
-            guess_word_answer=guess_word_answer,
-            crossword_words=crossword_words,
-            word_forming_letters=word_forming_letters,
-            word_forming_valid_words=word_forming_valid_words,
+            guess_word_answer=normalize_word(schema.guess_word_answer),
+            crossword_words=[word for item in schema.crossword if (word := normalize_word(item.word))],
+            crossword_clues=_clues_by_word(schema.crossword),
             total_tokens=total_tokens,
             response_time_ms=response_time_ms,
         )

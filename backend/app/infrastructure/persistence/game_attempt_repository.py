@@ -16,10 +16,12 @@ class SqlAlchemyGameAttemptRepository(GameAttemptRepository):
         model = GameAttemptModel(
             id=attempt.id,
             user_id=attempt.user_id,
+            file_id=attempt.file_id,
             game_type=attempt.game_type,
             file_title=attempt.file_title,
             score_label=attempt.score_label,
             xp_earned=attempt.xp_earned,
+            score_percent=attempt.score_percent,
             best_score_label=attempt.best_score_label,
         )
         self._session.add(model)
@@ -36,10 +38,12 @@ class SqlAlchemyGameAttemptRepository(GameAttemptRepository):
             GameAttempt(
                 id=row.id,
                 user_id=row.user_id,
+                file_id=row.file_id,
                 game_type=row.game_type,
                 file_title=row.file_title,
                 score_label=row.score_label,
                 xp_earned=row.xp_earned,
+                score_percent=row.score_percent,
                 best_score_label=row.best_score_label,
                 played_at=row.played_at,
             )

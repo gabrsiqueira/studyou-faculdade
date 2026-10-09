@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EmojiEvents
 import androidx.compose.material3.Icon
@@ -40,6 +41,8 @@ fun ResultScreen(
     xp: Int,
     streak: Int,
     note: String,
+    level: Int = 1,
+    leveledUp: Boolean = false,
     onClose: () -> Unit,
     onPlayAgain: () -> Unit,
     onViewHistory: () -> Unit
@@ -89,10 +92,34 @@ fun ResultScreen(
                     contentColor = AprendixColors.StatusWarning
                 )
                 LabelChip(
+                    text = "Nível $level",
+                    containerColor = AprendixColors.StatusSuccessContainer,
+                    contentColor = AprendixColors.StatusSuccess
+                )
+                LabelChip(
                     text = "Sequência de $streak dias",
                     containerColor = AprendixColors.StatusInfoContainer,
                     contentColor = AprendixColors.StatusInfo
                 )
+            }
+
+            if (leveledUp) {
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Surface(
+                    shape = RoundedCornerShape(12.dp),
+                    color = AprendixColors.StatusSuccessContainer,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = "Você subiu para o nível $level!",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = AprendixColors.StatusSuccess,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(vertical = 12.dp, horizontal = 16.dp)
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -124,6 +151,8 @@ private fun ResultScreenPreview() {
             xp = 80,
             streak = 5,
             note = "Sua melhor nota nesse jogo é 9/10 — quase lá!",
+            level = 3,
+            leveledUp = true,
             onClose = {},
             onPlayAgain = {},
             onViewHistory = {}

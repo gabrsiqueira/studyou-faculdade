@@ -5,11 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.studyou.domain.model.CrosswordDirection
 import br.com.studyou.domain.model.CrosswordEntry
-import br.com.studyou.domain.model.GameAttempt
 import br.com.studyou.domain.model.GameType
+import br.com.studyou.domain.model.NewGameAttempt
+import br.com.studyou.domain.model.displayTitle
 import br.com.studyou.domain.repository.FileRepository
 import br.com.studyou.domain.repository.GameRepository
 import br.com.studyou.ui.screens.files.subjectTitleOf
+import br.com.studyou.ui.screens.games.recordFinishedGame
 import br.com.studyou.ui.screens.result.GameResultArgs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -35,6 +37,8 @@ data class CrosswordUiState(
     val isLoading: Boolean = true,
     val isUnavailable: Boolean = false,
     val isComplete: Boolean = false,
+    /** Ready once the attempt is recorded; the result screen opens only when the player taps "Finalizar". */
+    val pendingResultArgs: GameResultArgs? = null,
     val resultArgs: GameResultArgs? = null
 ) {
     val currentWord: String get() = selectedIndices.map { letters[it] }.joinToString("")
@@ -44,6 +48,20 @@ data class CrosswordUiState(
         entries.flatMap { it.cells() }.toSet()
     }
 
+    /**
+     * Crossword-style numbering: each starting cell gets a number, in reading order (top to
+     * bottom, left to right). Entries that start on the same cell share the number.
+     */
+    val startCellNumbers: Map<Pair<Int, Int>, Int> by lazy {
+        entries.map { it.row to it.col }
+            .distinct()
+            .sortedWith(compareBy({ it.first }, { it.second }))
+            .withIndex()
+            .associate { (index, cell) -> cell to index + 1 }
+    }
+
+    fun numberOf(entry: CrosswordEntry): Int = startCellNumbers.getValue(entry.row to entry.col)
+
     /** Letters already revealed on the grid, from entries the player has already found. */
     val cellLetters: Map<Pair<Int, Int>, Char> by lazy {
         buildMap {
@@ -52,7 +70,7 @@ data class CrosswordUiState(
     }
 }
 
-/** Holds the state of the "Cruzamento" game for a given study file. */
+/** Holds the state of the "Palavras Cruzadas" game for a given study file. */
 class CrosswordViewModel(
     private val fileId: String,
     private val fileRepository: FileRepository,
@@ -64,6 +82,9 @@ class CrosswordViewModel(
 
     private val startTimeMillis = System.currentTimeMillis()
     private var bonusWords: Set<String> = emptySet()
+
+    // Guards against the last word being confirmed twice and finishing twice.
+    private var finished = false
 
     init {
         viewModelScope.launch {
@@ -90,7 +111,7 @@ class CrosswordViewModel(
 
     fun onLetterTap(index: Int) {
         val state = _uiState.value
-        if (index in state.selectedIndices) return
+        if (state.isComplete || index in state.selectedIndices) return
         _uiState.value = state.copy(selectedIndices = state.selectedIndices + index, lastAttemptCorrect = null)
     }
 
@@ -104,6 +125,7 @@ class CrosswordViewModel(
     }
 
     fun onConfirmWord() {
+        if (finished) return
         val state = _uiState.value
         val word = state.currentWord
         if (word.isEmpty()) return
@@ -135,40 +157,50 @@ class CrosswordViewModel(
     }
 
     private fun finish(state: CrosswordUiState) {
+        if (finished) return
+        finished = true
+        // The completed grid stays on screen; the result screen only opens on "Finalizar".
+        _uiState.value = state.copy(isComplete = true)
+
         val elapsedSeconds = ((System.currentTimeMillis() - startTimeMillis) / 1000).toInt()
         val timeLabel = "%d:%02d".format(elapsedSeconds / 60, elapsedSeconds % 60)
         val xp = 60 + state.bonusWordsFound.size * 10
         viewModelScope.launch {
-            gameRepository.saveAttempt(
-                GameAttempt(
-                    id = "crossword-$fileId-${System.currentTimeMillis()}",
+            val resultArgs = gameRepository.recordFinishedGame(
+                attempt = NewGameAttempt(
+                    fileId = fileId,
                     gameType = GameType.CROSSWORD,
                     fileTitle = state.subjectTitle,
-                    playedAtLabel = "hoje",
                     scoreLabel = "Completo em $timeLabel",
+                    // The game only ends once every word on the grid has been found.
+                    scorePercent = 100,
                     xpEarned = xp,
-                    streakDays = 0,
                     bestScoreLabel = timeLabel
+                ),
+                resultArgs = GameResultArgs(
+                    fileId = fileId,
+                    gameType = GameType.CROSSWORD,
+                    title = "${GameType.CROSSWORD.displayTitle()} — ${state.subjectTitle}",
+                    big = timeLabel,
+                    caption = "para completar",
+                    xp = xp,
+                    streak = 0,
+                    note = if (state.bonusWordsFound.isEmpty()) {
+                        "Você completou as palavras cruzadas!"
+                    } else {
+                        "Você completou as palavras cruzadas e encontrou ${state.bonusWordsFound.size} palavra(s) bônus: " +
+                            state.bonusWordsFound.joinToString(", ")
+                    }
                 )
             )
+            _uiState.value = _uiState.value.copy(pendingResultArgs = resultArgs)
         }
-        _uiState.value = state.copy(
-            isComplete = true,
-            resultArgs = GameResultArgs(
-                fileId = fileId,
-                gameType = GameType.CROSSWORD,
-                title = "Cruzamento — ${state.subjectTitle}",
-                big = timeLabel,
-                caption = "para completar",
-                xp = xp,
-                streak = 0,
-                note = if (state.bonusWordsFound.isEmpty()) {
-                    "Você completou o cruzamento corretamente!"
-                } else {
-                    "Você completou o cruzamento e encontrou ${state.bonusWordsFound.size} palavra(s) bônus: " +
-                        state.bonusWordsFound.joinToString(", ")
-                }
-            )
-        )
+    }
+
+    /** Leaves the completed grid for the result screen. */
+    fun onFinishClick() {
+        val state = _uiState.value
+        val pending = state.pendingResultArgs ?: return
+        _uiState.value = state.copy(resultArgs = pending)
     }
 }

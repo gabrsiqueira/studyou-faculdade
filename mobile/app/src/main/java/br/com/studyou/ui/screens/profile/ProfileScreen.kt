@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import br.com.studyou.domain.model.LevelProgress
 import br.com.studyou.domain.model.UserProfile
 import br.com.studyou.ui.di.LocalAppContainer
 import br.com.studyou.ui.navigation.Screen
@@ -40,13 +42,12 @@ import br.com.studyou.ui.theme.StudyouTheme
 @Composable
 fun ProfileRoute(
     currentRoute: String?,
-    onNavigateBottomNav: (Screen) -> Unit,
-    onLoggedOut: () -> Unit
+    onNavigateBottomNav: (Screen) -> Unit
 ) {
     val container = LocalAppContainer.current
     val viewModel: ProfileViewModel = viewModel(
         factory = viewModelFactory {
-            initializer { ProfileViewModel(container.userRepository, container.authRepository) }
+            initializer { ProfileViewModel(container.userRepository, container.historyRepository, container.authRepository) }
         }
     )
     val uiState by viewModel.uiState.collectAsState()
@@ -55,7 +56,7 @@ fun ProfileRoute(
         uiState = uiState,
         currentRoute = currentRoute,
         onNavigateBottomNav = onNavigateBottomNav,
-        onLogoutClick = { viewModel.logout(onLoggedOut) }
+        onLogoutClick = viewModel::logout
     )
 }
 
@@ -95,6 +96,10 @@ fun ProfileScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            LevelCard(progress = (profile ?: EMPTY_PROFILE).levelProgress)
+
+            Spacer(modifier = Modifier.height(12.dp))
+
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxWidth()) {
                 StatCard(value = "${profile?.completedGames ?: 0}", label = "jogos concluídos", modifier = Modifier.weight(1f))
                 StatCard(value = "${profile?.averageScorePercent ?: 0}%", label = "nota média", modifier = Modifier.weight(1f))
@@ -106,6 +111,52 @@ fun ProfileScreen(
             TextButton(onClick = onLogoutClick, modifier = Modifier.fillMaxWidth()) {
                 Text("Sair", color = AprendixColors.StatusDanger, fontWeight = FontWeight.SemiBold)
             }
+        }
+    }
+}
+
+private val EMPTY_PROFILE = UserProfile(name = "", email = "", completedGames = 0, averageScorePercent = 0, streakDays = 0)
+
+/** The player's level, total XP and how much is left to reach the next level. */
+@Composable
+private fun LevelCard(progress: LevelProgress) {
+    Surface(
+        color = MaterialTheme.colorScheme.surfaceVariant,
+        shape = RoundedCornerShape(12.dp),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    "Nível ${progress.level}",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.weight(1f)
+                )
+                Text(
+                    "${progress.totalXp} XP",
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold,
+                    color = AprendixColors.StatusWarning
+                )
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            LinearProgressIndicator(
+                progress = { progress.progressFraction },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(8.dp)
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                "${progress.xpIntoLevel}/${progress.xpForNextLevel} XP — faltam ${progress.xpToNextLevel} XP para o nível ${progress.level + 1}",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
     }
 }
@@ -137,7 +188,7 @@ private fun StatCard(value: String, label: String, modifier: Modifier = Modifier
 private fun ProfileScreenPreview() {
     StudyouTheme {
         ProfileScreen(
-            uiState = ProfileUiState(profile = UserProfile("Fred", "fred@email.com", 14, 82, 5)),
+            uiState = ProfileUiState(profile = UserProfile("Fred", "fred@email.com", 14, 82, 5, totalXp = 420)),
             currentRoute = Screen.Profile.route,
             onNavigateBottomNav = {},
             onLogoutClick = {}

@@ -20,7 +20,10 @@ class Settings(BaseSettings):
     database_url: str
 
     gemini_api_key: str
-    gemini_model: str = "gemini-3.8-flash"
+    gemini_model: str = "gemini-3.7-flash"
+    # Quanto o modelo "pensa" antes de responder (LOW, MEDIUM, HIGH; vazio = padrao do
+    # modelo). LOW deixa a resposta bem mais rapida sem perder qualidade para este uso.
+    gemini_thinking_level: str = "LOW"
     gemini_analysis_prompt: str = (
         "Voce e um assistente de estudos. Resuma o conteudo do arquivo enviado e "
         "extraia os principais topicos, conceitos e possiveis perguntas de revisao."

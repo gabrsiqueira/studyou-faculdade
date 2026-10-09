@@ -7,16 +7,26 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 /**
- * Holds the game attempts played this session, in memory. Shared between
- * [GameRepositoryImpl] (which records an attempt when a game finishes) and
- * [HistoryRepositoryImpl] (which reads them for the "Meu histórico" screen).
+ * In-memory cache of the signed-in user's game attempts (most recent first), mirroring what
+ * the backend has. Shared by [GameRepositoryImpl] (records new attempts), [HistoryRepositoryImpl]
+ * and [UserRepositoryImpl] (profile stats). Cleared when the user logs out.
  */
 class GameAttemptStore {
     private val attemptsFlow = MutableStateFlow<List<GameAttempt>>(emptyList())
 
     fun observe(): StateFlow<List<GameAttempt>> = attemptsFlow.asStateFlow()
 
+    fun current(): List<GameAttempt> = attemptsFlow.value
+
     fun add(attempt: GameAttempt) {
-        attemptsFlow.update { current -> listOf(attempt) + current }
+        attemptsFlow.update { current -> listOf(attempt) + current.filterNot { it.id == attempt.id } }
+    }
+
+    fun replaceAll(attempts: List<GameAttempt>) {
+        attemptsFlow.value = attempts.sortedByDescending { it.playedAtMillis }
+    }
+
+    fun clear() {
+        attemptsFlow.value = emptyList()
     }
 }

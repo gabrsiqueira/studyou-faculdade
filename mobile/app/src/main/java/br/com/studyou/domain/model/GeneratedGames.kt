@@ -5,6 +5,5 @@ data class GeneratedGames(
     val quiz: List<QuizQuestion>,
     val flashcards: List<Flashcard>,
     val guessWord: GuessWordPuzzle,
-    val crossword: CrosswordPuzzle,
-    val wordForming: WordFormingPuzzle
+    val crossword: CrosswordPuzzle
 )

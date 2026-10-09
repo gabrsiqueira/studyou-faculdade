@@ -5,7 +5,7 @@ from app.domain.entities.games import RawGameContent
 
 class GameContentGenerator(ABC):
     """Porta para gerar o conteudo bruto dos jogos (perguntas, palavras-chave) a partir
-    do texto ja analisado de um arquivo. O posicionamento geometrico do cruzamento nao
+    do texto ja analisado de um arquivo. O posicionamento geometrico das palavras cruzadas nao
     e responsabilidade desta porta -- fica a cargo de CrosswordLayoutService."""
 
     @abstractmethod

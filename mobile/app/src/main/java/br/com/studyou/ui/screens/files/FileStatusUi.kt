@@ -36,4 +36,5 @@ fun fileStatusStyle(status: FileStatus): FileStatusStyle = when (status) {
 
 /** Short subject label derived from the file name, e.g. "Sistema Solar – Resumo.pdf" -> "Sistema Solar". */
 fun subjectTitleOf(fileName: String): String =
-    fileName.substringBefore(" – ").substringBefore(" - ").trim()
+    fileName.substringBeforeLast('.').ifBlank { fileName }
+        .substringBefore(" – ").substringBefore(" - ").trim()

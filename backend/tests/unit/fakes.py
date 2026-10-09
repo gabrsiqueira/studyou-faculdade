@@ -40,9 +40,7 @@ def make_raw_game_content(**overrides) -> RawGameContent:
         quiz=[],
         flashcards=[],
         guess_word_answer="PALAVRA",
-        crossword_words=["PALAVRA", "TERMO"],
-        word_forming_letters=list("PALAVRA"),
-        word_forming_valid_words=["PALAVRA", "PARA"],
+        crossword_words=["TERMO", "METRO"],
     )
     defaults.update(overrides)
     return RawGameContent(**defaults)

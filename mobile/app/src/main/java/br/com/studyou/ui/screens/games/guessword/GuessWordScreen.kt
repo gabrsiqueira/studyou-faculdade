@@ -4,15 +4,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -25,7 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.min
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -61,7 +65,8 @@ fun GuessWordRoute(
         onClose = onClose,
         onLetterClick = viewModel::onLetterTyped,
         onBackspaceClick = viewModel::onBackspace,
-        onSubmitClick = viewModel::onSubmitGuess
+        onSubmitClick = viewModel::onSubmitGuess,
+        onFinishClick = viewModel::onFinishClick
     )
 }
 
@@ -71,7 +76,8 @@ fun GuessWordScreen(
     onClose: () -> Unit,
     onLetterClick: (Char) -> Unit,
     onBackspaceClick: () -> Unit,
-    onSubmitClick: () -> Unit
+    onSubmitClick: () -> Unit,
+    onFinishClick: () -> Unit = {}
 ) {
     Scaffold(
         topBar = {
@@ -89,29 +95,71 @@ fun GuessWordScreen(
                 .padding(20.dp)
         ) {
             Text(
-                text = uiState.attemptLabel,
+                text = when {
+                    uiState.isSolved -> "Você acertou em ${uiState.attemptsUsed} de ${uiState.maxAttempts} tentativas!"
+                    uiState.isFailed -> "Não foi dessa vez. A palavra era \"${uiState.revealedAnswer}\"."
+                    else -> uiState.attemptLabel
+                },
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                fontWeight = if (uiState.isOver) FontWeight.SemiBold else FontWeight.Normal,
+                color = when {
+                    uiState.isSolved -> AprendixColors.StatusSuccess
+                    uiState.isFailed -> MaterialTheme.colorScheme.error
+                    else -> MaterialTheme.colorScheme.onSurfaceVariant
+                }
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             // The full board is always shown, like Termo: rows already played, the row
-            // currently being typed, and empty rows for the attempts still to come.
-            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                repeat(uiState.maxAttempts) { index ->
-                    when {
-                        index < uiState.guesses.size ->
-                            GuessRow(row = uiState.guesses[index], length = uiState.answerLength)
-                        index == uiState.guesses.size && !uiState.isSolved && !uiState.isFailed ->
-                            CurrentInputRow(input = uiState.currentInput, length = uiState.answerLength)
-                        else ->
-                            CurrentInputRow(input = "", length = uiState.answerLength)
+            // currently being typed, and empty rows for the attempts still to come. It only
+            // takes the space the keyboard leaves free, with cells sized to fit both the
+            // width and the height, so short words never push the keyboard off screen.
+            BoxWithConstraints(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+            ) {
+                val columns = uiState.answerLength.coerceAtLeast(1)
+                val rows = uiState.maxAttempts.coerceAtLeast(1)
+                val cellSize = min(
+                    min(
+                        (maxWidth - BOARD_GAP * (columns - 1)) / columns,
+                        (maxHeight - BOARD_GAP * (rows - 1)) / rows
+                    ),
+                    MAX_CELL_SIZE
+                ).coerceAtLeast(0.dp)
+
+                Column(verticalArrangement = Arrangement.spacedBy(BOARD_GAP)) {
+                    repeat(uiState.maxAttempts) { index ->
+                        when {
+                            index < uiState.guesses.size ->
+                                GuessRow(row = uiState.guesses[index], cellSize = cellSize)
+                            index == uiState.guesses.size && !uiState.isSolved && !uiState.isFailed ->
+                                CurrentInputRow(input = uiState.currentInput, length = uiState.answerLength, cellSize = cellSize)
+                            else ->
+                                CurrentInputRow(input = "", length = uiState.answerLength, cellSize = cellSize)
+                        }
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(12.dp))
+
+            if (uiState.isOver) {
+                // The finished board (and the colored keyboard) stays visible until the player
+                // decides to leave, instead of jumping straight to the result screen.
+                Button(
+                    onClick = onFinishClick,
+                    enabled = uiState.pendingResultArgs != null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 12.dp)
+                ) {
+                    Text("Finalizar", fontWeight = FontWeight.SemiBold)
+                }
+            }
 
             val letterColors = uiState.keyboardStates.mapValues { (_, state) -> colorFor(state) }
             OnScreenKeyboard(
@@ -119,29 +167,32 @@ fun GuessWordScreen(
                 onLetterClick = onLetterClick,
                 onBackspaceClick = onBackspaceClick,
                 onEnterClick = onSubmitClick,
-                enterEnabled = uiState.currentInput.length == uiState.answerLength
+                enterEnabled = !uiState.isOver && uiState.currentInput.length == uiState.answerLength
             )
         }
     }
 }
 
+private val BOARD_GAP = 6.dp
+private val MAX_CELL_SIZE = 64.dp
+
 @Composable
-private fun GuessRow(row: List<Pair<Char, LetterState>>, length: Int) {
-    Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.fillMaxWidth()) {
+private fun GuessRow(row: List<Pair<Char, LetterState>>, cellSize: Dp) {
+    Row(horizontalArrangement = Arrangement.spacedBy(BOARD_GAP)) {
         row.forEach { (letter, state) ->
             LetterCell(
                 letter = letter.toString(),
                 backgroundColor = colorFor(state),
                 textColor = Color.White,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.size(cellSize)
             )
         }
     }
 }
 
 @Composable
-private fun CurrentInputRow(input: String, length: Int) {
-    Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.fillMaxWidth()) {
+private fun CurrentInputRow(input: String, length: Int, cellSize: Dp) {
+    Row(horizontalArrangement = Arrangement.spacedBy(BOARD_GAP)) {
         repeat(length) { index ->
             val letter = input.getOrNull(index)?.toString().orEmpty()
             LetterCell(
@@ -149,7 +200,7 @@ private fun CurrentInputRow(input: String, length: Int) {
                 backgroundColor = MaterialTheme.colorScheme.surface,
                 textColor = MaterialTheme.colorScheme.onSurface,
                 bordered = true,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.size(cellSize)
             )
         }
     }
@@ -166,7 +217,6 @@ private fun LetterCell(
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .aspectRatio(1f)
             .background(backgroundColor, RoundedCornerShape(8.dp))
             .then(
                 if (bordered) {

@@ -9,7 +9,7 @@ class UnsupportedFileFormatError(FileAnalysisDomainError):
         self.filename = filename
         self.allowed_formats = allowed_formats
         super().__init__(
-            f"Formato do arquivo '{filename}' nao suportado. "
+            f"Formato do arquivo '{filename}' não suportado. "
             f"Formatos aceitos: {', '.join(sorted(allowed_formats))}."
         )
 
@@ -32,7 +32,7 @@ class ContentExceedsContextLimitError(FileAnalysisDomainError):
     def __init__(self, filename: str):
         self.filename = filename
         super().__init__(
-            f"Conteudo do arquivo '{filename}' excede o limite de contexto do modelo de IA."
+            f"Conteúdo do arquivo '{filename}' excede o limite de contexto do modelo de IA."
         )
 
 
@@ -43,7 +43,7 @@ class AIServiceError(FileAnalysisDomainError):
         self.filename = filename
         self.reason = reason
         super().__init__(
-            f"Falha ao analisar o arquivo '{filename}' com o servico de IA: {reason}"
+            f"Falha ao analisar o arquivo '{filename}' com o serviço de IA: {reason}"
         )
 
 
@@ -56,18 +56,18 @@ class EmailAlreadyRegisteredError(AuthDomainError):
 
     def __init__(self, email: str):
         self.email = email
-        super().__init__(f"Ja existe uma conta com o e-mail '{email}'.")
+        super().__init__(f"Já existe uma conta com o e-mail '{email}'.")
 
 
 class InvalidCredentialsError(AuthDomainError):
     """Levantado quando o e-mail ou a senha informados no login estao incorretos."""
 
     def __init__(self) -> None:
-        super().__init__("E-mail ou senha invalidos.")
+        super().__init__("E-mail ou senha inválidos.")
 
 
 class UnauthorizedError(AuthDomainError):
     """Levantado quando a requisicao nao tem um token de autenticacao valido."""
 
     def __init__(self) -> None:
-        super().__init__("Nao autenticado. Faca login novamente.")
+        super().__init__("Não autenticado. Faça login novamente.")

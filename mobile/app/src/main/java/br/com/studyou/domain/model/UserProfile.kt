@@ -6,5 +6,8 @@ data class UserProfile(
     val email: String,
     val completedGames: Int,
     val averageScorePercent: Int,
-    val streakDays: Int
-)
+    val streakDays: Int,
+    val totalXp: Int = 0
+) {
+    val levelProgress: LevelProgress get() = levelProgressFor(totalXp)
+}

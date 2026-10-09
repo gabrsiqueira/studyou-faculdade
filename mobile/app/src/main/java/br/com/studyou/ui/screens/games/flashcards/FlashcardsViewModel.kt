@@ -4,11 +4,13 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.studyou.domain.model.Flashcard
-import br.com.studyou.domain.model.GameAttempt
 import br.com.studyou.domain.model.GameType
+import br.com.studyou.domain.model.NewGameAttempt
+import br.com.studyou.domain.model.displayTitle
 import br.com.studyou.domain.repository.FileRepository
 import br.com.studyou.domain.repository.GameRepository
 import br.com.studyou.ui.screens.files.subjectTitleOf
+import br.com.studyou.ui.screens.games.recordFinishedGame
 import br.com.studyou.ui.screens.result.GameResultArgs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,6 +42,9 @@ class FlashcardsViewModel(
     private val _uiState = MutableStateFlow(FlashcardsUiState())
     val uiState: StateFlow<FlashcardsUiState> = _uiState.asStateFlow()
 
+    // Guards against "Lembrei" on the last card being tapped twice and finishing twice.
+    private var finished = false
+
     init {
         viewModelScope.launch {
             val file = fileRepository.observeFiles().first().find { it.id == fileId }
@@ -57,6 +62,7 @@ class FlashcardsViewModel(
     }
 
     fun markCard(remembered: Boolean) {
+        if (finished) return
         val state = _uiState.value
         val newRememberedCount = if (remembered) state.rememberedCount + 1 else state.rememberedCount
         val isLastCard = state.currentIndex == state.cards.lastIndex
@@ -73,34 +79,36 @@ class FlashcardsViewModel(
     }
 
     private fun finish(state: FlashcardsUiState) {
+        if (finished) return
+        finished = true
+        _uiState.value = state
+
         val total = state.cards.size
         val percent = if (total == 0) 0 else (state.rememberedCount * 100) / total
         val xp = state.rememberedCount * 8
         viewModelScope.launch {
-            gameRepository.saveAttempt(
-                GameAttempt(
-                    id = "flashcards-$fileId-${System.currentTimeMillis()}",
+            val resultArgs = gameRepository.recordFinishedGame(
+                attempt = NewGameAttempt(
+                    fileId = fileId,
                     gameType = GameType.FLASHCARDS,
                     fileTitle = state.subjectTitle,
-                    playedAtLabel = "hoje",
                     scoreLabel = "$percent% lembrados",
+                    scorePercent = percent,
                     xpEarned = xp,
-                    streakDays = 0,
                     bestScoreLabel = "$percent% lembrados"
+                ),
+                resultArgs = GameResultArgs(
+                    fileId = fileId,
+                    gameType = GameType.FLASHCARDS,
+                    title = "${GameType.FLASHCARDS.displayTitle()} — ${state.subjectTitle}",
+                    big = "$percent%",
+                    caption = "lembrados",
+                    xp = xp,
+                    streak = 0,
+                    note = "Você revisou $total cartões e lembrou de ${state.rememberedCount} deles."
                 )
             )
+            _uiState.value = _uiState.value.copy(resultArgs = resultArgs)
         }
-        _uiState.value = state.copy(
-            resultArgs = GameResultArgs(
-                fileId = fileId,
-                gameType = GameType.FLASHCARDS,
-                title = "Flashcards — ${state.subjectTitle}",
-                big = "$percent%",
-                caption = "lembrados",
-                xp = xp,
-                streak = 0,
-                note = "Você revisou $total cartões e lembrou de ${state.rememberedCount} deles."
-            )
-        )
     }
 }

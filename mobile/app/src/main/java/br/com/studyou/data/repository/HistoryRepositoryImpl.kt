@@ -1,13 +1,18 @@
 package br.com.studyou.data.repository
 
+import br.com.studyou.data.remote.ApiResult
+import br.com.studyou.data.remote.StudYouApiClient
 import br.com.studyou.domain.model.GameHistoryGroup
 import br.com.studyou.domain.model.displayTitle
 import br.com.studyou.domain.repository.HistoryRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-/** Groups the attempts recorded in [gameAttemptStore] by game type for the history screen. */
-class HistoryRepositoryImpl(private val gameAttemptStore: GameAttemptStore) : HistoryRepository {
+/** The signed-in user's attempts, loaded from the backend and grouped by game type. */
+class HistoryRepositoryImpl(
+    private val api: StudYouApiClient,
+    private val gameAttemptStore: GameAttemptStore
+) : HistoryRepository {
 
     override fun observeHistory(): Flow<List<GameHistoryGroup>> =
         gameAttemptStore.observe().map { attempts ->
@@ -22,4 +27,12 @@ class HistoryRepositoryImpl(private val gameAttemptStore: GameAttemptStore) : Hi
                     )
                 }
         }
+
+    override suspend fun refresh(): Result<Unit> = when (val result = api.listAttempts()) {
+        is ApiResult.Success -> {
+            gameAttemptStore.replaceAll(result.data)
+            Result.success(Unit)
+        }
+        is ApiResult.Failure -> Result.failure(IllegalStateException(result.message))
+    }
 }

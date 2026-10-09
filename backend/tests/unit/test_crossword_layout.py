@@ -69,3 +69,18 @@ def test_letter_pool_uses_max_count_per_letter_across_words():
             expected[letter] = max(expected[letter], count)
 
     assert Counter(game.letters) == expected
+
+
+def test_entries_carry_their_clue():
+    service = CrosswordLayoutService()
+
+    game = service.build(["TERRA", "MARTE"], clues={"TERRA": "Planeta onde vivemos", "MARTE": "Planeta vermelho"})
+
+    clues = {entry.answer: entry.clue for entry in game.entries}
+    assert clues == {"TERRA": "Planeta onde vivemos", "MARTE": "Planeta vermelho"}
+
+
+def test_entries_without_clue_get_an_empty_one():
+    game = CrosswordLayoutService().build(["TERRA", "MARTE"])
+
+    assert all(entry.clue == "" for entry in game.entries)

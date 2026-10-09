@@ -1,3 +1,4 @@
+import java.net.URI
 import java.util.Properties
 
 plugins {
@@ -14,6 +15,52 @@ val envProperties = Properties().apply {
     }
 }
 val backendBaseUrl: String = envProperties.getProperty("BACKEND_BASE_URL", "http://localhost:8000")
+
+/**
+ * Generates res/xml/network_security_config.xml allowing plain HTTP only to the backend host
+ * configured in .env (plus the usual local-development addresses), so changing the IP in
+ * .env never requires touching this file by hand. Everything else still requires HTTPS.
+ */
+abstract class GenerateNetworkSecurityConfig : DefaultTask() {
+    @get:Input
+    abstract val backendHost: Property<String>
+
+    @get:OutputDirectory
+    abstract val outputDir: DirectoryProperty
+
+    @TaskAction
+    fun generate() {
+        val hosts = linkedSetOf("localhost", "127.0.0.1", "10.0.2.2", backendHost.get()).filter { it.isNotBlank() }
+        val domains = hosts.joinToString("\n") { "        <domain includeSubdomains=\"false\">$it</domain>" }
+        val file = outputDir.get().file("xml/network_security_config.xml").asFile
+        file.parentFile.mkdirs()
+        file.writeText(
+            """
+            |<?xml version="1.0" encoding="utf-8"?>
+            |<!-- Generated from BACKEND_BASE_URL in /mobile/.env by app/build.gradle.kts — do not edit. -->
+            |<network-security-config>
+            |    <domain-config cleartextTrafficPermitted="true">
+            |$domains
+            |    </domain-config>
+            |</network-security-config>
+            |""".trimMargin()
+        )
+    }
+}
+
+val generateNetworkSecurityConfig = tasks.register<GenerateNetworkSecurityConfig>("generateNetworkSecurityConfig") {
+    backendHost.set(URI(backendBaseUrl).host.orEmpty())
+    outputDir.set(layout.buildDirectory.dir("generated/res/networkSecurityConfig"))
+}
+
+androidComponents {
+    onVariants { variant ->
+        variant.sources.res?.addGeneratedSourceDirectory(
+            generateNetworkSecurityConfig,
+            GenerateNetworkSecurityConfig::outputDir
+        )
+    }
+}
 
 android {
     namespace = "br.com.studyou"
@@ -48,6 +95,11 @@ android {
         compose = true
         buildConfig = true
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -63,6 +115,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
+    testImplementation(libs.robolectric)
+    testImplementation(platform(libs.androidx.compose.bom))
+    testImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)

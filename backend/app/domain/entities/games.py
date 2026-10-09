@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 @dataclass(frozen=True, slots=True)
@@ -26,6 +26,8 @@ class CrosswordEntry:
     answer: str
     row: int
     col: int
+    # Dica mostrada ao jogador para descobrir a palavra (vazia em jogos gerados antes das dicas).
+    clue: str = ""
 
 
 @dataclass(frozen=True, slots=True)
@@ -37,12 +39,6 @@ class CrosswordGame:
 
 
 @dataclass(frozen=True, slots=True)
-class WordFormingGame:
-    letters: list[str]
-    valid_words: list[str]
-
-
-@dataclass(frozen=True, slots=True)
 class GeneratedGames:
     """Todos os jogos gerados a partir do conteudo analisado de um arquivo."""
 
@@ -50,20 +46,19 @@ class GeneratedGames:
     flashcards: list[Flashcard]
     guess_word: GuessWordGame
     crossword: CrosswordGame
-    word_forming: WordFormingGame
 
 
 @dataclass(frozen=True, slots=True)
 class RawGameContent:
-    """Conteudo de jogos gerado pela IA, antes do posicionamento geometrico do
-    cruzamento (que e feito deterministicamente por CrosswordLayoutService)."""
+    """Conteudo de jogos gerado pela IA, antes do posicionamento geometrico das
+    palavras cruzadas (que e feito deterministicamente por CrosswordLayoutService)."""
 
     quiz: list[QuizQuestion]
     flashcards: list[Flashcard]
     guess_word_answer: str
     crossword_words: list[str]
-    word_forming_letters: list[str]
-    word_forming_valid_words: list[str]
+    # Dica de cada palavra das palavras cruzadas, indexada pela palavra normalizada.
+    crossword_clues: dict[str, str] = field(default_factory=dict)
     # Tokens (entrada + saida) gastos na chamada a IA que gerou este conteudo.
     total_tokens: int = 0
     # Tempo de resposta (ms) da chamada a IA que gerou este conteudo.

@@ -164,7 +164,7 @@ private fun HistoryScreenPreview() {
                         GameType.QUIZ,
                         "Quiz — Sistema Solar",
                         "Melhor nota: 9/10 · 3 tentativas",
-                        listOf(GameAttempt("a1", GameType.QUIZ, "Sistema Solar", "12 set", "9/10", 90, 5, "9/10"))
+                        listOf(GameAttempt("a1", "file-1", GameType.QUIZ, "Sistema Solar", System.currentTimeMillis(), "9/10", 90, 90, "9/10"))
                     )
                 ),
                 expandedGameType = GameType.QUIZ

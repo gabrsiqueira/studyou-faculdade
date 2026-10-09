@@ -2,7 +2,6 @@ package br.com.studyou.ui.screens.games
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.HelpOutline
-import androidx.compose.material.icons.filled.Extension
 import androidx.compose.material.icons.filled.GridOn
 import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.Style
@@ -39,11 +38,5 @@ fun gameTypeStyle(type: GameType): GameTypeStyle = when (type) {
         Icons.Filled.GridOn,
         AprendixColors.StatusSuccessContainer,
         AprendixColors.StatusSuccess
-    )
-
-    GameType.WORD_FORMING -> GameTypeStyle(
-        Icons.Filled.Extension,
-        AprendixColors.StatusWarningContainer,
-        AprendixColors.StatusWarning
     )
 }

@@ -7,7 +7,6 @@ import br.com.studyou.domain.model.Flashcard
 import br.com.studyou.domain.model.GeneratedGames
 import br.com.studyou.domain.model.GuessWordPuzzle
 import br.com.studyou.domain.model.QuizQuestion
-import br.com.studyou.domain.model.WordFormingPuzzle
 import java.util.UUID
 import org.json.JSONArray
 import org.json.JSONObject
@@ -18,8 +17,7 @@ fun parseGeneratedGames(games: JSONObject): GeneratedGames {
         quiz = parseQuiz(games.getJSONArray("quiz")),
         flashcards = parseFlashcards(games.getJSONArray("flashcards")),
         guessWord = parseGuessWord(games.getJSONObject("guess_word")),
-        crossword = parseCrossword(games.getJSONObject("crossword")),
-        wordForming = parseWordForming(games.getJSONObject("word_forming"))
+        crossword = parseCrossword(games.getJSONObject("crossword"))
     )
 }
 
@@ -60,17 +58,12 @@ private fun parseCrossword(obj: JSONObject): CrosswordPuzzle {
                 },
                 answer = item.getString("answer"),
                 row = item.getInt("row"),
-                col = item.getInt("col")
+                col = item.getInt("col"),
+                clue = item.optString("clue")
             )
         },
         bonusWords = obj.getJSONArray("bonus_words").toStringList().toSet()
     )
 }
-
-private fun parseWordForming(obj: JSONObject): WordFormingPuzzle = WordFormingPuzzle(
-    title = "",
-    letters = obj.getJSONArray("letters").toStringList().mapNotNull { it.firstOrNull() },
-    validWords = obj.getJSONArray("valid_words").toStringList().toSet()
-)
 
 private fun JSONArray.toStringList(): List<String> = (0 until length()).map { getString(it) }

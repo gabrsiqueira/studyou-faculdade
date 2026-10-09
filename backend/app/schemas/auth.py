@@ -9,7 +9,7 @@ from app.application.use_cases.register_user import AuthResult
 def _validate_email(value: str) -> str:
     value = value.strip()
     if "@" not in value or value.startswith("@") or value.endswith("@"):
-        raise ValueError("E-mail invalido.")
+        raise ValueError("E-mail inválido.")
     return value
 
 

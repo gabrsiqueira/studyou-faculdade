@@ -11,6 +11,8 @@ from docx import Document
 from app.domain.entities.analysis import ContentAnalysis
 from app.domain.exceptions import AIServiceError, ContentExceedsContextLimitError
 from app.domain.interfaces.ai_content_analyzer import AIContentAnalyzer
+from app.infrastructure.ai.thinking import thinking_config_for
+from app.infrastructure.ai.errors import friendly_reason
 
 logger = logging.getLogger(__name__)
 
@@ -62,9 +64,10 @@ class GeminiContentAnalyzer(AIContentAnalyzer):
     demais, em vez de uma chamada extra (count_tokens) soh para essa verificacao.
     """
 
-    def __init__(self, api_key: str, model: str) -> None:
+    def __init__(self, api_key: str, model: str, thinking_level: str = "") -> None:
         self._client = genai.Client(api_key=api_key)
         self._model = model
+        self._thinking_config = thinking_config_for(thinking_level)
 
     async def analyze(self, filename: str, content: bytes, mime_type: str, prompt: str) -> ContentAnalysis:
         gemini_content, gemini_mime_type = _as_gemini_content(content, mime_type)
@@ -83,11 +86,12 @@ class GeminiContentAnalyzer(AIContentAnalyzer):
                     types.Part.from_bytes(data=gemini_content, mime_type=gemini_mime_type),
                     prompt,
                 ],
+                config=types.GenerateContentConfig(thinking_config=self._thinking_config),
             )
         except APIError as error:
             if _is_context_limit_error(error):
                 raise ContentExceedsContextLimitError(filename) from error
-            raise AIServiceError(filename, str(error)) from error
+            raise AIServiceError(filename, friendly_reason(error)) from error
         response_time_ms = round((time.perf_counter() - start) * 1000)
 
         usage = response.usage_metadata

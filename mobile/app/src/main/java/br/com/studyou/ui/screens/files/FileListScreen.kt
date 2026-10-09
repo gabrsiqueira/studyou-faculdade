@@ -58,7 +58,7 @@ fun FileListRoute(
     val container = LocalAppContainer.current
     val viewModel: FileListViewModel = viewModel(
         factory = viewModelFactory {
-            initializer { FileListViewModel(container.fileRepository, container.userRepository) }
+            initializer { FileListViewModel(container.fileRepository, container.userRepository, container.historyRepository) }
         }
     )
     val uiState by viewModel.uiState.collectAsState()
@@ -138,6 +138,15 @@ fun FileListScreen(
             }
 
             Spacer(modifier = Modifier.height(12.dp))
+
+            uiState.errorMessage?.let { message ->
+                Text(
+                    text = message,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)
+                )
+            }
 
             if (uiState.files.isEmpty()) {
                 Column(

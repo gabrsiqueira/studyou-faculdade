@@ -10,6 +10,8 @@ class GameAttempt:
     file_title: str
     score_label: str
     xp_earned: int
+    score_percent: int
     best_score_label: str
+    file_id: UUID | None = None
     id: UUID = field(default_factory=uuid4)
     played_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))

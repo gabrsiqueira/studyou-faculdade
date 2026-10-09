@@ -54,9 +54,11 @@ class GameAttemptModel(Base):
 
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True)
     user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True)
+    file_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), nullable=True)
     game_type: Mapped[str] = mapped_column(String(50), nullable=False)
     file_title: Mapped[str] = mapped_column(String(255), nullable=False)
     score_label: Mapped[str] = mapped_column(String(100), nullable=False)
     xp_earned: Mapped[int] = mapped_column(Integer, nullable=False)
+    score_percent: Mapped[int] = mapped_column(Integer, nullable=False, server_default="0")
     best_score_label: Mapped[str] = mapped_column(String(100), nullable=False)
     played_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

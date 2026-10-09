@@ -6,3 +6,17 @@ build/
 .gradle/
 .kotlin
 .env
+# Machine-specific SDK path
+local.properties
+
+# Signed release outputs (APK/AAB, baseline profiles) and signing keys
+/app/release/
+*.apk
+*.aab
+*.jks
+*.keystore
+
+# Android Studio / native build caches
+captures/
+.externalNativeBuild/
+.cxx/

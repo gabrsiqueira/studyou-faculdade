@@ -11,5 +11,9 @@ data class GameResultArgs(
     val caption: String,
     val xp: Int,
     val streak: Int,
-    val note: String
+    val note: String,
+    /** The player's level after this game's XP was added. */
+    val level: Int = 1,
+    /** Whether this game's XP was what took the player to [level]. */
+    val leveledUp: Boolean = false
 )

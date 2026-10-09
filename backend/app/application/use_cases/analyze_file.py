@@ -3,8 +3,9 @@ from dataclasses import dataclass
 from uuid import UUID
 
 from app.application.services.crossword_layout import CrosswordLayoutService
+from app.application.services.game_uniqueness import enforce_unique_content
 from app.domain.entities.analysis import FileAnalysisError, FileAnalysisResult
-from app.domain.entities.games import GeneratedGames, GuessWordGame, WordFormingGame
+from app.domain.entities.games import GeneratedGames, GuessWordGame
 from app.domain.exceptions import ContentExceedsContextLimitError
 from app.domain.interfaces.ai_content_analyzer import AIContentAnalyzer
 from app.domain.interfaces.analysis_repository import AnalysisRepository
@@ -70,7 +71,9 @@ class AnalyzeFileUseCase:
                 analysis.total_tokens,
             )
 
-            raw_games = await self._game_content_generator.generate(data.filename, analysis.text)
+            raw_games = enforce_unique_content(
+                await self._game_content_generator.generate(data.filename, analysis.text)
+            )
             logger.info(
                 "Jogos gerados para '%s' em %dms (%d tokens)",
                 data.filename,
@@ -82,7 +85,7 @@ class AnalyzeFileUseCase:
                 user_id=data.user_id,
                 filename=data.filename,
                 mime_type=data.mime_type,
-                reason="Conteudo do arquivo excede o limite de contexto do modelo de IA.",
+                reason="Conteúdo do arquivo excede o limite de contexto do modelo de IA.",
             )
             await self._repository.save_error(error)
             logger.info("Erro de limite de contexto persistido para '%s' (id=%s)", data.filename, error.id)
@@ -92,11 +95,7 @@ class AnalyzeFileUseCase:
             quiz=raw_games.quiz,
             flashcards=raw_games.flashcards,
             guess_word=GuessWordGame(answer=raw_games.guess_word_answer),
-            crossword=self._crossword_layout_service.build(raw_games.crossword_words),
-            word_forming=WordFormingGame(
-                letters=raw_games.word_forming_letters,
-                valid_words=raw_games.word_forming_valid_words,
-            ),
+            crossword=self._crossword_layout_service.build(raw_games.crossword_words, raw_games.crossword_clues),
         )
 
         result = FileAnalysisResult(

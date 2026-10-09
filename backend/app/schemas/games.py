@@ -7,7 +7,6 @@ from app.domain.entities.games import (
     GeneratedGames,
     GuessWordGame,
     QuizQuestion,
-    WordFormingGame,
 )
 
 
@@ -44,10 +43,11 @@ class CrosswordEntryResponse(BaseModel):
     answer: str
     row: int
     col: int
+    clue: str = ""
 
     @classmethod
     def from_entity(cls, entity: CrosswordEntry) -> "CrosswordEntryResponse":
-        return cls(direction=entity.direction, answer=entity.answer, row=entity.row, col=entity.col)
+        return cls(direction=entity.direction, answer=entity.answer, row=entity.row, col=entity.col, clue=entity.clue)
 
 
 class CrosswordGameResponse(BaseModel):
@@ -66,21 +66,11 @@ class CrosswordGameResponse(BaseModel):
         )
 
 
-class WordFormingGameResponse(BaseModel):
-    letters: list[str]
-    valid_words: list[str]
-
-    @classmethod
-    def from_entity(cls, entity: WordFormingGame) -> "WordFormingGameResponse":
-        return cls(letters=entity.letters, valid_words=entity.valid_words)
-
-
 class GeneratedGamesResponse(BaseModel):
     quiz: list[QuizQuestionResponse]
     flashcards: list[FlashcardResponse]
     guess_word: GuessWordGameResponse
     crossword: CrosswordGameResponse
-    word_forming: WordFormingGameResponse
 
     @classmethod
     def from_entity(cls, entity: GeneratedGames) -> "GeneratedGamesResponse":
@@ -89,7 +79,6 @@ class GeneratedGamesResponse(BaseModel):
             flashcards=[FlashcardResponse.from_entity(item) for item in entity.flashcards],
             guess_word=GuessWordGameResponse.from_entity(entity.guess_word),
             crossword=CrosswordGameResponse.from_entity(entity.crossword),
-            word_forming=WordFormingGameResponse.from_entity(entity.word_forming),
         )
 
     def to_entity(self) -> GeneratedGames:
@@ -101,12 +90,9 @@ class GeneratedGamesResponse(BaseModel):
                 size=self.crossword.size,
                 letters=self.crossword.letters,
                 entries=[
-                    CrosswordEntry(direction=e.direction, answer=e.answer, row=e.row, col=e.col)
+                    CrosswordEntry(direction=e.direction, answer=e.answer, row=e.row, col=e.col, clue=e.clue)
                     for e in self.crossword.entries
                 ],
                 bonus_words=self.crossword.bonus_words,
-            ),
-            word_forming=WordFormingGame(
-                letters=self.word_forming.letters, valid_words=self.word_forming.valid_words
             ),
         )

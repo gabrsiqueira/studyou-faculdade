@@ -45,13 +45,15 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
     fun submit(onSuccess: () -> Unit) {
         val state = _uiState.value
+        if (state.isLoading) return
         if (state.email.isBlank() || state.password.isBlank()) {
             _uiState.value = state.copy(errorMessage = "Informe e-mail e senha.")
             return
         }
 
+        // Set synchronously so a double tap can't submit twice before the coroutine starts.
+        _uiState.value = state.copy(isLoading = true, errorMessage = null)
         viewModelScope.launch {
-            _uiState.value = state.copy(isLoading = true, errorMessage = null)
             val result = if (state.mode == AuthMode.LOGIN) {
                 authRepository.login(state.email, state.password)
             } else {

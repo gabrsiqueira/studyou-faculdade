@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 @Immutable
 data class HistoryUiState(
@@ -20,6 +21,10 @@ data class HistoryUiState(
 
 /** Holds the state of the "Meu histórico" screen. */
 class HistoryViewModel(historyRepository: HistoryRepository) : ViewModel() {
+
+    init {
+        viewModelScope.launch { historyRepository.refresh() }
+    }
 
     private val expandedGameType = MutableStateFlow<GameType?>(null)
 

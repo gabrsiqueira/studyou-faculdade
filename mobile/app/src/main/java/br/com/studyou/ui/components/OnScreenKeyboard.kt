@@ -51,19 +51,37 @@ fun OnScreenKeyboard(
             ) {
                 val isLastRow = rowIndex == keyboardRows.lastIndex
                 if (isLastRow && onEnterClick != null) {
+                    // Highlighted like a primary action once the word is complete, and wide
+                    // enough that "ENTER" never wraps onto two lines.
                     KeyboardKey(
-                        modifier = Modifier.weight(1.5f),
-                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        modifier = Modifier.weight(2f),
+                        containerColor = if (enterEnabled) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                        },
+                        contentColor = if (enterEnabled) {
+                            MaterialTheme.colorScheme.onPrimary
+                        } else {
+                            MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
+                        },
                         enabled = enterEnabled,
                         onClick = onEnterClick
                     ) {
-                        Text("ENTER", fontWeight = FontWeight.SemiBold, style = MaterialTheme.typography.labelSmall)
+                        Text(
+                            "ENTER",
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.labelMedium,
+                            maxLines = 1,
+                            softWrap = false
+                        )
                     }
                 }
                 row.forEach { letter ->
                     KeyboardKey(
                         modifier = Modifier.weight(1f),
                         containerColor = letterColors[letter] ?: MaterialTheme.colorScheme.surfaceVariant,
+                        contentColor = if (letter in letterColors) Color.White else MaterialTheme.colorScheme.onSurfaceVariant,
                         onClick = { onLetterClick(letter) }
                     ) {
                         Text(letter.toString(), fontWeight = FontWeight.SemiBold)
@@ -89,16 +107,18 @@ private fun KeyboardKey(
     containerColor: Color,
     onClick: () -> Unit,
     enabled: Boolean = true,
+    contentColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
     content: @Composable () -> Unit
 ) {
     Surface(
         color = containerColor,
+        contentColor = contentColor,
         shape = RoundedCornerShape(8.dp),
         onClick = onClick,
         enabled = enabled,
-        modifier = modifier.fillMaxWidth().height(44.dp)
+        modifier = modifier.fillMaxWidth().height(48.dp)
     ) {
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.padding(4.dp)) {
+        Box(contentAlignment = Alignment.Center, modifier = Modifier.padding(horizontal = 2.dp, vertical = 4.dp)) {
             content()
         }
     }
