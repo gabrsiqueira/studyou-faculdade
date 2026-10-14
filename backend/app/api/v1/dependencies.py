@@ -15,14 +15,12 @@ from app.application.use_cases.register_user import RegisterUserUseCase
 from app.core.config import Settings, get_settings
 from app.domain.entities.user import User
 from app.domain.exceptions import UnauthorizedError
-from app.domain.interfaces.ai_content_analyzer import AIContentAnalyzer
 from app.domain.interfaces.analysis_repository import AnalysisRepository
 from app.domain.interfaces.game_attempt_repository import GameAttemptRepository
 from app.domain.interfaces.game_content_generator import GameContentGenerator
 from app.domain.interfaces.password_hasher import PasswordHasher
 from app.domain.interfaces.token_service import TokenService
 from app.domain.interfaces.user_repository import UserRepository
-from app.infrastructure.ai.gemini_analyzer import GeminiContentAnalyzer
 from app.infrastructure.ai.gemini_game_generator import GeminiGameContentGenerator
 from app.infrastructure.persistence.database import get_db_session
 from app.infrastructure.persistence.game_attempt_repository import SqlAlchemyGameAttemptRepository
@@ -34,16 +32,6 @@ from app.infrastructure.validation.format_validator import ExtensionFileFormatVa
 from app.infrastructure.validation.size_validator import MaxSizeFileValidator
 
 _bearer_scheme = HTTPBearer(auto_error=False)
-
-
-@lru_cache
-def get_ai_analyzer() -> AIContentAnalyzer:
-    settings = get_settings()
-    return GeminiContentAnalyzer(
-        api_key=settings.gemini_api_key,
-        model=settings.gemini_model,
-        thinking_level=settings.gemini_thinking_level,
-    )
 
 
 @lru_cache
@@ -138,16 +126,13 @@ async def get_current_user(
 def get_analyze_file_use_case(
     session: Annotated[AsyncSession, Depends(get_db_session)],
     settings: Annotated[Settings, Depends(get_settings)],
-    ai_analyzer: Annotated[AIContentAnalyzer, Depends(get_ai_analyzer)],
     game_content_generator: Annotated[GameContentGenerator, Depends(get_game_content_generator)],
     crossword_layout_service: Annotated[CrosswordLayoutService, Depends(get_crossword_layout_service)],
 ) -> AnalyzeFileUseCase:
     return AnalyzeFileUseCase(
         format_validator=ExtensionFileFormatValidator(settings.allowed_file_formats_set),
         size_validator=MaxSizeFileValidator(settings.max_file_size_bytes),
-        ai_analyzer=ai_analyzer,
         game_content_generator=game_content_generator,
         crossword_layout_service=crossword_layout_service,
         repository=SqlAlchemyAnalysisRepository(session),
-        analysis_prompt=settings.gemini_analysis_prompt,
     )

@@ -8,6 +8,9 @@ from app.domain.entities.games import Flashcard, QuizQuestion, RawGameContent
 # considerados a mesma pergunta reformulada.
 _SIMILARITY_THRESHOLD = 0.5
 
+_GUESS_WORD_MIN_LENGTH = 4
+_GUESS_WORD_MAX_LENGTH = 10
+
 _STOPWORDS = {
     "qual", "quais", "como", "onde", "quando", "quem", "porque", "para", "pela", "pelo",
     "pelas", "pelos", "sobre", "entre", "sendo", "esta", "este", "essa", "esse", "isso",
@@ -64,6 +67,11 @@ def _unique_words(words: list[str], excluded: set[str]) -> list[str]:
     return kept
 
 
+def _is_valid_guess_word(word: str) -> bool:
+    """Palavra do guess_word: uma palavra so, de 4 a 10 letras (como pedido no prompt)."""
+    return word.isalpha() and _GUESS_WORD_MIN_LENGTH <= len(word) <= _GUESS_WORD_MAX_LENGTH
+
+
 def enforce_unique_content(raw: RawGameContent) -> RawGameContent:
     """Garante que nenhum jogo repita o conteudo de outro: os flashcards nao repetem
     perguntas do quiz e as palavras cruzadas nao repetem a palavra do Termo. Itens
@@ -74,8 +82,11 @@ def enforce_unique_content(raw: RawGameContent) -> RawGameContent:
 
     guess_word = normalize_word(raw.guess_word_answer)
     crossword_words = _unique_words(raw.crossword_words, excluded={guess_word})
-    if not guess_word and crossword_words:
-        guess_word = crossword_words.pop(0)
+    if not _is_valid_guess_word(guess_word):
+        # Sem palavra valida para o guess_word: usa a palavra mais longa do crossword.
+        guess_word = max(crossword_words, key=len) if crossword_words else ""
+        if guess_word:
+            crossword_words.remove(guess_word)
 
     return RawGameContent(
         quiz=quiz,
@@ -83,6 +94,8 @@ def enforce_unique_content(raw: RawGameContent) -> RawGameContent:
         guess_word_answer=guess_word,
         crossword_words=crossword_words,
         crossword_clues={word: clue for word, clue in raw.crossword_clues.items() if word in crossword_words},
+        prompt_used=raw.prompt_used,
+        raw_response=raw.raw_response,
         total_tokens=raw.total_tokens,
         response_time_ms=raw.response_time_ms,
     )

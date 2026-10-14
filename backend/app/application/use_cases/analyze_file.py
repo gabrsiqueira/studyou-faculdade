@@ -7,7 +7,6 @@ from app.application.services.game_uniqueness import enforce_unique_content
 from app.domain.entities.analysis import FileAnalysisError, FileAnalysisResult
 from app.domain.entities.games import GeneratedGames, GuessWordGame
 from app.domain.exceptions import ContentExceedsContextLimitError
-from app.domain.interfaces.ai_content_analyzer import AIContentAnalyzer
 from app.domain.interfaces.analysis_repository import AnalysisRepository
 from app.domain.interfaces.file_validator import FileFormatValidator, FileSizeValidator
 from app.domain.interfaces.game_content_generator import GameContentGenerator
@@ -24,9 +23,9 @@ class AnalyzeFileInput:
 
 
 class AnalyzeFileUseCase:
-    """Orquestra o fluxo: validar formato -> validar tamanho -> analisar conteudo (a IA
-    rejeita se exceder o limite de contexto) -> gerar os jogos a partir da analise ->
-    persistir resultado ou erro.
+    """Orquestra o fluxo: validar formato -> validar tamanho -> enviar o arquivo a IA
+    junto com o prompt de geracao (a IA rejeita se exceder o limite de contexto) ->
+    validar as atividades geradas -> persistir resultado ou erro.
 
     Depende apenas de abstracoes (DIP), as implementacoes concretas sao
     injetadas pela camada de composicao (api/v1/dependencies.py).
@@ -36,23 +35,19 @@ class AnalyzeFileUseCase:
         self,
         format_validator: FileFormatValidator,
         size_validator: FileSizeValidator,
-        ai_analyzer: AIContentAnalyzer,
         game_content_generator: GameContentGenerator,
         crossword_layout_service: CrosswordLayoutService,
         repository: AnalysisRepository,
-        analysis_prompt: str,
     ) -> None:
         self._format_validator = format_validator
         self._size_validator = size_validator
-        self._ai_analyzer = ai_analyzer
         self._game_content_generator = game_content_generator
         self._crossword_layout_service = crossword_layout_service
         self._repository = repository
-        self._analysis_prompt = analysis_prompt
 
     async def execute(self, data: AnalyzeFileInput) -> FileAnalysisResult:
         logger.info(
-            "Iniciando analise do arquivo '%s' (%s, %d bytes)",
+            "Iniciando geracao das atividades do arquivo '%s' (%s, %d bytes)",
             data.filename,
             data.mime_type,
             len(data.content),
@@ -61,25 +56,7 @@ class AnalyzeFileUseCase:
         self._size_validator.validate(data.filename, data.content)
 
         try:
-            analysis = await self._ai_analyzer.analyze(
-                data.filename, data.content, data.mime_type, self._analysis_prompt
-            )
-            logger.info(
-                "Analise da IA concluida para '%s' em %dms (%d tokens)",
-                data.filename,
-                analysis.response_time_ms,
-                analysis.total_tokens,
-            )
-
-            raw_games = enforce_unique_content(
-                await self._game_content_generator.generate(data.filename, analysis.text)
-            )
-            logger.info(
-                "Jogos gerados para '%s' em %dms (%d tokens)",
-                data.filename,
-                raw_games.response_time_ms,
-                raw_games.total_tokens,
-            )
+            generated = await self._game_content_generator.generate(data.filename, data.content, data.mime_type)
         except ContentExceedsContextLimitError:
             error = FileAnalysisError(
                 user_id=data.user_id,
@@ -90,7 +67,14 @@ class AnalyzeFileUseCase:
             await self._repository.save_error(error)
             logger.info("Erro de limite de contexto persistido para '%s' (id=%s)", data.filename, error.id)
             raise
+        logger.info(
+            "Jogos gerados para '%s' em %dms (%d tokens)",
+            data.filename,
+            generated.response_time_ms,
+            generated.total_tokens,
+        )
 
+        raw_games = enforce_unique_content(generated)
         games = GeneratedGames(
             quiz=raw_games.quiz,
             flashcards=raw_games.flashcards,
@@ -102,12 +86,12 @@ class AnalyzeFileUseCase:
             user_id=data.user_id,
             filename=data.filename,
             mime_type=data.mime_type,
-            prompt_used=self._analysis_prompt,
-            content=analysis.text,
+            prompt_used=raw_games.prompt_used,
+            content=raw_games.raw_response,
             games=games,
-            total_tokens=analysis.total_tokens + raw_games.total_tokens,
-            ai_response_time_ms=analysis.response_time_ms + raw_games.response_time_ms,
+            total_tokens=raw_games.total_tokens,
+            ai_response_time_ms=raw_games.response_time_ms,
         )
         await self._repository.save_result(result)
-        logger.info("Resultado da analise persistido para '%s' (id=%s)", data.filename, result.id)
+        logger.info("Resultado persistido para '%s' (id=%s)", data.filename, result.id)
         return result

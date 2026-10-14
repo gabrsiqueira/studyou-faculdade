@@ -1,21 +1,25 @@
 # StudYou Backend
 
 Backend em **Python + FastAPI** responsável por receber arquivos de estudo
-enviados pelo app mobile, validar formato/tamanho, enviar o conteúdo para o
-**Gemini** (serviço de IA de terceiro) e persistir o resultado da análise (ou
-o erro) no banco de dados.
+enviados pelo app mobile, validar formato/tamanho, enviar o arquivo para o
+**Gemini** (serviço de IA de terceiro) para gerar as atividades gamificadas e
+persistir o resultado (ou o erro) no banco de dados.
 
 ## Fluxo implementado (ver diagrama de arquitetura)
 
 1. Mobile envia o arquivo via API (`POST /api/v1/files/analyze`).
 2. Backend valida o **formato** do arquivo → `415` se não suportado.
 3. Backend valida o **tamanho** do arquivo → `413` se exceder o limite.
-4. Backend envia o conteúdo para o modelo de IA (Gemini) e verifica se está
-   dentro do **limite de contexto**:
-   - Não está no limite → persiste o erro no banco e retorna `422`.
-   - Está no limite → a IA analisa o conteúdo com base no **prompt
-     especificado na aplicação**, o resultado é persistido no banco e
-     retornado ao mobile com `201`.
+4. Backend envia o arquivo ao modelo de IA (Gemini) junto com o **prompt de
+   geração das atividades** e o schema JSON de saída, em uma única requisição:
+   - Conteúdo fora do **limite de contexto** → persiste o erro no banco e retorna `422`.
+   - Dentro do limite → o modelo devolve o JSON com quiz, flashcards,
+     guess_word e crossword; as atividades são validadas, persistidas no banco e
+     retornadas ao mobile com `201`.
+
+Arquivos DOCX e PPTX são convertidos para texto puro antes do envio
+(`python-docx`/`python-pptx`: parágrafos do corpo do documento e caixas de texto
+dos slides). PDF, TXT, PNG, JPG e JPEG são enviados diretamente.
 
 ## Arquitetura
 
@@ -31,7 +35,7 @@ app/
   application/        # Casos de uso — orquestram o fluxo usando as abstrações do domínio
     use_cases/
   infrastructure/      # Implementações concretas (adapters) das interfaces do domínio
-    ai/                # GeminiContentAnalyzer (implementa AIContentAnalyzer)
+    ai/                # GeminiGameContentGenerator (implementa GameContentGenerator)
     validation/        # Validadores de formato/tamanho
     persistence/        # SQLAlchemy: models, engine/session, repository
   api/                 # Camada de apresentação (FastAPI): routers, DI, exception handlers
@@ -46,7 +50,7 @@ app/
 ```
 
 Cada classe tem uma única responsabilidade (SRP): validação de formato,
-validação de tamanho, análise via IA e persistência são componentes
+validação de tamanho, geração das atividades via IA e persistência são componentes
 independentes, substituíveis sem alterar o caso de uso (`AnalyzeFileUseCase`),
 que depende apenas das interfaces definidas em `domain/interfaces`.
 
@@ -115,15 +119,15 @@ Os dados (arquivos, jogos e histórico) ficam salvos por usuário.
 
 ### Arquivos e jogos
 
-`POST /api/v1/files/analyze` — multipart/form-data com o campo `file`. Analisa o arquivo e
-gera os 4 jogos (Quiz, Flashcards, Termo, Palavras Cruzadas), sem conteúdo
+`POST /api/v1/files/analyze` — multipart/form-data com o campo `file`. Envia o arquivo ao
+Gemini e gera os 4 jogos (Quiz, Flashcards, Termo, Palavras Cruzadas), sem conteúdo
 repetido entre eles.
 
-- `201` — análise concluída, retorna o conteúdo analisado e os jogos. O
-  campo `total_tokens` traz o total de tokens (entrada + saída) gastos no
-  Gemini, somando a chamada de análise e a de geração dos jogos, e o campo
-  `ai_response_time_ms` traz o tempo de resposta do Gemini (em ms) somado
-  dessas duas chamadas.
+- `201` — geração concluída, retorna os jogos. O campo `total_tokens` traz o
+  total de tokens (entrada + saída) da requisição ao Gemini, obtido nos
+  metadados de uso da API, e o campo `ai_response_time_ms` traz o intervalo
+  (em ms) entre o envio da requisição e o recebimento da resposta, medido no
+  backend.
 - `413` — arquivo excede `MAX_FILE_SIZE_BYTES`.
 - `415` — extensão do arquivo fora de `ALLOWED_FILE_FORMATS`.
 - `422` — conteúdo do arquivo excede o limite de contexto do modelo Gemini.
@@ -146,7 +150,7 @@ arquivos de backup). No Docker Compose a pasta `logs/` é montada no host.
 
 O que é logado:
 - Cada requisição: método, rota, status e duração (`app.api.middleware`).
-- Início e conclusão de cada análise, tempo das chamadas ao Gemini e o id do
+- Início e conclusão de cada geração, tempo da requisição ao Gemini e o id do
   resultado/erro persistido (`app.application.use_cases.analyze_file`).
 - Erros de negócio (413/415/422) como `WARNING` e falhas do Gemini (502) e
   exceções não tratadas como `ERROR`, com stack trace.

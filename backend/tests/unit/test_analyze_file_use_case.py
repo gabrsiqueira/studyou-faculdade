@@ -8,7 +8,6 @@ from app.domain.exceptions import ContentExceedsContextLimitError, FileTooLargeE
 from app.infrastructure.validation.format_validator import ExtensionFileFormatValidator
 from app.infrastructure.validation.size_validator import MaxSizeFileValidator
 from tests.unit.fakes import (
-    FakeAIContentAnalyzer,
     FakeAnalysisRepository,
     FakeGameContentGenerator,
     make_raw_game_content,
@@ -18,7 +17,6 @@ USER_ID = uuid4()
 
 
 def make_use_case(
-    ai_analyzer=None,
     game_content_generator=None,
     repository=None,
     allowed_formats=None,
@@ -27,95 +25,77 @@ def make_use_case(
     return AnalyzeFileUseCase(
         format_validator=ExtensionFileFormatValidator(allowed_formats or {"txt", "pdf"}),
         size_validator=MaxSizeFileValidator(max_size),
-        ai_analyzer=ai_analyzer or FakeAIContentAnalyzer(),
         game_content_generator=game_content_generator or FakeGameContentGenerator(),
         crossword_layout_service=CrosswordLayoutService(),
         repository=repository or FakeAnalysisRepository(),
-        analysis_prompt="resuma o conteudo",
     )
 
 
 async def test_rejects_unsupported_format_before_calling_ai():
-    ai_analyzer = FakeAIContentAnalyzer()
-    use_case = make_use_case(ai_analyzer=ai_analyzer)
+    game_content_generator = FakeGameContentGenerator()
+    use_case = make_use_case(game_content_generator=game_content_generator)
 
     with pytest.raises(UnsupportedFileFormatError):
-        await use_case.execute(AnalyzeFileInput(user_id=USER_ID, filename="video.mp4", mime_type="video/mp4", content=b"dados"))
+        await use_case.execute(
+            AnalyzeFileInput(user_id=USER_ID, filename="video.mp4", mime_type="video/mp4", content=b"dados")
+        )
 
-    assert ai_analyzer.analyze_calls == []
+    assert game_content_generator.generate_calls == []
 
 
 async def test_rejects_file_too_large_before_calling_ai():
-    ai_analyzer = FakeAIContentAnalyzer()
-    use_case = make_use_case(ai_analyzer=ai_analyzer, max_size=3)
+    game_content_generator = FakeGameContentGenerator()
+    use_case = make_use_case(game_content_generator=game_content_generator, max_size=3)
 
     with pytest.raises(FileTooLargeError):
-        await use_case.execute(AnalyzeFileInput(user_id=USER_ID, filename="notas.txt", mime_type="text/plain", content=b"dados"))
+        await use_case.execute(
+            AnalyzeFileInput(user_id=USER_ID, filename="notas.txt", mime_type="text/plain", content=b"dados")
+        )
 
-    assert ai_analyzer.analyze_calls == []
+    assert game_content_generator.generate_calls == []
 
 
 async def test_persists_error_and_raises_when_content_exceeds_context_limit():
-    ai_analyzer = FakeAIContentAnalyzer(within_limit=False)
-    game_content_generator = FakeGameContentGenerator()
+    game_content_generator = FakeGameContentGenerator(within_limit=False)
     repository = FakeAnalysisRepository()
-    use_case = make_use_case(ai_analyzer=ai_analyzer, game_content_generator=game_content_generator, repository=repository)
+    use_case = make_use_case(game_content_generator=game_content_generator, repository=repository)
 
     with pytest.raises(ContentExceedsContextLimitError):
-        await use_case.execute(AnalyzeFileInput(user_id=USER_ID, filename="notas.txt", mime_type="text/plain", content=b"dados"))
+        await use_case.execute(
+            AnalyzeFileInput(user_id=USER_ID, filename="notas.txt", mime_type="text/plain", content=b"dados")
+        )
 
     assert len(repository.saved_errors) == 1
     assert repository.saved_errors[0].filename == "notas.txt"
     assert repository.saved_results == []
-    assert game_content_generator.generate_calls == []
 
 
-async def test_persists_result_with_generated_games_when_analysis_succeeds():
-    ai_analyzer = FakeAIContentAnalyzer(within_limit=True, analysis_output="resumo do conteudo")
-    game_content_generator = FakeGameContentGenerator()
-    repository = FakeAnalysisRepository()
-    use_case = make_use_case(
-        ai_analyzer=ai_analyzer, game_content_generator=game_content_generator, repository=repository
+async def test_persists_result_with_generated_games_when_generation_succeeds():
+    game_content_generator = FakeGameContentGenerator(
+        make_raw_game_content(
+            prompt_used="prompt de geracao",
+            raw_response='{"quiz": []}',
+            total_tokens=1500,
+            response_time_ms=2400,
+        )
     )
+    repository = FakeAnalysisRepository()
+    use_case = make_use_case(game_content_generator=game_content_generator, repository=repository)
 
     result = await use_case.execute(
         AnalyzeFileInput(user_id=USER_ID, filename="notas.txt", mime_type="text/plain", content=b"dados")
     )
 
-    assert result.content == "resumo do conteudo"
+    assert result.prompt_used == "prompt de geracao"
+    assert result.content == '{"quiz": []}'
+    assert result.total_tokens == 1500
+    assert result.ai_response_time_ms == 2400
     assert len(repository.saved_results) == 1
     assert repository.saved_errors == []
-    assert ai_analyzer.analyze_calls == [("notas.txt", b"dados", "text/plain", "resuma o conteudo")]
-    assert game_content_generator.generate_calls == [("notas.txt", "resumo do conteudo")]
+    assert game_content_generator.generate_calls == [("notas.txt", b"dados", "text/plain")]
 
     assert result.games.guess_word.answer == "PALAVRA"
     assert {entry.answer for entry in result.games.crossword.entries} | set(result.games.crossword.bonus_words) == {
         "TERMO",
         "METRO",
     }
-
-
-async def test_result_total_tokens_sums_analysis_and_game_generation_tokens():
-    use_case = make_use_case(
-        ai_analyzer=FakeAIContentAnalyzer(total_tokens=1200),
-        game_content_generator=FakeGameContentGenerator(make_raw_game_content(total_tokens=800)),
-    )
-
-    result = await use_case.execute(
-        AnalyzeFileInput(user_id=USER_ID, filename="notas.txt", mime_type="text/plain", content=b"dados")
-    )
-
-    assert result.total_tokens == 2000
-
-
-async def test_result_ai_response_time_sums_analysis_and_game_generation_times():
-    use_case = make_use_case(
-        ai_analyzer=FakeAIContentAnalyzer(response_time_ms=3200),
-        game_content_generator=FakeGameContentGenerator(make_raw_game_content(response_time_ms=1800)),
-    )
-
-    result = await use_case.execute(
-        AnalyzeFileInput(user_id=USER_ID, filename="notas.txt", mime_type="text/plain", content=b"dados")
-    )
-
-    assert result.ai_response_time_ms == 5000

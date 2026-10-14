@@ -61,3 +61,17 @@ def test_keeps_clues_only_for_words_that_stay_in_the_crossword():
     result = enforce_unique_content(raw)
 
     assert result.crossword_clues == {"SANGUE": "Liquido vermelho do corpo"}
+
+
+def test_falls_back_to_longest_crossword_word_when_guess_word_is_invalid():
+    raw = make_raw_game_content(
+        guess_word_answer="SOL",
+        crossword_words=["MAR", "FOTOSSINTESE", "CLOROFILA"],
+        crossword_clues={"FOTOSSINTESE": "Processo vegetal", "CLOROFILA": "Pigmento verde"},
+    )
+
+    result = enforce_unique_content(raw)
+
+    assert result.guess_word_answer == "FOTOSSINTESE"
+    assert result.crossword_words == ["MAR", "CLOROFILA"]
+    assert result.crossword_clues == {"CLOROFILA": "Pigmento verde"}

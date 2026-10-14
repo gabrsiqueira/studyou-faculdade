@@ -40,7 +40,7 @@ class CrosswordGame:
 
 @dataclass(frozen=True, slots=True)
 class GeneratedGames:
-    """Todos os jogos gerados a partir do conteudo analisado de um arquivo."""
+    """Todos os jogos gerados a partir do conteudo de um arquivo."""
 
     quiz: list[QuizQuestion]
     flashcards: list[Flashcard]
@@ -59,6 +59,9 @@ class RawGameContent:
     crossword_words: list[str]
     # Dica de cada palavra das palavras cruzadas, indexada pela palavra normalizada.
     crossword_clues: dict[str, str] = field(default_factory=dict)
+    # Prompt enviado a IA junto com o arquivo e o JSON bruto devolvido por ela.
+    prompt_used: str = ""
+    raw_response: str = ""
     # Tokens (entrada + saida) gastos na chamada a IA que gerou este conteudo.
     total_tokens: int = 0
     # Tempo de resposta (ms) da chamada a IA que gerou este conteudo.

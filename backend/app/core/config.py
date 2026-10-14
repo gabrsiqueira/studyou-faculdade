@@ -21,13 +21,9 @@ class Settings(BaseSettings):
 
     gemini_api_key: str
     gemini_model: str = "gemini-3.7-flash"
-    # Quanto o modelo "pensa" antes de responder (LOW, MEDIUM, HIGH; vazio = padrao do
-    # modelo). LOW deixa a resposta bem mais rapida sem perder qualidade para este uso.
-    gemini_thinking_level: str = "LOW"
-    gemini_analysis_prompt: str = (
-        "Voce e um assistente de estudos. Resuma o conteudo do arquivo enviado e "
-        "extraia os principais topicos, conceitos e possiveis perguntas de revisao."
-    )
+    # Nivel de raciocinio do modelo (MINIMAL, LOW, MEDIUM, HIGH). Vazio = padrao recomendado
+    # pela Google para cada modelo; os parametros de geracao sao mantidos nos valores padrao.
+    gemini_thinking_level: str = ""
 
     max_file_size_bytes: int = 10 * 1024 * 1024
     allowed_file_formats: str = "pdf,txt,docx,pptx,png,jpg,jpeg"
