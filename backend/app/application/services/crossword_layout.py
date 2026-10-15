@@ -19,19 +19,19 @@ def normalize_word(word: str) -> str:
 
 
 class CrosswordLayoutService:
-    """Posiciona uma lista de palavras numa grade de palavras cruzadas (estilo Word of
-    Wonders): cada palavra que se encaixa, cruzando alguma letra ja posicionada, entra na
-    grade com a sua dica; as que nao encaixam viram palavras bonus. Tambem calcula o
-    conjunto de letras necessario para formar todas as palavras na roda.
+    """Posiciona uma lista de palavras numa grade de cruzamento (estilo Word of Wonders):
+    cada palavra que se encaixa, cruzando alguma letra ja posicionada, entra na grade; as
+    que nao encaixam viram palavras bonus. Tambem calcula o conjunto de letras necessario
+    para formar todas as palavras na roda.
     """
 
-    def build(self, candidate_words: list[str], clues: dict[str, str] | None = None) -> CrosswordGame:
+    def build(self, candidate_words: list[str]) -> CrosswordGame:
         words = self._prepare_words(candidate_words)
         if not words:
             return CrosswordGame(size=0, letters=[], entries=[], bonus_words=[])
 
         placements, bonus_words = self._place_words(words)
-        entries, size = self._normalize_placements(placements, clues or {})
+        entries, size = self._normalize_placements(placements)
         letters = self._letter_pool(entries, bonus_words)
         return CrosswordGame(size=size, letters=letters, entries=entries, bonus_words=bonus_words)
 
@@ -104,9 +104,7 @@ class CrosswordLayoutService:
             r, c = (row, col + i) if direction == "ACROSS" else (row + i, col)
             grid[(r, c)] = letter
 
-    def _normalize_placements(
-        self, placements: list[_Placement], clues: dict[str, str]
-    ) -> tuple[list[CrosswordEntry], int]:
+    def _normalize_placements(self, placements: list[_Placement]) -> tuple[list[CrosswordEntry], int]:
         all_cells: list[_Cell] = []
         for direction, word, row, col in placements:
             for i in range(len(word)):
@@ -124,7 +122,6 @@ class CrosswordLayoutService:
                 answer=word,
                 row=row - min_row,
                 col=col - min_col,
-                clue=clues.get(word, ""),
             )
             for direction, word, row, col in placements
         ]

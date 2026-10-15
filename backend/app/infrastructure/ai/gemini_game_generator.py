@@ -47,11 +47,8 @@ usados em nenhuma pergunta do quiz e distintos entre si.
 - guess_word_answer: UMA unica palavra-chave central do conteudo (sem espacos, sem \
 acentos, 4 a 10 letras, maiusculas) para um jogo de adivinhacao estilo Termo. Ela NAO \
 pode aparecer em crossword.
-- crossword: de 6 a 10 itens para preencher palavras cruzadas, cada um com:
-  - word: uma palavra-chave do conteudo (uma palavra so, sem espacos, sem acentos, 3 a 10 \
-letras), todas diferentes entre si e da palavra do Termo;
-  - clue: uma dica curta (ate 12 palavras) que ajude o jogador a descobrir essa palavra a \
-partir do conteudo estudado. A dica NUNCA pode conter a propria palavra nem derivados dela.
+- crossword: de 6 a 10 palavras-chave do conteudo (uma palavra so, sem espacos, sem \
+acentos, 3 a 10 letras), todas diferentes entre si e da palavra do Termo.
 """
 
 
@@ -66,16 +63,11 @@ class _FlashcardSchema(BaseModel):
     answer: str
 
 
-class _CrosswordWordSchema(BaseModel):
-    word: str
-    clue: str
-
-
 class _GameContentSchema(BaseModel):
     quiz: list[_QuizQuestionSchema]
     flashcards: list[_FlashcardSchema]
     guess_word_answer: str
-    crossword: list[_CrosswordWordSchema]
+    crossword: list[str]
 
 
 def _extract_docx_text(content: bytes) -> str:
@@ -108,17 +100,6 @@ def _is_context_limit_error(error: APIError) -> bool:
         return False
     message = str(error).lower()
     return any(hint in message for hint in _CONTEXT_LIMIT_ERROR_HINTS)
-
-
-def _clues_by_word(items: list[_CrosswordWordSchema]) -> dict[str, str]:
-    """Dica de cada palavra; descarta dicas vazias ou que entregam a propria resposta."""
-    clues: dict[str, str] = {}
-    for item in items:
-        word, clue = normalize_word(item.word), " ".join(item.clue.split())
-        gives_answer_away = any(normalize_word(token).startswith(word) for token in clue.split())
-        if word and clue and not gives_answer_away:
-            clues.setdefault(word, clue)
-    return clues
 
 
 class GeminiGameContentGenerator(GameContentGenerator):
@@ -198,8 +179,7 @@ class GeminiGameContentGenerator(GameContentGenerator):
             quiz=quiz,
             flashcards=flashcards,
             guess_word_answer=normalize_word(schema.guess_word_answer),
-            crossword_words=[word for item in schema.crossword if (word := normalize_word(item.word))],
-            crossword_clues=_clues_by_word(schema.crossword),
+            crossword_words=[word for item in schema.crossword if (word := normalize_word(item))],
             prompt_used=GENERATION_PROMPT,
             raw_response=raw_response,
             total_tokens=total_tokens,

@@ -79,7 +79,7 @@ class AnalyzeFileUseCase:
             quiz=raw_games.quiz,
             flashcards=raw_games.flashcards,
             guess_word=GuessWordGame(answer=raw_games.guess_word_answer),
-            crossword=self._crossword_layout_service.build(raw_games.crossword_words, raw_games.crossword_clues),
+            crossword=self._crossword_layout_service.build(raw_games.crossword_words),
         )
 
         result = FileAnalysisResult(

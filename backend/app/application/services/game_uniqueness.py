@@ -93,7 +93,6 @@ def enforce_unique_content(raw: RawGameContent) -> RawGameContent:
         flashcards=flashcards,
         guess_word_answer=guess_word,
         crossword_words=crossword_words,
-        crossword_clues={word: clue for word, clue in raw.crossword_clues.items() if word in crossword_words},
         prompt_used=raw.prompt_used,
         raw_response=raw.raw_response,
         total_tokens=raw.total_tokens,

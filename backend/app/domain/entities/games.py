@@ -26,8 +26,6 @@ class CrosswordEntry:
     answer: str
     row: int
     col: int
-    # Dica mostrada ao jogador para descobrir a palavra (vazia em jogos gerados antes das dicas).
-    clue: str = ""
 
 
 @dataclass(frozen=True, slots=True)
@@ -57,8 +55,6 @@ class RawGameContent:
     flashcards: list[Flashcard]
     guess_word_answer: str
     crossword_words: list[str]
-    # Dica de cada palavra das palavras cruzadas, indexada pela palavra normalizada.
-    crossword_clues: dict[str, str] = field(default_factory=dict)
     # Prompt enviado a IA junto com o arquivo e o JSON bruto devolvido por ela.
     prompt_used: str = ""
     raw_response: str = ""

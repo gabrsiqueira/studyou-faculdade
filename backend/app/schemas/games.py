@@ -43,11 +43,10 @@ class CrosswordEntryResponse(BaseModel):
     answer: str
     row: int
     col: int
-    clue: str = ""
 
     @classmethod
     def from_entity(cls, entity: CrosswordEntry) -> "CrosswordEntryResponse":
-        return cls(direction=entity.direction, answer=entity.answer, row=entity.row, col=entity.col, clue=entity.clue)
+        return cls(direction=entity.direction, answer=entity.answer, row=entity.row, col=entity.col)
 
 
 class CrosswordGameResponse(BaseModel):
@@ -90,7 +89,7 @@ class GeneratedGamesResponse(BaseModel):
                 size=self.crossword.size,
                 letters=self.crossword.letters,
                 entries=[
-                    CrosswordEntry(direction=e.direction, answer=e.answer, row=e.row, col=e.col, clue=e.clue)
+                    CrosswordEntry(direction=e.direction, answer=e.answer, row=e.row, col=e.col)
                     for e in self.crossword.entries
                 ],
                 bonus_words=self.crossword.bonus_words,
