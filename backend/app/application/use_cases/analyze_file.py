@@ -87,7 +87,6 @@ class AnalyzeFileUseCase:
             filename=data.filename,
             mime_type=data.mime_type,
             prompt_used=raw_games.prompt_used,
-            content=raw_games.raw_response,
             games=games,
             total_tokens=raw_games.total_tokens,
             ai_response_time_ms=raw_games.response_time_ms,

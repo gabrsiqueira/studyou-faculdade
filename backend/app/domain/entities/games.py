@@ -55,9 +55,8 @@ class RawGameContent:
     flashcards: list[Flashcard]
     guess_word_answer: str
     crossword_words: list[str]
-    # Prompt enviado a IA junto com o arquivo e o JSON bruto devolvido por ela.
+    # Prompt enviado a IA junto com o arquivo.
     prompt_used: str = ""
-    raw_response: str = ""
     # Tokens (entrada + saida) gastos na chamada a IA que gerou este conteudo.
     total_tokens: int = 0
     # Tempo de resposta (ms) da chamada a IA que gerou este conteudo.

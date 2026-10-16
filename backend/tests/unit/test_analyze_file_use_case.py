@@ -74,7 +74,6 @@ async def test_persists_result_with_generated_games_when_generation_succeeds():
     game_content_generator = FakeGameContentGenerator(
         make_raw_game_content(
             prompt_used="prompt de geracao",
-            raw_response='{"quiz": []}',
             total_tokens=1500,
             response_time_ms=2400,
         )
@@ -87,7 +86,6 @@ async def test_persists_result_with_generated_games_when_generation_succeeds():
     )
 
     assert result.prompt_used == "prompt de geracao"
-    assert result.content == '{"quiz": []}'
     assert result.total_tokens == 1500
     assert result.ai_response_time_ms == 2400
     assert len(repository.saved_results) == 1

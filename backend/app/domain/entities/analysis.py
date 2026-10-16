@@ -20,8 +20,6 @@ class FileAnalysisResult:
     mime_type: str
     # Prompt enviado a IA junto com o arquivo.
     prompt_used: str
-    # JSON bruto devolvido pela IA com as atividades.
-    content: str
     games: GeneratedGames
     # Tokens (entrada + saida) gastos na requisicao a IA para este arquivo.
     total_tokens: int = 0

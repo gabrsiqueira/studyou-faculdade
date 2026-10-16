@@ -11,7 +11,6 @@ class FileAnalysisResponse(BaseModel):
     id: UUID
     filename: str
     mime_type: str
-    content: str
     games: GeneratedGamesResponse
     total_tokens: int
     ai_response_time_ms: int
@@ -24,7 +23,6 @@ class FileAnalysisResponse(BaseModel):
             id=entity.id,
             filename=entity.filename,
             mime_type=entity.mime_type,
-            content=entity.content,
             games=GeneratedGamesResponse.from_entity(entity.games),
             total_tokens=entity.total_tokens,
             ai_response_time_ms=entity.ai_response_time_ms,

@@ -153,10 +153,10 @@ class GeminiGameContentGenerator(GameContentGenerator):
 
         usage = response.usage_metadata
         total_tokens = (usage.total_token_count or 0) if usage else 0
-        return self._to_raw_game_content(parsed, response.text or "", total_tokens, response_time_ms)
+        return self._to_raw_game_content(parsed, total_tokens, response_time_ms)
 
     def _to_raw_game_content(
-        self, schema: _GameContentSchema, raw_response: str, total_tokens: int, response_time_ms: int
+        self, schema: _GameContentSchema, total_tokens: int, response_time_ms: int
     ) -> RawGameContent:
         """Converte e descarta itens malformados. A unicidade entre jogos fica em
         enforce_unique_content (use case)."""
@@ -181,7 +181,6 @@ class GeminiGameContentGenerator(GameContentGenerator):
             guess_word_answer=normalize_word(schema.guess_word_answer),
             crossword_words=[word for item in schema.crossword if (word := normalize_word(item))],
             prompt_used=GENERATION_PROMPT,
-            raw_response=raw_response,
             total_tokens=total_tokens,
             response_time_ms=response_time_ms,
         )

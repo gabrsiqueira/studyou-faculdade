@@ -94,7 +94,6 @@ def enforce_unique_content(raw: RawGameContent) -> RawGameContent:
         guess_word_answer=guess_word,
         crossword_words=crossword_words,
         prompt_used=raw.prompt_used,
-        raw_response=raw.raw_response,
         total_tokens=raw.total_tokens,
         response_time_ms=raw.response_time_ms,
     )

@@ -22,7 +22,7 @@ class SqlAlchemyAnalysisRepository(AnalysisRepository):
             filename=result.filename,
             mime_type=result.mime_type,
             prompt_used=result.prompt_used,
-            content=result.content,
+            content="",
             games=GeneratedGamesResponse.from_entity(result.games).model_dump(mode="json"),
             status=result.status.value,
         )
@@ -55,7 +55,6 @@ class SqlAlchemyAnalysisRepository(AnalysisRepository):
                 filename=row.filename,
                 mime_type=row.mime_type,
                 prompt_used=row.prompt_used,
-                content=row.content,
                 games=GeneratedGamesResponse.model_validate(row.games).to_entity(),
                 status=FileAnalysisStatus(row.status),
                 created_at=row.created_at,
