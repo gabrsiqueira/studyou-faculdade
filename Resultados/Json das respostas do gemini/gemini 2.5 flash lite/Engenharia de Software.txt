@@ -1,0 +1,182 @@
+{
+    "id": "cd1a0525-2cb8-49e3-a34f-08a24dd777ed",
+    "filename": "Engenharia de Software.pptx",
+    "mime_type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Qual é a principal diferença entre Análise e Projeto no desenvolvimento de sistemas?",
+                "options": [
+                    "Análise foca no 'como' e Projeto no 'o quê'.",
+                    "Análise define a estrutura física e Projeto o modelo conceitual.",
+                    "Análise foca no 'o quê' o sistema deve fazer e Projeto no 'como' implementá-lo.",
+                    "Não há diferença significativa entre Análise e Projeto."
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Em um sistema informatizado, quais são os 5 elementos cruciais mencionados?",
+                "options": [
+                    "Dados, Informação, Processos, Aplicações e Rede",
+                    "Hardware, Software, Pessoas, Dados e Processos",
+                    "Usuários, Servidores, Bancos de Dados, Sistemas Operacionais e Aplicativos",
+                    "Entrada, Processamento, Saída, Armazenamento e Controle"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "O que diferencia 'Dado' de 'Informação' em um contexto de sistemas?",
+                "options": [
+                    "Dado é processado e Informação é bruta.",
+                    "Dado é um fato isolado, enquanto Informação é um dado organizado e contextualizado para gerar conhecimento.",
+                    "Informação requer hardware, Dado não.",
+                    "Não há diferença, são sinônimos."
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual é a função primordial de um Sistema de Informação (SI) em uma organização?",
+                "options": [
+                    "Desenvolver hardware específico para a empresa.",
+                    "Coletar, processar, armazenar e distribuir informações para auxiliar na tomada de decisões.",
+                    "Criar programas de treinamento para os funcionários.",
+                    "Realizar a análise de mercado para novos produtos."
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Como os Sistemas de Informação podem auxiliar na Análise SWOT (FOFA)?",
+                "options": [
+                    "Eles apenas registram os resultados da análise SWOT.",
+                    "São ferramentas para coletar e analisar dados sobre o ambiente interno e externo da organização.",
+                    "São usados exclusivamente para identificar as Fraquezas de uma empresa.",
+                    "Sistemas de Informação não têm relação com a Análise SWOT."
+                ],
+                "correct_option_index": 1
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "Defina 'Sistema' de forma simples.",
+                "answer": "Um conjunto organizado de elementos que operam para atingir objetivos específicos."
+            },
+            {
+                "question": "Cite os 5 elementos essenciais de um sistema informatizado.",
+                "answer": "Hardware, Software, Pessoas, Dados e Processos."
+            },
+            {
+                "question": "Qual o foco da fase de Análise no desenvolvimento de sistemas?",
+                "answer": "O 'o quê' o sistema deve fazer."
+            },
+            {
+                "question": "Qual o foco da fase de Projeto no desenvolvimento de sistemas?",
+                "answer": "O 'como' o sistema deve ser implementado fisicamente."
+            },
+            {
+                "question": "Qual a diferença entre 'Dado' e 'Informação'?",
+                "answer": "Dado é um fato isolado; Informação é dado organizado e com contexto para gerar conhecimento."
+            },
+            {
+                "question": "Defina Sistema de Informação (SI).",
+                "answer": "Um conjunto de componentes interligados que coletam, processam, armazenam e distribuem informações."
+            },
+            {
+                "question": "Cite um exemplo de SI na área de Indústria.",
+                "answer": "Controle de estoque, processamento de pedidos, monitoramento de qualidade."
+            }
+        ],
+        "guess_word": {
+            "answer": "SISTEMA",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 19,
+            "letters": [
+                "I",
+                "N",
+                "F",
+                "O",
+                "O",
+                "R",
+                "R",
+                "M",
+                "A",
+                "A",
+                "C",
+                "H",
+                "D",
+                "D",
+                "W",
+                "E",
+                "S",
+                "S",
+                "S",
+                "T",
+                "P",
+                "L",
+                "J"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "INFORMACAO",
+                    "row": 1,
+                    "col": 2
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "HARDWARE",
+                    "row": 0,
+                    "col": 8
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "SOFTWARE",
+                    "row": 0,
+                    "col": 5
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "PROCESSO",
+                    "row": 6,
+                    "col": 7
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "SISTEMA",
+                    "row": 6,
+                    "col": 12
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "PESSOAS",
+                    "row": 10,
+                    "col": 11
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "ANALISE",
+                    "row": 12,
+                    "col": 12
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "PROJETO",
+                    "row": 3,
+                    "col": 0
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "DADOS",
+                    "row": 3,
+                    "col": 8
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 4627,
+    "ai_response_time_ms": 8069,
+    "status": "completed",
+    "created_at": "2026-10-20T19:09:12.275438Z"
+}

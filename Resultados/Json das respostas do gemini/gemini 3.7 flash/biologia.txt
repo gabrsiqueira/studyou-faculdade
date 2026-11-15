@@ -1,0 +1,169 @@
+{
+    "id": "cc057bf2-7eaf-4a05-b761-5af11ea3bea3",
+    "filename": "Biologia.txt",
+    "mime_type": "text/plain",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Qual porcentagem aproximada do peso corporal de um ser humano adulto é composta por água?",
+                "options": [
+                    "Cerca de 20%",
+                    "Cerca de 40%",
+                    "Cerca de 60%",
+                    "Cerca de 80%"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Quais são as quatro etapas principais que compõem o ciclo hidrológico?",
+                "options": [
+                    "Evaporação, condensação, precipitação e infiltração",
+                    "Ebulição, congelamento, fusão e sedimentação",
+                    "Transpiração, decantação, filtragem e absorção",
+                    "Sublimação, erosão, dissolução e drenagem"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Qual gás essencial à respiração é liberado pelas plantas durante a fotossíntese a partir da quebra da água?",
+                "options": [
+                    "Nitrogênio",
+                    "Oxigênio",
+                    "Metano",
+                    "Ozônio"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Em nível celular, qual é o papel principal da água como solvente?",
+                "options": [
+                    "Proteger o DNA contra mutações solares",
+                    "Facilitar as reações químicas indispensáveis à vida",
+                    "Gerar calor constante no citoplasma",
+                    "Impedir a entrada de sais minerais na célula"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Quais sintomas comuns caracterizam os primeiros estágios da desidratação no organismo?",
+                "options": [
+                    "Febre alta e tosse seca",
+                    "Sede, fadiga e tontura",
+                    "Insônia e aumento da pressão arterial",
+                    "Inchaço articular e dormência"
+                ],
+                "correct_option_index": 1
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "Qual composto orgânico rico em energia é sintetizado pelas plantas durante a fotossíntese?",
+                "answer": "Glicose"
+            },
+            {
+                "question": "Além da água e da luz solar, que gás atmosférico é reagente essencial na fotossíntese?",
+                "answer": "Dióxido de carbono (CO2)"
+            },
+            {
+                "question": "Qual função fisiológica da água atua diretamente para manter a temperatura do corpo estável?",
+                "answer": "Regulação térmica"
+            },
+            {
+                "question": "De que maneira a água auxilia o sistema excretor a manter o corpo livre de toxinas?",
+                "answer": "Eliminando resíduos metabólicos"
+            },
+            {
+                "question": "Qual medida de infraestrutura sanitária é fundamental para frear a contaminação de rios e lagos?",
+                "answer": "Tratamento de esgoto"
+            },
+            {
+                "question": "Qual ação ecológica protege o ponto de surgimento natural da água doce na superfície?",
+                "answer": "Preservação de nascentes"
+            }
+        ],
+        "guess_word": {
+            "answer": "POTAVEL",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 14,
+            "letters": [
+                "E",
+                "E",
+                "Q",
+                "U",
+                "I",
+                "I",
+                "I",
+                "L",
+                "B",
+                "R",
+                "O",
+                "O",
+                "O",
+                "G",
+                "C",
+                "A",
+                "A",
+                "M",
+                "N",
+                "T",
+                "D",
+                "P",
+                "Z",
+                "S",
+                "S",
+                "S"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "EQUILIBRIO",
+                    "row": 3,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "BIOLOGICO",
+                    "row": 3,
+                    "col": 6
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "AMBIENTAL",
+                    "row": 0,
+                    "col": 3
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "LIMITADO",
+                    "row": 6,
+                    "col": 6
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "POLUICAO",
+                    "row": 2,
+                    "col": 9
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "NATUREZA",
+                    "row": 0,
+                    "col": 2
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ESCASSEZ",
+                    "row": 3,
+                    "col": 0
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 6178,
+    "ai_response_time_ms": 153935,
+    "status": "completed",
+    "created_at": "2026-10-20T02:08:43.550366Z"
+}

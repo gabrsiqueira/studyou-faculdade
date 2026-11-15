@@ -1,0 +1,159 @@
+{
+    "id": "ee5d9f91-e2c7-4620-87bb-01c47b68742f",
+    "filename": "ia.docx",
+    "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "O que define essencialmente a tecnica de fine-tuning?",
+                "options": [
+                    "Criar um modelo a partir de dados aleatorios",
+                    "Refinar um modelo pre-treinado com dados especificos",
+                    "Apagar todo o conhecimento de um modelo de IA",
+                    "Aumentar o poder computacional de um servidor"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual destas e uma vantagem direta de usar o fine-tuning?",
+                "options": [
+                    "Necessidade de volumes massivos de dados brutos",
+                    "Maior demanda por processamento de hardware",
+                    "Eficiencia de tempo e recursos computacionais",
+                    "Eliminacao total da necessidade de treinamento"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual plataforma e conhecida por disponibilizar modelos e ferramentas para implementar IA?",
+                "options": [
+                    "Hugging Face",
+                    "Wikipedia",
+                    "GitHub",
+                    "Stack Overflow"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Qual modelo e mencionado no texto como exemplo para tarefas de texto?",
+                "options": [
+                    "TensorFlow",
+                    "PyTorch",
+                    "BERT",
+                    "Docker"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual e um exemplo de aplicacao pratica citada para fine-tuning?",
+                "options": [
+                    "Criacao de sistemas operacionais",
+                    "Chatbots de atendimento especializado",
+                    "Desenvolvimento de compiladores de linguagem",
+                    "Formatacao de documentos de texto"
+                ],
+                "correct_option_index": 1
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "O que significa fine-tuning?",
+                "answer": "Ajuste fino de um modelo de IA pre-treinado."
+            },
+            {
+                "question": "Como se compara a necessidade de dados do fine-tuning ao treino do zero?",
+                "answer": "O fine-tuning exige um conjunto de dados menor."
+            },
+            {
+                "question": "Qual modelo foi citado para tarefas de geracao de imagens?",
+                "answer": "Stable Diffusion."
+            },
+            {
+                "question": "Qual a principal economia gerada pelo fine-tuning?",
+                "answer": "Economia de tempo e recursos computacionais."
+            },
+            {
+                "question": "Cite uma utilidade do fine-tuning em visao computacional.",
+                "answer": "Detecao de objetos em dominios especificos."
+            },
+            {
+                "question": "Por que o fine-tuning e mais rapido?",
+                "answer": "Aproveita o conhecimento previo do modelo."
+            }
+        ],
+        "guess_word": {
+            "answer": "MODELO",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 9,
+            "letters": [
+                "C",
+                "H",
+                "A",
+                "A",
+                "T",
+                "T",
+                "B",
+                "O",
+                "J",
+                "U",
+                "S",
+                "E",
+                "I",
+                "M",
+                "M",
+                "G",
+                "R",
+                "N",
+                "D",
+                "D",
+                "L",
+                "L"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "CHATBOT",
+                    "row": 0,
+                    "col": 2
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "AJUSTE",
+                    "row": 0,
+                    "col": 4
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "IMAGEM",
+                    "row": 5,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "TREINO",
+                    "row": 0,
+                    "col": 8
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "DADOS",
+                    "row": 4,
+                    "col": 2
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "BERT",
+                    "row": 0,
+                    "col": 6
+                }
+            ],
+            "bonus_words": [
+                "LLAMA"
+            ]
+        }
+    },
+    "total_tokens": 2585,
+    "ai_response_time_ms": 9969
+}

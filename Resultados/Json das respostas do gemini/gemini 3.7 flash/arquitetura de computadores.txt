@@ -1,0 +1,155 @@
+{
+    "id": "16c27815-594e-42d5-bf86-d44be3176c6c",
+    "filename": "Arquitetura de computadores.pdf",
+    "mime_type": "application/pdf",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Qual civilização antiga desenvolveu por volta de 3000 a.C. o ábaco para efetuar cálculos manuais ágeis?",
+                "options": [
+                    "Babilônia",
+                    "Egito",
+                    "Grécia",
+                    "Roma"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Quais operações matemáticas a Máquina de Pascal de 1617 conseguia executar por meio de engrenagens mecânicas?",
+                "options": [
+                    "Multiplicação e divisão",
+                    "Adição e subtração",
+                    "Potenciação e radiciação",
+                    "Cálculo de derivadas"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual meio físico era utilizado para a alimentação e entrada de dados no computador comercial IBM 701 de 1953?",
+                "options": [
+                    "Fitas magnéticas",
+                    "Disquetes de silício",
+                    "Cartões perfurados",
+                    "Teclados eletrônicos"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual patamar aproximado de operações por segundo os computadores transistorizados atingiram no final dos anos 1950?",
+                "options": [
+                    "10.000 operações por segundo",
+                    "50.000 operações por segundo",
+                    "300.000 operações por segundo",
+                    "2.000.000 de operações por segundo"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual evento histórico dos anos 1960 impulsionou a busca por circuitos mais compactos, leves e altamente confiáveis?",
+                "options": [
+                    "A Segunda Guerra Mundial",
+                    "O programa espacial americano",
+                    "A criação da rede Arpanet",
+                    "A automação bancária"
+                ],
+                "correct_option_index": 1
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "Quem inventou a régua de cálculo em 1638 empregando guias graduadas deslizantes?",
+                "answer": "O padre inglês William Oughtred."
+            },
+            {
+                "question": "Qual era a função operacional primordial da válvula termoiônica nos primeiros sistemas eletrônicos?",
+                "answer": "Controlar a passagem da corrente elétrica."
+            },
+            {
+                "question": "Em que ano foi concebido o transistor semicondutor que veio a substituir as antigas válvulas?",
+                "answer": "No ano de 1947."
+            },
+            {
+                "question": "Quais fabricantes destacaram-se junto à IBM na comercialização de computadores transistorizados no fim dos anos 1950?",
+                "answer": "DEC e RCA."
+            },
+            {
+                "question": "Como são classificados os sistemas computacionais de pequena escala projetados para funções operacionais dedicadas?",
+                "answer": "Sistemas embarcados."
+            },
+            {
+                "question": "Qual categoria de sistemas computacionais representa o extremo de máxima escala e altíssimo poder de processamento?",
+                "answer": "Supercomputadores."
+            }
+        ],
+        "guess_word": {
+            "answer": "SILICIO",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 12,
+            "letters": [
+                "H",
+                "A",
+                "A",
+                "R",
+                "R",
+                "D",
+                "W",
+                "E",
+                "S",
+                "O",
+                "F",
+                "T",
+                "N",
+                "P",
+                "I",
+                "V",
+                "C",
+                "U"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "HARDWARE",
+                    "row": 4,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "SOFTWARE",
+                    "row": 0,
+                    "col": 4
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "FORTRAN",
+                    "row": 2,
+                    "col": 4
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "NAPIER",
+                    "row": 2,
+                    "col": 10
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "VACUO",
+                    "row": 3,
+                    "col": 1
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "CHIP",
+                    "row": 5,
+                    "col": 8
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 14908,
+    "ai_response_time_ms": 159609,
+    "status": "completed",
+    "created_at": "2026-10-20T02:12:36.619969Z"
+}

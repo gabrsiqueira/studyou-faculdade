@@ -1,0 +1,174 @@
+{
+    "id": "41704176-4501-46a2-93f1-d0712057e373",
+    "filename": "História.png",
+    "mime_type": "image/png",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Qual deus grego é o principal antagonista na jornada de retorno de Odisseu para casa?",
+                "options": [
+                    "Zeus",
+                    "Poseidon",
+                    "Apolo",
+                    "Ares"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Quem é a fiel esposa de Odisseu, conhecida por sua lealdade durante sua longa ausência?",
+                "options": [
+                    "Calipso",
+                    "Circe",
+                    "Penélope",
+                    "Atena"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual criatura mitológica Odisseu enfrenta que o mantém cativo em sua ilha por sete anos?",
+                "options": [
+                    "As Sereias",
+                    "O Ciclope Polifemo",
+                    "Calipso",
+                    "Os Lotófagos"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual o nome da terra natal de Odisseu para onde ele tanto deseja retornar?",
+                "options": [
+                    "Troia",
+                    "Itaca",
+                    "Tesprócia",
+                    "Esparta"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual deusa frequentemente auxilia Odisseu em seus momentos de maior dificuldade?",
+                "options": [
+                    "Afrodite",
+                    "Hera",
+                    "Deméter",
+                    "Atena"
+                ],
+                "correct_option_index": 3
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "Qual evento marca o início da jornada de Odisseu para casa?",
+                "answer": "O fim da Guerra de Troia."
+            },
+            {
+                "question": "Quem é o filho de Odisseu que também embarca em sua própria jornada?",
+                "answer": "Telêmaco."
+            },
+            {
+                "question": "Qual o nome do Ciclope que Odisseu cega?",
+                "answer": "Polifemo."
+            },
+            {
+                "question": "Que grupo de homens ocupa a casa de Odisseu e cobiça Penélope?",
+                "answer": "Os pretendentes."
+            },
+            {
+                "question": "O que Odisseu deve enfrentar que o tenta com suas canções?",
+                "answer": "As Sereias."
+            },
+            {
+                "question": "Em que local Odisseu visita seu pai, Laerte?",
+                "answer": "Em Ítaca."
+            },
+            {
+                "question": "Qual ninfa mantém Odisseu cativo por muitos anos?",
+                "answer": "Calipso."
+            }
+        ],
+        "guess_word": {
+            "answer": "ODISSEU",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 17,
+            "letters": [
+                "P",
+                "P",
+                "E",
+                "E",
+                "E",
+                "N",
+                "L",
+                "O",
+                "O",
+                "T",
+                "M",
+                "A",
+                "A",
+                "C",
+                "C",
+                "S",
+                "S",
+                "I",
+                "D",
+                "R"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "PENELOPE",
+                    "row": 1,
+                    "col": 2
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "TELEMACO",
+                    "row": 0,
+                    "col": 3
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "POSEIDON",
+                    "row": 1,
+                    "col": 8
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "SEREIAS",
+                    "row": 3,
+                    "col": 8
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "TROIA",
+                    "row": 2,
+                    "col": 10
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ITACA",
+                    "row": 3,
+                    "col": 12
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "ATENA",
+                    "row": 5,
+                    "col": 12
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "CIRCE",
+                    "row": 6,
+                    "col": 0
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 3750,
+    "ai_response_time_ms": 8227,
+    "status": "completed",
+    "created_at": "2026-10-20T19:10:10.883366Z"
+}
+

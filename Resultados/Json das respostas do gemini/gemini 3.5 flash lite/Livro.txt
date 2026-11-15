@@ -1,0 +1,162 @@
+{
+    "id": "51273152-471a-4546-8f4c-dae2381bb9fa",
+    "filename": "livro.txt",
+    "mime_type": "text/plain",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Quem foi o autor do classico da literatura fantastica O Hobbit?",
+                "options": [
+                    "C.S. Lewis",
+                    "J.R.R. Tolkien",
+                    "George R.R. Martin",
+                    "J.K. Rowling"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual era o nome do dragao que roubou o Reino de Erebor?",
+                "options": [
+                    "Ancalagon",
+                    "Glaurung",
+                    "Smaug",
+                    "Scatha"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual o nome do mago que arranca Bilbo de sua zona de conforto?",
+                "options": [
+                    "Saruman",
+                    "Radagast",
+                    "Gandalf",
+                    "Elrond"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "O que Bilbo encontra nas cavernas subterraneas apos um jogo de adivinhacoes?",
+                "options": [
+                    "Uma espada magica",
+                    "Um anel que concede invisibilidade",
+                    "Um escudo encantado",
+                    "Um mapa secreto"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Como e chamada a obsessao pelo tesouro que afeta Thorin?",
+                "options": [
+                    "Mal do Dragao",
+                    "Mal da Montanha",
+                    "Mal do Ouro",
+                    "Maldicao de Erebor"
+                ],
+                "correct_option_index": 0
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "Qual e o nome do protagonista hobbit de O Hobbit?",
+                "answer": "Bilbo Bolseiro"
+            },
+            {
+                "question": "Quantos anoes participam da expedicao liderada por Thorin?",
+                "answer": "Treze"
+            },
+            {
+                "question": "Qual e o nome da montanha que os anoes pretendem retomar?",
+                "answer": "Erebor"
+            },
+            {
+                "question": "Com qual criatura Bilbo disputa um jogo de adivinhacoes nas cavernas?",
+                "answer": "Gollum"
+            },
+            {
+                "question": "Qual o nome da grande batalha final narrada no livro?",
+                "answer": "Batalha dos Cinco Exercitos"
+            },
+            {
+                "question": "Como e chamada a toca onde Bilbo vive confortavelmente?",
+                "answer": "Bolsao"
+            }
+        ],
+        "guess_word": {
+            "answer": "HOBBIT",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 11,
+            "letters": [
+                "G",
+                "A",
+                "A",
+                "N",
+                "D",
+                "L",
+                "F",
+                "T",
+                "O",
+                "K",
+                "I",
+                "E",
+                "E",
+                "R",
+                "R",
+                "B",
+                "B",
+                "H",
+                "S",
+                "M",
+                "U"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "GANDALF",
+                    "row": 3,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "TOLKIEN",
+                    "row": 1,
+                    "col": 5
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "EREBOR",
+                    "row": 6,
+                    "col": 5
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "THORIN",
+                    "row": 1,
+                    "col": 5
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "BILBO",
+                    "row": 6,
+                    "col": 8
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "SMAUG",
+                    "row": 1,
+                    "col": 1
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ANEL",
+                    "row": 0,
+                    "col": 10
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 3862,
+    "ai_response_time_ms": 8411
+}

@@ -1,0 +1,162 @@
+{
+    "id": "26ad5b18-e764-4a49-a8ad-fa503080e93e",
+    "filename": "Inteligência Artificial.docx",
+    "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Qual é o principal objetivo do Fine-Tuning?",
+                "options": [
+                    "Treinar um modelo de IA do zero com dados massivos.",
+                    "Adaptar um modelo de IA pré-treinado para uma tarefa específica.",
+                    "Aumentar a quantidade de dados de treinamento.",
+                    "Reduzir a complexidade de um modelo de IA."
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual a vantagem do Fine-Tuning em termos de dados de treinamento?",
+                "options": [
+                    "Exige mais dados do que o treinamento do zero.",
+                    "Não requer nenhum dado de treinamento.",
+                    "Utiliza um conjunto de dados menor e mais direcionado.",
+                    "Requer dados gerais, não direcionados."
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual destes modelos é comumente usado para Processamento de Linguagem Natural (PNL) e se beneficia de Fine-Tuning?",
+                "options": [
+                    "Stable Diffusion",
+                    "Llama",
+                    "BERT",
+                    "Hugging Face"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual plataforma é mencionada como facilitadora do acesso a modelos e do processo de Fine-Tuning?",
+                "options": [
+                    "Google AI",
+                    "OpenAI",
+                    "Microsoft Azure",
+                    "Hugging Face"
+                ],
+                "correct_option_index": 3
+            },
+            {
+                "prompt": "Que tipo de tarefa de IA é exemplificada pelo desenvolvimento de chatbots otimizados para atendimento ao cliente?",
+                "options": [
+                    "Reconhecimento de imagens",
+                    "Geração de conteúdo",
+                    "Personalização de modelos",
+                    "Classificação de texto"
+                ],
+                "correct_option_index": 2
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "O que significa 'modelo pré-treinado'?",
+                "answer": "Um modelo de IA que já passou por um treinamento inicial geral."
+            },
+            {
+                "question": "Quais são as duas principais vantagens do Fine-Tuning?",
+                "answer": "Redução do tempo de treinamento e menor necessidade de dados."
+            },
+            {
+                "question": "Cite um modelo popular para geração de imagens que usa Fine-Tuning.",
+                "answer": "Stable Diffusion."
+            },
+            {
+                "question": "Qual a finalidade de usar dados menores e direcionados no Fine-Tuning?",
+                "answer": "Adaptar o modelo a uma tarefa ou conjunto de dados específico."
+            },
+            {
+                "question": "Qual plataforma simplifica o acesso a modelos como BERT e Llama?",
+                "answer": "Hugging Face."
+            },
+            {
+                "question": "Dê um exemplo de personalização de um modelo de IA para um negócio.",
+                "answer": "Chatbots para atendimento ao cliente de uma empresa específica."
+            },
+            {
+                "question": "Fine-Tuning é um treinamento do zero?",
+                "answer": "Não, é um ajuste de um modelo já treinado."
+            }
+        ],
+        "guess_word": {
+            "answer": "AJUSTE",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 8,
+            "letters": [
+                "H",
+                "U",
+                "G",
+                "G",
+                "G",
+                "I",
+                "N",
+                "M",
+                "M",
+                "A",
+                "A",
+                "E",
+                "D",
+                "D",
+                "O",
+                "O",
+                "S",
+                "S",
+                "P",
+                "L",
+                "L",
+                "T",
+                "T",
+                "R",
+                "F",
+                "X",
+                "B"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "HUGGING",
+                    "row": 0,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "IMAGEM",
+                    "row": 0,
+                    "col": 4
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "DADOS",
+                    "row": 2,
+                    "col": 3
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "PESOS",
+                    "row": 4,
+                    "col": 3
+                }
+            ],
+            "bonus_words": [
+                "MODELO",
+                "TAREFA",
+                "LLAMA",
+                "TEXTO",
+                "BERT"
+            ]
+        }
+    },
+    "total_tokens": 3828,
+    "ai_response_time_ms": 8260,
+    "status": "completed",
+    "created_at": "2026-10-20T19:12:23.059088Z"
+}

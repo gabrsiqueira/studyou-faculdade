@@ -1,0 +1,176 @@
+{
+    "id": "ccfc2789-88ba-4636-abf0-025a7323cb3f",
+    "filename": "Biologia.txt",
+    "mime_type": "text/plain",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Qual a porcentagem aproximada de água no corpo humano?",
+                "options": [
+                    "Aproximadamente 20%",
+                    "Aproximadamente 60%",
+                    "Aproximadamente 80%",
+                    "Aproximadamente 40%"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual processo vital para as plantas utiliza água e libera oxigênio?",
+                "options": [
+                    "Respiração celular",
+                    "Fotossíntese",
+                    "Digestão",
+                    "Transpiração"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual das seguintes funções da água no corpo humano NÃO foi explicitamente mencionada no resumo?",
+                "options": [
+                    "Regulação da temperatura",
+                    "Transporte de nutrientes",
+                    "Lubrificação das articulações",
+                    "Eliminação de resíduos"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual termo descreve a condição de falta de água no organismo?",
+                "options": [
+                    "Hiperhidratação",
+                    "Desidratação",
+                    "Reidratação",
+                    "Osmose"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual das seguintes é uma causa para a disponibilidade limitada de água potável, segundo o texto?",
+                "options": [
+                    "Excesso de chuvas",
+                    "Baixa taxa de evaporação",
+                    "Poluição",
+                    "Aumento da cobertura vegetal"
+                ],
+                "correct_option_index": 2
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "Qual a função da água como solvente nas células?",
+                "answer": "Permite reações químicas e o transporte de substâncias."
+            },
+            {
+                "question": "O que é o ciclo hidrológico?",
+                "answer": "O movimento contínuo da água na Terra (evaporação, condensação, precipitação, infiltração)."
+            },
+            {
+                "question": "Cite duas medidas para garantir a disponibilidade de água para o futuro.",
+                "answer": "Tratamento de esgoto e consumo consciente."
+            },
+            {
+                "question": "Por que a água é vital para os ecossistemas?",
+                "answer": "É essencial para a sobrevivência de plantas e animais e para processos como a fotossíntese."
+            },
+            {
+                "question": "Quais são os perigos da desidratação?",
+                "answer": "Sede, tontura, fadiga e comprometimento de funções vitais."
+            },
+            {
+                "question": "Qual o papel da água na regulação da temperatura corporal?",
+                "answer": "Ajuda a manter a temperatura do corpo estável."
+            }
+        ],
+        "guess_word": {
+            "answer": "AGUA",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 15,
+            "letters": [
+                "F",
+                "O",
+                "O",
+                "O",
+                "T",
+                "T",
+                "S",
+                "S",
+                "S",
+                "I",
+                "I",
+                "N",
+                "N",
+                "E",
+                "E",
+                "H",
+                "D",
+                "D",
+                "R",
+                "L",
+                "L",
+                "G",
+                "C",
+                "A",
+                "V",
+                "P",
+                "U"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "FOTOSSINTESE",
+                    "row": 2,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "HIDROLOGICO",
+                    "row": 1,
+                    "col": 6
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "DESERDICO",
+                    "row": 1,
+                    "col": 9
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "NASCENTES",
+                    "row": 0,
+                    "col": 4
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "SOLVENTE",
+                    "row": 1,
+                    "col": 1
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "POLUICAO",
+                    "row": 11,
+                    "col": 5
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "CELULA",
+                    "row": 8,
+                    "col": 9
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "VIDA",
+                    "row": 5,
+                    "col": 14
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 3710,
+    "ai_response_time_ms": 7243,
+    "status": "completed",
+    "created_at": "2026-10-20T19:07:17.314172Z"
+}

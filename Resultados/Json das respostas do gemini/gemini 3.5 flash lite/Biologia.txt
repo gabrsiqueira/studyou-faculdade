@@ -1,0 +1,166 @@
+{
+    "id": "68ab9ffa-35e4-4428-9ef2-0cb226d0984e",
+    "filename": "biologia.txt",
+    "mime_type": "text/plain",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Qual e a porcentagem aproximada de agua que compoe o corpo de um ser humano adulto?",
+                "options": [
+                    "30 por cento",
+                    "60 por cento",
+                    "80 por cento",
+                    "95 por cento"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual processo realizado pelas plantas utiliza a agua junto com dioxido de carbono e luz solar?",
+                "options": [
+                    "Respiracao",
+                    "Transpiracao",
+                    "Fotossintese",
+                    "Fermentacao"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Como a agua atua no nivel celular segundo o texto estudado?",
+                "options": [
+                    "Como solvente para reacoes quimicas",
+                    "Como barreira impermeavel",
+                    "Como fonte de energia direta",
+                    "Como geradora de calor intenso"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Qual e a condicao causada pela falta de agua no organismo humano?",
+                "options": [
+                    "Hipertermia",
+                    "Desidratacao",
+                    "Oxidacao",
+                    "Intoxicacao"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual e um dos principais desafios ambientais relacionados a agua potavel mencionados?",
+                "options": [
+                    "Excesso de chuvas nos oceanos",
+                    "Poluicao e desperdicio",
+                    "Aumento da salinidade dos rios",
+                    "Congelamento das nascentes"
+                ],
+                "correct_option_index": 1
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "Qual funcao da agua ajuda a manter o equilibrio termico no corpo humano?",
+                "answer": "Regulacao termica"
+            },
+            {
+                "question": "Como e chamado o movimento continuo da agua na Terra?",
+                "answer": "Ciclo hidrologico"
+            },
+            {
+                "question": "Qual termo define a capacidade da agua de permitir reacoes quimicas nas celulas?",
+                "answer": "Solvente universal"
+            },
+            {
+                "question": "Qual e o nome da condicao gerada pela falta de agua no organismo?",
+                "answer": "Desidratacao"
+            },
+            {
+                "question": "O que as plantas produzem utilizando agua, CO2 e luz solar?",
+                "answer": "Glicose e oxigenio"
+            },
+            {
+                "question": "Por que a agua potavel e considerada um recurso limitado?",
+                "answer": "Devido a poluicao, desperdicio e ma distribuicao"
+            }
+        ],
+        "guess_word": {
+            "answer": "AGUA",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 15,
+            "letters": [
+                "F",
+                "O",
+                "O",
+                "T",
+                "T",
+                "S",
+                "S",
+                "S",
+                "I",
+                "N",
+                "E",
+                "E",
+                "D",
+                "D",
+                "R",
+                "A",
+                "A",
+                "A",
+                "C",
+                "C",
+                "L",
+                "V",
+                "P",
+                "U",
+                "G"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "FOTOSSINTESE",
+                    "row": 1,
+                    "col": 1
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "DESIDRATACAO",
+                    "row": 0,
+                    "col": 10
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "SOLVENTE",
+                    "row": 1,
+                    "col": 5
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "POLUICAO",
+                    "row": 0,
+                    "col": 2
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "PLANTA",
+                    "row": 6,
+                    "col": 8
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "CICLO",
+                    "row": 9,
+                    "col": 10
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "AGUA",
+                    "row": 3,
+                    "col": 0
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 2805,
+    "ai_response_time_ms": 18818
+}

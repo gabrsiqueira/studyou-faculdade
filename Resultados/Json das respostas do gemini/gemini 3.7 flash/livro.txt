@@ -1,0 +1,176 @@
+{
+    "id": "515c5c36-cdee-4f1c-9fdb-b15e62b3f39e",
+    "filename": "Livro.txt",
+    "mime_type": "text/plain",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Em que ano a clássica obra de ficção de J. R. R. Tolkien sobre a Terra-média veio a público pela primeira vez?",
+                "options": [
+                    "1937",
+                    "1945",
+                    "1954",
+                    "1928"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Para qual ofício ou ocupação específica Bilbo Bolseiro foi contratado pela comitiva?",
+                "options": [
+                    "Ladrão",
+                    "Guerreiro",
+                    "Guia",
+                    "Escudeiro"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Qual criatura sombria habitante de grutas perdeu o artefato circular recolhido por Bilbo?",
+                "options": [
+                    "Gollum",
+                    "Radagast",
+                    "Dwalin",
+                    "Balin"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Quais feras caninas marcharam em aliança com os goblins durante o grande confronto decisivo da obra?",
+                "options": [
+                    "Mumakil",
+                    "Wargs",
+                    "Uruk-hai",
+                    "Huorns"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual líder nobre da comitiva sucumbe aos ferimentos e falece no desfecho da expedição?",
+                "options": [
+                    "Thorin Escudo de Carvalho",
+                    "Fili",
+                    "Kili",
+                    "Dori"
+                ],
+                "correct_option_index": 0
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "Qual sábio mago organiza a visita inesperada à moradia do protagonista e inicia a missão?",
+                "answer": "Gandalf."
+            },
+            {
+                "question": "Qual réptil voador colossal guardava as riquezas tomadas no interior da montanha?",
+                "answer": "Smaug."
+            },
+            {
+                "question": "Quantos anões no total compunham o grupo que partiu para recuperar as terras ancestrais?",
+                "answer": "Treze anões."
+            },
+            {
+                "question": "Qual o nome do antigo reino sob a Montanha Solitária cobiçado pela expedição?",
+                "answer": "Erebor."
+            },
+            {
+                "question": "Qual habilidade sobrenatural é conferida a quem utiliza o artefato encontrado na caverna?",
+                "answer": "Invisibilidade."
+            },
+            {
+                "question": "Que tipo de brutos monstruosos foram transformados em pedra pelos primeiros raios de sol?",
+                "answer": "Trolls."
+            },
+            {
+                "question": "Que arquétipo literário caracteriza a trajetória de Bilbo, ao sair de sua vida acomodada para a liderança?",
+                "answer": "Herói improvável."
+            }
+        ],
+        "guess_word": {
+            "answer": "HOBBIT",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 15,
+            "letters": [
+                "G",
+                "A",
+                "A",
+                "A",
+                "N",
+                "N",
+                "C",
+                "I",
+                "R",
+                "H",
+                "S",
+                "T",
+                "E",
+                "O",
+                "O",
+                "U",
+                "B",
+                "L",
+                "M",
+                "Z",
+                "D",
+                "J",
+                "F"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "GANANCIA",
+                    "row": 1,
+                    "col": 1
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ARANHAS",
+                    "row": 1,
+                    "col": 2
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "TESOURO",
+                    "row": 7,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "BATALHA",
+                    "row": 0,
+                    "col": 8
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "AMIZADE",
+                    "row": 3,
+                    "col": 8
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "JORNADA",
+                    "row": 6,
+                    "col": 6
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "HOMENS",
+                    "row": 5,
+                    "col": 8
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ELFOS",
+                    "row": 7,
+                    "col": 1
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 9307,
+    "ai_response_time_ms": 62075,
+    "status": "completed",
+    "created_at": "2026-10-20T01:54:16.639636Z"
+}

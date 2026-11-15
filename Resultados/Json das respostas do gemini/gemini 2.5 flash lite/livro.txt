@@ -1,0 +1,174 @@
+{
+    "id": "1da23d0a-6e41-45c3-85c8-5fcf2a12e1fa",
+    "filename": "Livro.txt",
+    "mime_type": "text/plain",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Qual o nome do mago que recruta Bilbo Bolseiro para a jornada?",
+                "options": [
+                    "Saruman",
+                    "Gandalf",
+                    "Radagast",
+                    "Alatar"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual o nome do dragão que roubou o tesouro de Erebor?",
+                "options": [
+                    "Ancalagon",
+                    "Scatha",
+                    "Smaug",
+                    "Glaurung"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "O que Bilbo Bolseiro encontra na caverna de Gollum que se torna crucial para a jornada?",
+                "options": [
+                    "Uma espada mágica",
+                    "Um mapa antigo",
+                    "Um anel de invisibilidade",
+                    "Um escudo encantado"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual o nome do líder dos treze anões que acompanham Bilbo?",
+                "options": [
+                    "Balin",
+                    "Dwalin",
+                    "Fili",
+                    "Thorin Escudo de Carvalho"
+                ],
+                "correct_option_index": 3
+            },
+            {
+                "prompt": "Qual evento acontece após a morte de Smaug, envolvendo anões, elfos e homens contra goblins e wargs?",
+                "options": [
+                    "A Batalha dos Campos de Pelennor",
+                    "A Batalha do Abismo de Helm",
+                    "A Batalha dos Cinco Exércitos",
+                    "A Batalha de Azanulbizar"
+                ],
+                "correct_option_index": 2
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "Quem é o personagem principal de 'O Hobbit'?",
+                "answer": "Bilbo Bolseiro"
+            },
+            {
+                "question": "Qual o objetivo principal da expedição?",
+                "answer": "Recuperar o tesouro de Erebor do dragão Smaug"
+            },
+            {
+                "question": "Quem lidera os treze anões na jornada?",
+                "answer": "Thorin Escudo de Carvalho"
+            },
+            {
+                "question": "Qual o nome do mago que acompanha o grupo?",
+                "answer": "Gandalf"
+            },
+            {
+                "question": "Que objeto Bilbo ganha de Gollum?",
+                "answer": "Um anel mágico de invisibilidade"
+            },
+            {
+                "question": "Quais perigos eles enfrentam na jornada?",
+                "answer": "Trolls, goblins, aranhas, elfos"
+            },
+            {
+                "question": "Qual o nome do dragão que guardava o tesouro?",
+                "answer": "Smaug"
+            },
+            {
+                "question": "Como Bilbo muda ao longo da história?",
+                "answer": "Torna-se mais corajoso, inteligente e autoconfiante"
+            }
+        ],
+        "guess_word": {
+            "answer": "HOBBIT",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 11,
+            "letters": [
+                "G",
+                "A",
+                "A",
+                "N",
+                "D",
+                "L",
+                "F",
+                "O",
+                "B",
+                "B",
+                "I",
+                "S",
+                "E",
+                "E",
+                "R",
+                "R",
+                "T",
+                "H",
+                "M",
+                "C",
+                "U"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "GANDALF",
+                    "row": 1,
+                    "col": 3
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "GOBLINS",
+                    "row": 1,
+                    "col": 3
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "EREBOR",
+                    "row": 3,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "THORIN",
+                    "row": 0,
+                    "col": 1
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "MAGICO",
+                    "row": 0,
+                    "col": 7
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "SMAUG",
+                    "row": 7,
+                    "col": 3
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ANEL",
+                    "row": 7,
+                    "col": 5
+                }
+            ],
+            "bonus_words": [
+                "BILBO"
+            ]
+        }
+    },
+    "total_tokens": 4030,
+    "ai_response_time_ms": 7924,
+    "status": "completed",
+    "created_at": "2026-10-20T19:13:48.588501Z"
+}

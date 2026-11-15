@@ -1,0 +1,158 @@
+{
+    "id": "a74113c2-1c5e-402d-952a-04f643f2a7ca",
+    "filename": "robotica.pdf",
+    "mime_type": "application/pdf",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Como sao chamadas as estruturas rigidas que compoem o corpo de um manipulador robotico?",
+                "options": [
+                    "Juntas",
+                    "Elos",
+                    "Efetuadores",
+                    "Eixos"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual termo define a ferramenta instalada na extremidade do punho para realizar tarefas?",
+                "options": [
+                    "Base",
+                    "Antebraco",
+                    "Efetuador",
+                    "Articulador"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual tipo de junta permite o movimento de translacao retilinea com 1 grau de liberdade?",
+                "options": [
+                    "Prismatica",
+                    "Esferica",
+                    "Rotacional",
+                    "Revolvente"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Em uma junta rotativa do tipo Torcional (T), como estao os elos de entrada e saida?",
+                "options": [
+                    "Perpendiculares ao eixo",
+                    "Em angulo de 45 graus",
+                    "Alinhados com o eixo de rotacao",
+                    "Em direcoes opostas"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Por que robos industriais sao considerados multifuncionais?",
+                "options": [
+                    "Pois possuem sensores de luz",
+                    "Devido a capacidade de trocar efetuadores",
+                    "Porque operam apenas com energia eletrica",
+                    "Porque possuem juntas prismaticas"
+                ],
+                "correct_option_index": 1
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "O que sao juntas em robos?",
+                "answer": "Conexoes entre elos que permitem o movimento."
+            },
+            {
+                "question": "O que significa a sigla DOF?",
+                "answer": "Graus de liberdade (Degrees of Freedom)."
+            },
+            {
+                "question": "O que caracteriza um robo antropomorfico?",
+                "answer": "Design que se assemelha ao braco humano."
+            },
+            {
+                "question": "Quantos graus de liberdade tem uma junta esferica?",
+                "answer": "3 graus de liberdade."
+            },
+            {
+                "question": "Defina junta rotacional (R).",
+                "answer": "Elos perpendiculares ao eixo de rotacao."
+            },
+            {
+                "question": "O que e a junta do tipo Revolvente (V)?",
+                "answer": "Elo de entrada alinhado e elo de saida perpendicular ao eixo."
+            }
+        ],
+        "guess_word": {
+            "answer": "ROBOTICA",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 9,
+            "letters": [
+                "J",
+                "U",
+                "N",
+                "T",
+                "A",
+                "P",
+                "H",
+                "O",
+                "O",
+                "B",
+                "R",
+                "C",
+                "S",
+                "E",
+                "L",
+                "D",
+                "F"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "JUNTA",
+                    "row": 2,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "PUNHO",
+                    "row": 1,
+                    "col": 1
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "BRACO",
+                    "row": 0,
+                    "col": 4
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "ROBO",
+                    "row": 1,
+                    "col": 4
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "BASE",
+                    "row": 1,
+                    "col": 6
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "ELO",
+                    "row": 4,
+                    "col": 6
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "DOF",
+                    "row": 5,
+                    "col": 0
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 4862,
+    "ai_response_time_ms": 12057
+}

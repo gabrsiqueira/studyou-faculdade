@@ -1,0 +1,169 @@
+{
+    "id": "e5ca9755-6c38-4410-ac28-4550ba93d1ab",
+    "filename": "eng-de-software.pptx",
+    "mime_type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Qual elemento da fase de projeto responde 'como o sistema faz'?",
+                "options": [
+                    "Implementação física",
+                    "Modelo conceitual",
+                    "Fato isolado",
+                    "Ambiente externo"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Qual dos cinco elementos de um sistema informatizado engloba os usuários e operadores?",
+                "options": [
+                    "Hardware",
+                    "Software",
+                    "Pessoas",
+                    "Processos"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "O que caracteriza essencialmente um Dado em contraste com a Informação?",
+                "options": [
+                    "Um fato isolado sem uso imediato",
+                    "Um conjunto estruturado para tomada de decisão",
+                    "Uma ferramenta de gestão estratégica",
+                    "Um componente de hardware"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Na Análise SWOT, o que representam as Forças (Strengths)?",
+                "options": [
+                    "O ambiente externo da organização",
+                    "O ambiente interno da organização",
+                    "O processamento de dados brutais",
+                    "A infraestrutura de hardware"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual tecnologia é comumente utilizada na área industrial como exemplo de Sistema de Informação?",
+                "options": [
+                    "CAD",
+                    "SWOT",
+                    "FOFA",
+                    "Laudon"
+                ],
+                "correct_option_index": 0
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "O que define a Análise em um sistema?",
+                "answer": "Exame das partes para criar um modelo, respondendo o que o sistema deve fazer."
+            },
+            {
+                "question": "O que define o Projeto em um sistema?",
+                "answer": "Reunião de elementos para a implementação física, respondendo como o sistema deve fazer."
+            },
+            {
+                "question": "Cite os 5 elementos essenciais de um sistema informatizado.",
+                "answer": "Hardware, Software, Pessoas, Dados e Processos."
+            },
+            {
+                "question": "Qual a diferença entre Dado e Informação?",
+                "answer": "O dado é um fato isolado, enquanto a informação é o dado organizado com valor de conhecimento."
+            },
+            {
+                "question": "O que significa a sigla SWOT em gestão estratégica?",
+                "answer": "Forças, Fraquezas, Oportunidades e Ameaças."
+            },
+            {
+                "question": "Quais são as dimensões avaliadas no ambiente interno da Análise SWOT?",
+                "answer": "Forças e Fraquezas."
+            }
+        ],
+        "guess_word": {
+            "answer": "SISTEMA",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 17,
+            "letters": [
+                "I",
+                "N",
+                "F",
+                "O",
+                "O",
+                "R",
+                "R",
+                "M",
+                "A",
+                "A",
+                "C",
+                "H",
+                "D",
+                "D",
+                "W",
+                "E",
+                "S",
+                "S",
+                "T",
+                "L",
+                "P",
+                "J"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "INFORMACAO",
+                    "row": 3,
+                    "col": 5
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "HARDWARE",
+                    "row": 2,
+                    "col": 11
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "SOFTWARE",
+                    "row": 2,
+                    "col": 8
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "SISTEMA",
+                    "row": 2,
+                    "col": 5
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ANALISE",
+                    "row": 3,
+                    "col": 13
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "PROJETO",
+                    "row": 5,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "DADO",
+                    "row": 0,
+                    "col": 14
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "SWOT",
+                    "row": 8,
+                    "col": 13
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 3929,
+    "ai_response_time_ms": 7211
+}

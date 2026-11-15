@@ -1,0 +1,176 @@
+{
+    "id": "e7d1de58-4d41-4eaf-a1fd-1706f0655a0b",
+    "filename": "Engenharia de Software.pptx",
+    "mime_type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Qual e a pergunta central que norteia a etapa de Analise no desenvolvimento de sistemas?",
+                "options": [
+                    "O que o sistema deve fazer?",
+                    "Como o sistema sera codificado?",
+                    "Quanto custara a infraestrutura fisica?",
+                    "Quem realizara o suporte tecnico?"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Segundo a definicao de Laudon (2021), quais sao as quatro atividades basicas realizadas por um Sistema de Informacao?",
+                "options": [
+                    "Comprar, auditar, faturar e vender",
+                    "Coletar, processar, armazenar e distribuir",
+                    "Formatar, compilar, testar e publicar",
+                    "Conectar, criptografar, depurar e transmitir"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Na analise SWOT (FOFA), quais componentes pertencem estritamente ao ambiente interno e controlavel da organizacao?",
+                "options": [
+                    "Oportunidades e Ameacas",
+                    "Forcas e Fraquezas",
+                    "Precos e Concorrencia",
+                    "Politicas governamentais e Tendencias"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual exemplo representa o uso de Sistemas de Informacao voltado para a area de Industria e Producao?",
+                "options": [
+                    "Previsao de fluxo de caixa",
+                    "Automacao fabril via CAD/CAM/CIM",
+                    "Campanhas de divulgacao promocional",
+                    "Avaliacao e recrutamento de candidatos"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Do ponto de vista conceitual em SI, o que diferencia a Informacao do Dado?",
+                "options": [
+                    "Informacao e apenas o registro numerico bruto",
+                    "Informacao consiste em dados contextualizados que reduzem a incerteza",
+                    "Informacao nao depende de processamento previo para ser interpretada",
+                    "Informacao e sinonimo de hardware de armazenamento"
+                ],
+                "correct_option_index": 1
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "Qual e o foco principal e a pergunta-chave da etapa de Projeto de sistemas?",
+                "answer": "Foca na organizacao fisica para implementacao, respondendo a pergunta 'Como o sistema deve fazer?'."
+            },
+            {
+                "question": "O que define um Dado no contexto da teoria de sistemas?",
+                "answer": "Um fato bruto e isolado, desprovido de contexto, que por si so nao representa conhecimento."
+            },
+            {
+                "question": "Na Matriz SWOT, quais variaveis compoem o ambiente externo (nao controlavel)?",
+                "answer": "Oportunidades e Ameacas."
+            },
+            {
+                "question": "Quais sao funcoes tipicas atendidas por um SI no setor de Recursos Humanos?",
+                "answer": "Gestao de desempenho, selecao de candidatos e analise de produtividade."
+            },
+            {
+                "question": "Qual e o papel de um Sistema de Informacao no setor Financeiro e Contabil?",
+                "answer": "Realizar previsoes de receitas, controle do fluxo de caixa e gestao de fundos."
+            },
+            {
+                "question": "O que e um Sistema em sentido amplo?",
+                "answer": "Um conjunto organizado de elementos interconectados que operam juntos para alcancar objetivos especificos."
+            }
+        ],
+        "guess_word": {
+            "answer": "SISTEMA",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 13,
+            "letters": [
+                "M",
+                "A",
+                "A",
+                "R",
+                "R",
+                "K",
+                "E",
+                "E",
+                "T",
+                "I",
+                "N",
+                "N",
+                "G",
+                "H",
+                "D",
+                "D",
+                "W",
+                "S",
+                "S",
+                "S",
+                "O",
+                "O",
+                "F",
+                "P",
+                "C",
+                "Q",
+                "U"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "MARKETING",
+                    "row": 3,
+                    "col": 1
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "HARDWARE",
+                    "row": 2,
+                    "col": 2
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "SOFTWARE",
+                    "row": 0,
+                    "col": 6
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "PROCESSO",
+                    "row": 6,
+                    "col": 5
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "FINANCAS",
+                    "row": 1,
+                    "col": 8
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "PESSOAS",
+                    "row": 9,
+                    "col": 1
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ESTOQUE",
+                    "row": 5,
+                    "col": 10
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "DADOS",
+                    "row": 5,
+                    "col": 0
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 5488,
+    "ai_response_time_ms": 187819,
+    "status": "completed",
+    "created_at": "2026-10-20T02:03:34.907314Z"
+}

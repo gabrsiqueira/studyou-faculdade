@@ -1,0 +1,162 @@
+{
+    "id": "201c731e-a72d-4c63-8070-4722af11fb4b",
+    "filename": "eng-de-software.pptx",
+    "mime_type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Qual é a definição correta de 'dado' dentro da hierarquia de sistemas de informação?",
+                "options": [
+                    "Um dado é a conclusão obtida após o processamento.",
+                    "Um dado é um fato isolado ou bruto.",
+                    "Um dado é um software de gestão estratégica.",
+                    "Um dado é o resultado final da análise SWOT."
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "No desenvolvimento de sistemas, a fase de 'Análise' é caracterizada por qual pergunta principal?",
+                "options": [
+                    "Como será a implementação física?",
+                    "Qual tecnologia será utilizada?",
+                    "O que o sistema deve fazer?",
+                    "Quem serão os usuários finais?"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Quais são os cinco componentes essenciais que formam um Sistema de Informação?",
+                "options": [
+                    "Hardware, Software, Pessoas, Dados e Processos.",
+                    "Internet, Servidores, Clientes, Cabos e Senhas.",
+                    "Marketing, Finanças, RH, Vendas e Produção.",
+                    "Análise, Projeto, SWOT, CAD e CAM."
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "O que a sigla FOFA, utilizada na análise estratégica, representa em português?",
+                "options": [
+                    "Fatos, Objetivos, Ferramentas e Aplicações.",
+                    "Forças, Oportunidades, Fraquezas e Ameaças.",
+                    "Funcionalidades, Operações, Fluxos e Ações.",
+                    "Financeiro, Organizacional, Físico e Administrativo."
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual é a função da etapa de 'Projeto' no desenvolvimento de um sistema?",
+                "options": [
+                    "Definir os objetivos globais do negócio.",
+                    "Coletar dados brutos do mercado.",
+                    "Estruturar a implementação física do modelo.",
+                    "Analisar a concorrência externa."
+                ],
+                "correct_option_index": 2
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "O que é um sistema?",
+                "answer": "Um conjunto organizado de elementos que operam para atingir objetivos."
+            },
+            {
+                "question": "Diferença entre dado e informação?",
+                "answer": "Dado é um fato bruto; informação é dado organizado que gera conhecimento."
+            },
+            {
+                "question": "O que define a fase de Projeto?",
+                "answer": "A estruturação da implementação física de um sistema."
+            },
+            {
+                "question": "O que significa CAD/CAM/CIM?",
+                "answer": "Tecnologias de suporte a sistemas de produção industrial."
+            },
+            {
+                "question": "O que compõe a análise SWOT?",
+                "answer": "Mapeamento do ambiente interno (Forças/Fraquezas) e externo (Oportunidades/Ameaças)."
+            },
+            {
+                "question": "Qual a principal função de um SI nas empresas?",
+                "answer": "Apoiar a tomada de decisão e o controle organizacional."
+            }
+        ],
+        "guess_word": {
+            "answer": "SISTEMA",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 16,
+            "letters": [
+                "S",
+                "S",
+                "S",
+                "O",
+                "O",
+                "F",
+                "T",
+                "W",
+                "A",
+                "A",
+                "R",
+                "R",
+                "E",
+                "H",
+                "D",
+                "D",
+                "P",
+                "J",
+                "N",
+                "L",
+                "I"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "SOFTWARE",
+                    "row": 5,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "HARDWARE",
+                    "row": 4,
+                    "col": 5
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "PROJETO",
+                    "row": 10,
+                    "col": 4
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ANALISE",
+                    "row": 0,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "PESSOAS",
+                    "row": 9,
+                    "col": 8
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "DADO",
+                    "row": 7,
+                    "col": 5
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "SWOT",
+                    "row": 12,
+                    "col": 8
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 3386,
+    "ai_response_time_ms": 11594
+}

@@ -1,0 +1,157 @@
+{
+    "id": "f62f0aa0-e312-408a-af5a-bc33bf957164",
+    "filename": "historia.png",
+    "mime_type": "image/png",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Qual divindade atua como principal mentora e protetora de Odisseu e Telêmaco?",
+                "options": [
+                    "Zeus",
+                    "Atena",
+                    "Poseidon",
+                    "Hera"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Como é chamada a característica marcante de Odisseu relacionada à sua astúcia?",
+                "options": [
+                    "Nostos",
+                    "Xenia",
+                    "Metis",
+                    "Arete"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Por quanto tempo Odisseu ficou aprisionado pela ninfa Calipso?",
+                "options": [
+                    "10 anos",
+                    "2 anos",
+                    "7 anos",
+                    "5 anos"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual é a função do disfarce de Odisseu como mendigo ao retornar a Ítaca?",
+                "options": [
+                    "Evitar ser reconhecido pelos pretendentes",
+                    "Provar a lealdade de sua família",
+                    "Testar a hospitalidade dos escravos",
+                    "Todas as opções anteriores"
+                ],
+                "correct_option_index": 3
+            },
+            {
+                "prompt": "O que Penélope utiliza como estratégia para testar a identidade de Odisseu no final da obra?",
+                "options": [
+                    "O arco de Odisseu",
+                    "A cama inamovível",
+                    "A cicatriz na perna",
+                    "O conhecimento sobre o cão Argos"
+                ],
+                "correct_option_index": 1
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "O que significa o termo Nostos?",
+                "answer": "O tema do retorno para casa."
+            },
+            {
+                "question": "Qual deus é o principal antagonista na jornada de Odisseu?",
+                "answer": "Poseidon."
+            },
+            {
+                "question": "O que era a Xenia na Grécia Antiga?",
+                "answer": "O conceito de hospitalidade."
+            },
+            {
+                "question": "Quem é o filho de Odisseu que busca pelo pai?",
+                "answer": "Telêmaco."
+            },
+            {
+                "question": "O que marca o fim da Odisseia?",
+                "answer": "A vingança contra os pretendentes e o reencontro familiar."
+            },
+            {
+                "question": "Onde ocorre a maior parte do presente da narrativa?",
+                "answer": "Em Ítaca."
+            }
+        ],
+        "guess_word": {
+            "answer": "ODISSEU",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 13,
+            "letters": [
+                "C",
+                "A",
+                "A",
+                "L",
+                "I",
+                "P",
+                "S",
+                "S",
+                "O",
+                "O",
+                "N",
+                "T",
+                "R",
+                "E",
+                "M",
+                "X"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "CALIPSO",
+                    "row": 1,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "NOSTOS",
+                    "row": 0,
+                    "col": 6
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "TROIA",
+                    "row": 3,
+                    "col": 6
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ITACA",
+                    "row": 1,
+                    "col": 3
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ATENA",
+                    "row": 1,
+                    "col": 1
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "METIS",
+                    "row": 0,
+                    "col": 9
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "XENIA",
+                    "row": 1,
+                    "col": 8
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 3956,
+    "ai_response_time_ms": 14042
+}

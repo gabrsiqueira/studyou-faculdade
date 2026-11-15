@@ -1,0 +1,164 @@
+{
+    "id": "7956bbd8-07fd-43c0-a943-3f34934c759b",
+    "filename": "Robótica.pdf",
+    "mime_type": "application/pdf",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Qual é a função primordial dos efetuadores (end-effectors) em um manipulador robótico?",
+                "options": [
+                    "Realizar a tarefa final por meio de ferramentas montadas no punho",
+                    "Garantir a fixação estável do robô sobre a superfície de trabalho",
+                    "Controlar a rotação dos motores acoplados diretamente à base",
+                    "Conectar mecanicamente os elos rígidos do antebraço"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Qual característica descreve o funcionamento de uma junta prismática (linear)?",
+                "options": [
+                    "Permite giro completo em torno de três eixos ortogonais",
+                    "Possui 1 grau de liberdade com movimento puramente retilíneo",
+                    "Conecta elos por meio de articulações angulares sincronizadas",
+                    "Gera deslocamento helicoidal contínuo com acionamento manual"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Por qual motivo as juntas esféricas de 3 graus de liberdade são pouco utilizadas na indústria?",
+                "options": [
+                    "Apresentam restrição severa de carga em tarefas estáticas",
+                    "Inviabilizam a conexão com ferramentas do tipo garra",
+                    "Possuem elevada complexidade de fabricação e acionamento",
+                    "Operam unicamente por meio de atuadores pneumáticos"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Em uma junta rotativa do tipo Torcional (T), como se organizam os elos em relação ao eixo de rotação?",
+                "options": [
+                    "Ambos os elos estão na mesma direção do eixo de rotação",
+                    "Ambos os elos são estritamente perpendiculares ao eixo",
+                    "O elo de entrada é perpendicular e o de saída é alinhado",
+                    "Os dois elos formam um plano ortogonal em relação ao solo"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "O que caracteriza geometricamente uma junta rotativa classificada como Revolvente (V)?",
+                "options": [
+                    "Elo de entrada paralelo e elo de saída oblíquo",
+                    "Ambos os elos posicionados a noventa graus do eixo",
+                    "Elo de entrada na direção do eixo e elo de saída perpendicular",
+                    "Ambos os elos alinhados na mesma linha longitudinal da base"
+                ],
+                "correct_option_index": 2
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "Qual é o papel da base na arquitetura de um robô manipulador?",
+                "answer": "Atuar como a estrutura de suporte, geralmente estática, onde todo o robô é fixado."
+            },
+            {
+                "question": "Como podem ser definidos os elos de um manipulador robótico?",
+                "answer": "São barras ou estruturas rígidas e indeformáveis que conectam as juntas entre si."
+            },
+            {
+                "question": "Qual é a função básica exercida pelas juntas (articulações)?",
+                "answer": "Unir os elos adjacentes permitindo movimento relativo independente entre eles."
+            },
+            {
+                "question": "Como é estruturada a sequência de um manipulador antropomórfico?",
+                "answer": "É composto de forma análoga ao braço humano: base, braço, antebraço e punho."
+            },
+            {
+                "question": "O que expressa a quantidade de Graus de Liberdade (DOF) de uma junta?",
+                "answer": "Indica o número de movimentos independentes que a articulação consegue executar."
+            },
+            {
+                "question": "Como estão orientados os elos em uma junta Rotacional pura (R)?",
+                "answer": "Tanto o elo de entrada quanto o elo de saída são perpendiculares ao eixo de giro."
+            },
+            {
+                "question": "O que representa o punho na extremidade do manipulador?",
+                "answer": "É a terminação da última junta destinada à fixação da ferramenta de trabalho."
+            }
+        ],
+        "guess_word": {
+            "answer": "EFETUADOR",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 12,
+            "letters": [
+                "E",
+                "E",
+                "S",
+                "F",
+                "R",
+                "R",
+                "I",
+                "C",
+                "A",
+                "A",
+                "L",
+                "N",
+                "J",
+                "U",
+                "T",
+                "B",
+                "O",
+                "P",
+                "H",
+                "G"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "ESFERICA",
+                    "row": 4,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "LINEAR",
+                    "row": 3,
+                    "col": 5
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "JUNTA",
+                    "row": 0,
+                    "col": 7
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "BRACO",
+                    "row": 8,
+                    "col": 4
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ELOS",
+                    "row": 4,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "BASE",
+                    "row": 8,
+                    "col": 4
+                }
+            ],
+            "bonus_words": [
+                "PUNHO",
+                "GARRA"
+            ]
+        }
+    },
+    "total_tokens": 9026,
+    "ai_response_time_ms": 75047,
+    "status": "completed",
+    "created_at": "2026-10-20T01:50:13.601172Z"
+}

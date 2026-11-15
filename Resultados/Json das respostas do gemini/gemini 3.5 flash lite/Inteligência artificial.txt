@@ -1,0 +1,155 @@
+{
+    "id": "12488b37-5104-42f1-ae34-b9b070b67594",
+    "filename": "ia.docx",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "O que caracteriza o processo de fine-tuning em inteligência artificial?",
+                "options": [
+                    "Ajustar um modelo pré-treinado com dados direcionados",
+                    "Treinar uma rede neural completamente do zero",
+                    "Apagar todos os pesos aprendidos anteriormente",
+                    "Criar dados massivos sem uso de modelos"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Qual vantagem o fine-tuning apresenta em relação ao treinamento do zero?",
+                "options": [
+                    "Exige uma quantidade infinita de dados",
+                    "Aumenta o tempo necessário de processamento",
+                    "Reduz significativamente o tempo e a necessidade de dados",
+                    "Elimina a necessidade de qualquer computador"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual plataforma é amplamente citada para facilitar o processo de fine-tuning?",
+                "options": [
+                    "Windows Update",
+                    "Hugging Face",
+                    "Adobe Photoshop",
+                    "Microsoft Excel"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual dos seguintes modelos é mencionado como exemplo no texto?",
+                "options": [
+                    "Windows 11",
+                    "Stable Diffusion",
+                    "Photoshop CS",
+                    "Linux Mint"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual é um caso de uso prático para modelos ajustados por fine-tuning?",
+                "options": [
+                    "Imprimir documentos em papel",
+                    "Chatbots para atendimento ao cliente",
+                    "Instalar sistemas operacionais",
+                    "Calcular planilhas financeiras"
+                ],
+                "correct_option_index": 1
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "O que significa fine-tuning?",
+                "answer": "Ajuste fino de um modelo pré-treinado para tarefas específicas."
+            },
+            {
+                "question": "Qual modelo de IA é citado junto a BERT e Llama?",
+                "answer": "Stable Diffusion"
+            },
+            {
+                "question": "O que são aproveitados de um modelo geral no ajuste fino?",
+                "answer": "Os pesos já aprendidos."
+            },
+            {
+                "question": "Qual plataforma oferece APIs para datasets personalizados?",
+                "answer": "Hugging Face"
+            },
+            {
+                "question": "Cite um exemplo de aplicação prática mencionado.",
+                "answer": "Chatbots de atendimento ao cliente"
+            },
+            {
+                "question": "O fine-tuning substitui a necessidade de qual processo demorado?",
+                "answer": "Treinamento do zero"
+            }
+        ],
+        "guess_word": {
+            "answer": "TUNING",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 10,
+            "letters": [
+                "C",
+                "H",
+                "A",
+                "A",
+                "T",
+                "T",
+                "B",
+                "O",
+                "O",
+                "U",
+                "N",
+                "N",
+                "I",
+                "G",
+                "M",
+                "D",
+                "D",
+                "E",
+                "L",
+                "L",
+                "S",
+                "S",
+                "P",
+                "R"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "CHATBOT",
+                    "row": 1,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "TUNING",
+                    "row": 1,
+                    "col": 3
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "MODELO",
+                    "row": 0,
+                    "col": 5
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "LLAMA",
+                    "row": 4,
+                    "col": 5
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "DADOS",
+                    "row": 3,
+                    "col": 7
+                }
+            ],
+            "bonus_words": [
+                "PESOS",
+                "BERT"
+            ]
+        }
+    },
+    "total_tokens": 2981,
+    "ai_response_time_ms": 9871
+}

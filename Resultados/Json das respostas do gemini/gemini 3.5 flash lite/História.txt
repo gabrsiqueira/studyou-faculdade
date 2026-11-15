@@ -1,0 +1,154 @@
+{
+    "id": "47c1da54-3964-4e90-a4db-31d3e63fed18",
+    "filename": "historia.png",
+    "mime_type": "image/png",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Qual deus enfurece-se com Ulisses logo após a Guerra de Troia, criando inúmeros obstáculos em sua viagem?",
+                "options": [
+                    "Zeus",
+                    "Poseidon",
+                    "Hermes",
+                    "Atena"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Por quantos anos Ulisses ficou preso na ilha da ninfa Calipso?",
+                "options": [
+                    "3 anos",
+                    "5 anos",
+                    "7 anos",
+                    "10 anos"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual é o nome do filho de Ulisses que deseja encontrar o pai e é ajudado por Atena?",
+                "options": [
+                    "Telêmaco",
+                    "Laertes",
+                    "Polifemo",
+                    "Calipso"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Como a deusa Atena disfarça inicialmente Ulisses ao retornar a Ítaca?",
+                "options": [
+                    "De guerreiro troiano",
+                    "De um deus do Olimpo",
+                    "De um marinheiro feácio",
+                    "De um mendigo"
+                ],
+                "correct_option_index": 3
+            },
+            {
+                "prompt": "Qual teste Penélope aplica para provar que o homem à sua frente é realmente Ulisses?",
+                "options": [
+                    "O teste do arco e flecha",
+                    "O teste da cama inamovível",
+                    "O teste da cicatriz na perna",
+                    "O teste do navio feácio"
+                ],
+                "correct_option_index": 1
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "Qual é a cidade natal de Ulisses para onde ele tenta retornar?",
+                "answer": "Itaca"
+            },
+            {
+                "question": "Quem é o autor do épico A Odisseia?",
+                "answer": "Homero"
+            },
+            {
+                "question": "Que nome recebe a ninfa que manteve Ulisses prisioneiro por sete anos?",
+                "answer": "Calipso"
+            },
+            {
+                "question": "Como se chama o pai de Ulisses com quem ele se reúne no final da obra?",
+                "answer": "Laertes"
+            },
+            {
+                "question": "Qual povo acolhe calorosamente Ulisses e o ajuda a alcançar Ítaca após sua saída da ilha de Calipso?",
+                "answer": "Feacios"
+            },
+            {
+                "question": "Qual é o nome da esposa de Ulisses que o aguardava em Ítaca?",
+                "answer": "Penelope"
+            }
+        ],
+        "guess_word": {
+            "answer": "ODISSEIA",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 10,
+            "letters": [
+                "P",
+                "O",
+                "O",
+                "S",
+                "S",
+                "S",
+                "E",
+                "E",
+                "I",
+                "D",
+                "N",
+                "T",
+                "L",
+                "M",
+                "A",
+                "A",
+                "C",
+                "U",
+                "R"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "POSEIDON",
+                    "row": 2,
+                    "col": 2
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "TELEMACO",
+                    "row": 1,
+                    "col": 5
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "ULISSES",
+                    "row": 4,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ITACA",
+                    "row": 4,
+                    "col": 2
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "ATENA",
+                    "row": 6,
+                    "col": 5
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "TROIA",
+                    "row": 0,
+                    "col": 8
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 4610,
+    "ai_response_time_ms": 9387
+}

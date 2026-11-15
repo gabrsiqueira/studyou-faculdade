@@ -1,0 +1,159 @@
+{
+    "id": "848b46f7-4514-4a8d-a550-7ebe96898946",
+    "filename": "robotica.pdf",
+    "mime_type": "application/pdf",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Como sao chamadas as estruturas rigidas e nao moveis que compoem sequencialmente um manipulador robotico?",
+                "options": [
+                    "Juntas",
+                    "Elos",
+                    "Punhos",
+                    "Eixos"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual e o termo em ingles para Graus de Liberdade, que define os movimentos de um robo?",
+                "options": [
+                    "Degree of Freedom",
+                    "Dynamic Force",
+                    "Direct Function",
+                    "Device Framework"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Qual tipo de junta possui movimentacao retilinea e fornece 1 grau de liberdade?",
+                "options": [
+                    "Esferica",
+                    "Rotacional",
+                    "Prismatica",
+                    "Torcional"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Como sao chamadas as ferramentas montadas no punho de um robo manipulador para tarefas especificas?",
+                "options": [
+                    "Base",
+                    "Elos",
+                    "Articulacoes",
+                    "Efetuadores"
+                ],
+                "correct_option_index": 3
+            },
+            {
+                "prompt": "Em qual classificacao de junta rotativa o elo de entrada tem a mesma direcao do eixo e o elo de saida e perpendicular?",
+                "options": [
+                    "Revolvente",
+                    "Torcional",
+                    "Linear",
+                    "Rotacional"
+                ],
+                "correct_option_index": 0
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "O que e um manipulador robotico?",
+                "answer": "Um robo industrial programavel e multifuncional projetado para realizar diversas tarefas atraves de movimentos variaveis."
+            },
+            {
+                "question": "O que sao juntas em um sistema robotico?",
+                "answer": "Sao as conexoes entre dois ou mais elos que definem os movimentos do robo."
+            },
+            {
+                "question": "O que caracteriza o braco robotico antropomorfico?",
+                "answer": "Ele se assemelha ao braco humano e sua estrutura e formada por base, braco e antebraco."
+            },
+            {
+                "question": "Quantos graus de liberdade possui uma junta esferica?",
+                "answer": "Tres graus de liberdade, permitindo rotacao em torno de tres eixos."
+            },
+            {
+                "question": "Qual e a direcao dos elos em uma junta rotativa do tipo torcional?",
+                "answer": "Os elos de entrada e de saida possuem a mesma direcao do eixo de rotacao."
+            },
+            {
+                "question": "Onde se localiza o punho do robo manipulador?",
+                "answer": "Na extremidade da ultima junta, onde sao montados os efetuadores."
+            }
+        ],
+        "guess_word": {
+            "answer": "MANIPULADOR",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 9,
+            "letters": [
+                "T",
+                "O",
+                "O",
+                "R",
+                "C",
+                "I",
+                "N",
+                "A",
+                "L",
+                "J",
+                "U",
+                "P",
+                "H",
+                "B",
+                "S",
+                "E",
+                "D",
+                "F"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "TORCIONAL",
+                    "row": 4,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "JUNTA",
+                    "row": 2,
+                    "col": 6
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "PUNHO",
+                    "row": 0,
+                    "col": 1
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "BASE",
+                    "row": 6,
+                    "col": 5
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ROBO",
+                    "row": 4,
+                    "col": 2
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ELO",
+                    "row": 6,
+                    "col": 8
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "DOF",
+                    "row": 7,
+                    "col": 1
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 4976,
+    "ai_response_time_ms": 12694
+}

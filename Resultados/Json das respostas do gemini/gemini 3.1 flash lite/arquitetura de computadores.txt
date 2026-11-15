@@ -1,0 +1,169 @@
+{
+    "id": "61f0625c-daef-4790-b15e-f1334c760651",
+    "filename": "arq-computadores.pdf",
+    "mime_type": "application/pdf",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Qual foi o instrumento de cálculo mais antigo mencionado no material?",
+                "options": [
+                    "Máquina de Pascal",
+                    "Régua de Cálculo",
+                    "Ábaco",
+                    "IBM 701"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual componente eletrônico revolucionou a computação ao substituir as válvulas termoiônicas em 1947?",
+                "options": [
+                    "Circuito integrado",
+                    "Transistor",
+                    "Cartão perfurado",
+                    "Pastilha de silício"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual era a função principal da Máquina de Pascal desenvolvida em 1617?",
+                "options": [
+                    "Armazenar dados complexos",
+                    "Processar programas espaciais",
+                    "Realizar adições e subtrações",
+                    "Operar com logaritmos"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "O que impulsionou o desenvolvimento dos circuitos integrados durante a década de 1960?",
+                "options": [
+                    "O programa espacial americano",
+                    "A invenção do ábaco",
+                    "O uso de válvulas",
+                    "O surgimento da linguagem Fortran"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Qual destas características define um sistema computacional?",
+                "options": [
+                    "Apenas hardware de cálculo",
+                    "Uso exclusivo de silício",
+                    "Combinação de hardware e software para processamento",
+                    "Apenas dispositivos mecânicos"
+                ],
+                "correct_option_index": 2
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "O que é um sistema computacional?",
+                "answer": "Conjunto de hardware e software que operam juntos para processar dados."
+            },
+            {
+                "question": "Quem criou a Régua de Cálculo em 1638?",
+                "answer": "William Oughtred."
+            },
+            {
+                "question": "Qual a principal vantagem dos transistores sobre as válvulas?",
+                "answer": "Menor tamanho, maior velocidade e menor consumo de energia."
+            },
+            {
+                "question": "O que permitiu a miniaturização extrema dos componentes nos anos 60?",
+                "answer": "A invenção dos circuitos integrados."
+            },
+            {
+                "question": "Qual era a linguagem utilizada pelo IBM 701?",
+                "answer": "Fortran."
+            },
+            {
+                "question": "Qual material semicondutor é a base da microeletrônica?",
+                "answer": "Silício."
+            },
+            {
+                "question": "Qual era o dispositivo de vidro usado no início da era eletrônica?",
+                "answer": "Válvula termoiônica."
+            }
+        ],
+        "guess_word": {
+            "answer": "SILICIO",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 15,
+            "letters": [
+                "H",
+                "A",
+                "A",
+                "R",
+                "R",
+                "D",
+                "W",
+                "E",
+                "P",
+                "O",
+                "G",
+                "M",
+                "V",
+                "V",
+                "L",
+                "L",
+                "U",
+                "F",
+                "T",
+                "N",
+                "S",
+                "C",
+                "B",
+                "I"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "HARDWARE",
+                    "row": 1,
+                    "col": 3
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "PROGRAMA",
+                    "row": 0,
+                    "col": 5
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "VALVULA",
+                    "row": 0,
+                    "col": 8
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "FORTRAN",
+                    "row": 5,
+                    "col": 0
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "PASCAL",
+                    "row": 6,
+                    "col": 7
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ABACO",
+                    "row": 6,
+                    "col": 11
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "CHIP",
+                    "row": 9,
+                    "col": 11
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 7933,
+    "ai_response_time_ms": 11252
+}

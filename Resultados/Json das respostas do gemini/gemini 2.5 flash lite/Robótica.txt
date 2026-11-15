@@ -1,0 +1,179 @@
+{
+    "id": "71530ad7-66a8-451d-ae73-846e0c8fa719",
+    "filename": "Robótica.pdf",
+    "mime_type": "application/pdf",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Qual a principal função de um robô manipulador industrial?",
+                "options": [
+                    "Realizar tarefas com movimentos fixos e repetitivos.",
+                    "Ser programável e multifuncional para tarefas com movimentos variáveis.",
+                    "Apenas transportar peças de um local para outro.",
+                    "Analisar dados complexos e gerar relatórios."
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Em um robô manipulador, o que são 'elos'?",
+                "options": [
+                    "As juntas que permitem o movimento.",
+                    "As ferramentas acopladas à extremidade do robô.",
+                    "As partes rígidas que se conectam pelas juntas.",
+                    "A base onde o robô é fixado."
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual tipo de junta permite um movimento retilíneo (deslizante) e possui 1 Grau de Liberdade (DOF)?",
+                "options": [
+                    "Junta Rotativa",
+                    "Junta Esférica",
+                    "Junta Prismática",
+                    "Junta Torsional"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Quantos Graus de Liberdade (DOF) uma junta esférica permite?",
+                "options": [
+                    "1 DOF",
+                    "2 DOF",
+                    "3 DOF",
+                    "4 DOF"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Como é classificada uma junta rotativa onde o elo de entrada está na mesma direção do eixo de rotação e o elo de saída é perpendicular a ele?",
+                "options": [
+                    "Torsional (T)",
+                    "Rotacional (R)",
+                    "Revolvente (V)",
+                    "Linear (P)"
+                ],
+                "correct_option_index": 2
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "O que é um robô manipulador?",
+                "answer": "Um braço robótico industrial programável e multifuncional."
+            },
+            {
+                "question": "Qual a função das juntas em um robô?",
+                "answer": "Permitem o movimento relativo entre os elos."
+            },
+            {
+                "question": "O que significa DOF?",
+                "answer": "Degree of Freedom, ou Grau de Liberdade, indicando movimentos independentes."
+            },
+            {
+                "question": "Cite um tipo de junta que permite movimento retilíneo.",
+                "answer": "Junta Prismática ou Linear."
+            },
+            {
+                "question": "Qual junta permite rotação em torno de três eixos?",
+                "answer": "Junta Esférica."
+            },
+            {
+                "question": "O que são 'efetuadores'?",
+                "answer": "Ferramentas acopladas ao manipulador para trabalhos específicos."
+            },
+            {
+                "question": "Qual a característica de um robô antropomórfico?",
+                "answer": "Que se assemelha ao corpo humano."
+            }
+        ],
+        "guess_word": {
+            "answer": "ROBOT",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 13,
+            "letters": [
+                "M",
+                "A",
+                "A",
+                "N",
+                "I",
+                "P",
+                "U",
+                "L",
+                "D",
+                "D",
+                "O",
+                "R",
+                "B",
+                "E",
+                "E",
+                "T",
+                "T",
+                "V",
+                "S",
+                "F",
+                "C",
+                "J",
+                "G",
+                "H"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "MANIPULADOR",
+                    "row": 4,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "LIBERDADE",
+                    "row": 4,
+                    "col": 6
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ROTATIVA",
+                    "row": 4,
+                    "col": 10
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "ESFERICA",
+                    "row": 7,
+                    "col": 3
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "JUNTAS",
+                    "row": 0,
+                    "col": 1
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "GRAUS",
+                    "row": 10,
+                    "col": 4
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "PUNHO",
+                    "row": 1,
+                    "col": 0
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "ELOS",
+                    "row": 12,
+                    "col": 6
+                }
+            ],
+            "bonus_words": [
+                "BASE"
+            ]
+        }
+    },
+    "total_tokens": 4553,
+    "ai_response_time_ms": 11374,
+    "status": "completed",
+    "created_at": "2026-10-20T19:23:42.337313Z"
+}

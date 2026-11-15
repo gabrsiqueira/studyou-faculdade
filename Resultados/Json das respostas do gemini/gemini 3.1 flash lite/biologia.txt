@@ -1,0 +1,156 @@
+{
+    "id": "53dd9d44-b723-4617-9098-6f170d9c32f1",
+    "filename": "biologia.txt",
+    "mime_type": "text/plain",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Qual é a porcentagem aproximada de água na composição do corpo humano?",
+                "options": [
+                    "30%",
+                    "50%",
+                    "60%",
+                    "80%"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual processo utiliza água e CO2 para produzir glicose nas plantas?",
+                "options": [
+                    "Respiração",
+                    "Fotossíntese",
+                    "Transpiração",
+                    "Evaporação"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual destas etapas faz parte do ciclo hidrológico?",
+                "options": [
+                    "Nitrificação",
+                    "Condensação",
+                    "Combustão",
+                    "Oxidação"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Como a água atua quimicamente dentro das células?",
+                "options": [
+                    "Como catalisador",
+                    "Como solvente",
+                    "Como combustível",
+                    "Como isolante"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual ação é citada como medida para a conservação dos recursos hídricos?",
+                "options": [
+                    "Desmatamento",
+                    "Tratamento de esgoto",
+                    "Descarte industrial",
+                    "Erosão do solo"
+                ],
+                "correct_option_index": 1
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "O que a água atua no transporte biológico?",
+                "answer": "Nutrientes e resíduos metabólicos"
+            },
+            {
+                "question": "Por que a água é um regulador térmico?",
+                "answer": "Ajuda a controlar a temperatura corporal"
+            },
+            {
+                "question": "Cite uma ameaça direta aos recursos hídricos.",
+                "answer": "Poluição"
+            },
+            {
+                "question": "O que compõe o ciclo hidrológico além de condensação e precipitação?",
+                "answer": "Evaporação e infiltração"
+            },
+            {
+                "question": "O que ocorre com a água potável no contexto atual?",
+                "answer": "É um recurso limitado"
+            },
+            {
+                "question": "Qual a importância das nascentes?",
+                "answer": "Devem ser preservadas para garantir o abastecimento"
+            }
+        ],
+        "guess_word": {
+            "answer": "HIDRICO",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 12,
+            "letters": [
+                "F",
+                "O",
+                "O",
+                "T",
+                "T",
+                "S",
+                "S",
+                "S",
+                "I",
+                "N",
+                "E",
+                "E",
+                "P",
+                "L",
+                "L",
+                "A",
+                "A",
+                "C",
+                "C",
+                "U",
+                "G"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "FOTOSSINTESE",
+                    "row": 3,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "PLANTA",
+                    "row": 0,
+                    "col": 7
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "CELULA",
+                    "row": 2,
+                    "col": 9
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ESGOTO",
+                    "row": 3,
+                    "col": 11
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "CICLO",
+                    "row": 1,
+                    "col": 4
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "AGUA",
+                    "row": 5,
+                    "col": 4
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 2632,
+    "ai_response_time_ms": 8008
+}

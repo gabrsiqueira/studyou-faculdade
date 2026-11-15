@@ -1,0 +1,156 @@
+{
+    "id": "66b8d72c-17a7-466d-9455-09be4df43ec8",
+    "filename": "Inteligência Artificial.docx",
+    "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "O que caracteriza fundamentalmente o processo de fine-tuning?",
+                "options": [
+                    "Readaptar um modelo previamente treinado em dados gerais para uma tarefa especifica",
+                    "Construir uma arquitetura neural inteiramente do zero sem dados previos",
+                    "Apagar todos os parametros existentes para iniciar um novo aprendizado",
+                    "Treinar modelos exclusivamente com regras logicas sem uso de dados"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Qual modelo e citado no material como exemplo aplicado a imagens?",
+                "options": [
+                    "ResNet",
+                    "Stable Diffusion",
+                    "GPT-4",
+                    "Midjourney"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Em termos de recursos, qual e uma das maiores vantagens do fine-tuning frente ao treinamento do zero?",
+                "options": [
+                    "Aumento exponencial da necessidade de poder computacional",
+                    "Exigencia de volumes massivos e ineditos de dados proprietarios",
+                    "Economia consideravel de tempo, custos e dados necessarios",
+                    "Eliminacao completa da necessidade de validacao humana"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual papel a plataforma Hugging Face desempenha no ecossistema de IA abordado?",
+                "options": [
+                    "Fabricar hardware exclusivo para servidores de alta performance",
+                    "Fornecer modelos abertos, conjuntos de dados e APIs facilitadoras",
+                    "Auditar legalmente dados para impedir qualquer customizacao",
+                    "Oferecer apenas cursos teoricos sobre redes neurais"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual modelo representativo da area de processamento de texto e citado no texto alem do Llama?",
+                "options": [
+                    "BERT",
+                    "Claude",
+                    "Gemini",
+                    "Whisper"
+                ],
+                "correct_option_index": 0
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "O que sao os pesos aprendidos (weights) em uma rede neural?",
+                "answer": "Parametros matematicos internos calibrados no treinamento que guardam o conhecimento previo."
+            },
+            {
+                "question": "O que define o conceito de treinamento do zero (from scratch)?",
+                "answer": "Ensinar um modelo sem base anterior, exigindo imenso volume de dados e alto poder computacional."
+            },
+            {
+                "question": "O que representa o modelo Llama no contexto dos modelos pre-treinados?",
+                "answer": "Um modelo representativo voltado para processamento e geracao de linguagem."
+            },
+            {
+                "question": "Qual e um exemplo de solucao especializada gerada por fine-tuning no dominio de texto?",
+                "answer": "Chatbots direcionados para operacoes de suporte ao cliente."
+            },
+            {
+                "question": "Qual e uma aplicacao pratica do ajuste fino na area de visao computacional?",
+                "answer": "Sistemas de deteccao e reconhecimento visual."
+            },
+            {
+                "question": "Qual e o tamanho relativo da base de dados exigida no fine-tuning?",
+                "answer": "Utiliza um conjunto substancialmente menor e mais direcionado de dados."
+            }
+        ],
+        "guess_word": {
+            "answer": "AJUSTE",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 9,
+            "letters": [
+                "C",
+                "H",
+                "A",
+                "A",
+                "T",
+                "T",
+                "B",
+                "O",
+                "P",
+                "E",
+                "E",
+                "S",
+                "S",
+                "D",
+                "D",
+                "X",
+                "V",
+                "I",
+                "L",
+                "L",
+                "M",
+                "R"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "CHATBOT",
+                    "row": 3,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "PESOS",
+                    "row": 0,
+                    "col": 5
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "DADOS",
+                    "row": 2,
+                    "col": 2
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "TEXTO",
+                    "row": 1,
+                    "col": 4
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "VISAO",
+                    "row": 6,
+                    "col": 0
+                }
+            ],
+            "bonus_words": [
+                "LLAMA",
+                "REDE"
+            ]
+        }
+    },
+    "total_tokens": 3612,
+    "ai_response_time_ms": 146581,
+    "status": "completed",
+    "created_at": "2026-10-20T01:57:25.599332Z"
+}

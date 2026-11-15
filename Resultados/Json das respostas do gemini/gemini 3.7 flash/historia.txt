@@ -1,0 +1,165 @@
+{
+    "id": "99665363-80cf-4645-a8f3-e4d2f51e319e",
+    "filename": "História.png",
+    "mime_type": "image/png",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Ao desembarcar em sua terra natal, que disfarce mágico a deusa Atena concedeu ao herói para protegê-lo dos pretendentes?",
+                "options": [
+                    "Um guerreiro espartano",
+                    "Um mercador estrangeiro",
+                    "Um humilde mendigo",
+                    "Um sacerdote idoso"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual segredo comprovou a identidade do protagonista perante sua esposa no palácio?",
+                "options": [
+                    "Um anel com selo real gravado em ouro",
+                    "A cama nupcial esculpida no tronco de uma oliveira viva",
+                    "Uma espada herdada de seus ancestrais",
+                    "Uma senha secreta combinada na juventude"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual importante conceito moral e sagrado da Grécia Antiga, referente à hospitalidade, foi flagrantemente violado pelos pretendentes?",
+                "options": [
+                    "Húbris",
+                    "Catarse",
+                    "Xênia",
+                    "Mímese"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "De que maneira o protagonista demonstrou inquestionavelmente ser filho de Laertes ao reencontrá-lo?",
+                "options": [
+                    "Mostrando uma cicatriz antiga e citando memórias de infância",
+                    "Apresentando o arco que apenas o verdadeiro herdeiro conseguia armar",
+                    "Entregando as vestes reais guardadas desde a partida",
+                    "Recitando os nomes de todos os servos da propriedade rural"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Qual divindade atuou como o principal antagonista divino, criando obstáculos e fúria marítima contra a viagem de regresso?",
+                "options": [
+                    "Ares",
+                    "Posídon",
+                    "Hefesto",
+                    "Hades"
+                ],
+                "correct_option_index": 1
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "Durante quantos anos a ninfa Calipso manteve o protagonista retido em sua ilha?",
+                "answer": "Sete anos."
+            },
+            {
+                "question": "Qual mensageiro divino foi incumbido por Zeus de ordenar a libertação do herói prisioneiro?",
+                "answer": "Hermes."
+            },
+            {
+                "question": "Qual é o nome do jovem filho que parte em uma jornada própria em busca de notícias do pai ausente?",
+                "answer": "Telêmaco."
+            },
+            {
+                "question": "Como a tradição grega da obra denomina a virtude da astúcia e inteligência estratégica?",
+                "answer": "Metis."
+            },
+            {
+                "question": "Qual termo da poética clássica designa o momento de revelação e reconhecimento mútuo entre personagens?",
+                "answer": "Anagnórise."
+            },
+            {
+                "question": "Qual recurso narrativo é empregado pelo herói para contar suas provações anteriores ao ser acolhido por anfitriões?",
+                "answer": "Flashback (narrativa não linear)."
+            }
+        ],
+        "guess_word": {
+            "answer": "NOSTOS",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 14,
+            "letters": [
+                "C",
+                "C",
+                "I",
+                "L",
+                "O",
+                "O",
+                "P",
+                "E",
+                "E",
+                "S",
+                "S",
+                "R",
+                "A",
+                "A",
+                "A",
+                "J",
+                "N",
+                "G",
+                "D",
+                "H",
+                "M",
+                "T"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "CICLOPE",
+                    "row": 1,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "SEREIAS",
+                    "row": 0,
+                    "col": 6
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "JANGADA",
+                    "row": 5,
+                    "col": 5
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "HOMERO",
+                    "row": 3,
+                    "col": 3
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ITACA",
+                    "row": 1,
+                    "col": 1
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "TROIA",
+                    "row": 1,
+                    "col": 11
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "CIRCE",
+                    "row": 2,
+                    "col": 9
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 11035,
+    "ai_response_time_ms": 122207,
+    "status": "completed",
+    "created_at": "2026-10-20T01:59:58.085362Z"
+}

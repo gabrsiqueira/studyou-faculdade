@@ -1,0 +1,156 @@
+{
+    "id": "da172877-7b3f-44af-8eb9-5e3893d465da",
+    "filename": "livro.txt",
+    "mime_type": "text/plain",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Qual é a principal motivação da expedição liderada por Thorin Escudo de Carvalho?",
+                "options": [
+                    "Encontrar o Um Anel",
+                    "Reconquistar Erebor",
+                    "Derrotar o mago Gandalf",
+                    "Explorar o Condado"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual criatura representa a ganância e serve como obstáculo central na trama?",
+                "options": [
+                    "Bilbo Bolseiro",
+                    "Thorin",
+                    "Smaug",
+                    "Gollum"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "O que Bilbo encontra durante sua jornada que serve como ferramenta de sobrevivência?",
+                "options": [
+                    "Uma espada mágica",
+                    "Um mapa secreto",
+                    "Um anel de invisibilidade",
+                    "Um escudo ancestral"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Como Bilbo se comporta no início da obra antes de sua transformação?",
+                "options": [
+                    "Corajoso e aventureiro",
+                    "Acomodado e pacato",
+                    "Guerreiro e estrategista",
+                    "Líder e ambicioso"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual é o tema central que emerge dos conflitos após a morte de Smaug?",
+                "options": [
+                    "A ganância",
+                    "A diplomacia",
+                    "A tecnologia",
+                    "A magia negra"
+                ],
+                "correct_option_index": 0
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "Quem é o autor de O Hobbit?",
+                "answer": "J.R.R. Tolkien"
+            },
+            {
+                "question": "O que é a 'Jornada do Herói' no contexto do livro?",
+                "answer": "A transição do conforto do Condado para o desconhecido"
+            },
+            {
+                "question": "Qual é o nome da montanha onde está o tesouro?",
+                "answer": "Erebor"
+            },
+            {
+                "question": "O que a morte de Thorin simboliza?",
+                "answer": "O perigo da ganância"
+            },
+            {
+                "question": "Qual é o nome da batalha final da obra?",
+                "answer": "Batalha dos Cinco Exércitos"
+            },
+            {
+                "question": "Além da bravura, qual valor é essencial para o sucesso da jornada?",
+                "answer": "Solidariedade"
+            }
+        ],
+        "guess_word": {
+            "answer": "HOBBIT",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 10,
+            "letters": [
+                "G",
+                "A",
+                "A",
+                "N",
+                "D",
+                "L",
+                "F",
+                "R",
+                "R",
+                "O",
+                "O",
+                "E",
+                "E",
+                "B",
+                "B",
+                "U",
+                "I",
+                "T",
+                "S"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "GANDALF",
+                    "row": 0,
+                    "col": 1
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "DRAGAO",
+                    "row": 0,
+                    "col": 4
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "EREBOR",
+                    "row": 5,
+                    "col": 0
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "GUERRA",
+                    "row": 3,
+                    "col": 4
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "BILBO",
+                    "row": 5,
+                    "col": 3
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ANEL",
+                    "row": 0,
+                    "col": 2
+                }
+            ],
+            "bonus_words": [
+                "TESOURO"
+            ]
+        }
+    },
+    "total_tokens": 3107,
+    "ai_response_time_ms": 10200
+}

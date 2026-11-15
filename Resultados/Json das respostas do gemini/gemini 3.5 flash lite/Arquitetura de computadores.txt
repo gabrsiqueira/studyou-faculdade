@@ -1,0 +1,164 @@
+{
+    "id": "a32ddaea-7cfa-44d0-b3ba-e434dfb010e9",
+    "filename": "arq-computadores.pdf",
+    "mime_type": "application/pdf",
+    "games": {
+        "quiz": [
+            {
+                "prompt": "Em que ano foi inventado o ábaco, considerado um dos primeiros instrumentos de pré-computação?",
+                "options": [
+                    "1617 AC",
+                    "3000 AC",
+                    "1638 AC",
+                    "1947 DC"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "Qual dispositivo substituiu as válvulas eletrônicas a partir de 1947, trazendo mais eficiência energética?",
+                "options": [
+                    "O Transistor",
+                    "O Circuito Integrado",
+                    "A Régua de Cálculo",
+                    "O Cartão Perfurado"
+                ],
+                "correct_option_index": 0
+            },
+            {
+                "prompt": "Quem criou a régua de cálculo em 1638 baseando-se nas tábuas de logaritmos?",
+                "options": [
+                    "John Napier",
+                    "Blaise Pascal",
+                    "William Oughtred",
+                    "Alan Turing"
+                ],
+                "correct_option_index": 2
+            },
+            {
+                "prompt": "Qual foi o primeiro computador comercial lançado em 1953 que operava com linguagem Fortran?",
+                "options": [
+                    "ENIAC",
+                    "IBM 701",
+                    "EDVAC",
+                    "DEC PDP-1"
+                ],
+                "correct_option_index": 1
+            },
+            {
+                "prompt": "O que impulsionou diretamente a chamada Revolução do Silício na década de 1960?",
+                "options": [
+                    "O programa espacial americano",
+                    "A criação da internet",
+                    "A invenção da máquina a vapor",
+                    "A descoberta da eletricidade estática"
+                ],
+                "correct_option_index": 0
+            }
+        ],
+        "flashcards": [
+            {
+                "question": "O que compõe um sistema computacional?",
+                "answer": "Hardware e software trabalhando juntos para processar dados."
+            },
+            {
+                "question": "Qual foi a utilidade da Máquina de Pascal criada em 1617?",
+                "answer": "Realizar operações de adição e subtração como primeira calculadora."
+            },
+            {
+                "question": "O que era a válvula termoiônica?",
+                "answer": "Um dispositivo de vidro de alto vácuo usado para controlar a corrente elétrica."
+            },
+            {
+                "question": "Qual é a principal vantagem dos circuitos integrados?",
+                "answer": "Permitem integrar milhares de transistores em uma única pastilha de silício reduzida."
+            },
+            {
+                "question": "Em qual local histórico ocorreu a invenção do ábaco por volta de 3000 AC?",
+                "answer": "Na Babilônia."
+            },
+            {
+                "question": "Qual linguagem de programação era operada pelo IBM 701?",
+                "answer": "Fortran."
+            }
+        ],
+        "guess_word": {
+            "answer": "TRANSISTOR",
+            "max_attempts": 6
+        },
+        "crossword": {
+            "size": 14,
+            "letters": [
+                "H",
+                "A",
+                "A",
+                "R",
+                "R",
+                "D",
+                "W",
+                "E",
+                "S",
+                "O",
+                "F",
+                "T",
+                "V",
+                "V",
+                "L",
+                "L",
+                "U",
+                "I",
+                "I",
+                "I",
+                "C",
+                "P",
+                "B"
+            ],
+            "entries": [
+                {
+                    "direction": "ACROSS",
+                    "answer": "HARDWARE",
+                    "row": 4,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "SOFTWARE",
+                    "row": 0,
+                    "col": 4
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "VALVULA",
+                    "row": 3,
+                    "col": 1
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "SILICIO",
+                    "row": 0,
+                    "col": 4
+                },
+                {
+                    "direction": "ACROSS",
+                    "answer": "PASCAL",
+                    "row": 9,
+                    "col": 0
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "ABACO",
+                    "row": 9,
+                    "col": 4
+                },
+                {
+                    "direction": "DOWN",
+                    "answer": "CHIP",
+                    "row": 0,
+                    "col": 8
+                }
+            ],
+            "bonus_words": []
+        }
+    },
+    "total_tokens": 7978,
+    "ai_response_time_ms": 11093
+}
